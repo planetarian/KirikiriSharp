@@ -13,10 +13,18 @@ namespace Tjs2.Sharpen
 			Attach (iss);
 		}
 
-		public override void Close ()
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+
+		public override void Dispose(bool disposing)
 		{
-			ips.Close ();
-			base.Close ();
+		    if (disposing)
+		    {
+		        ips.Dispose();
+		        base.Dispose(true);
+		    }
 		}
 
 		internal void Attach (PipedInputStream iss)

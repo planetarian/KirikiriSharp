@@ -21,25 +21,22 @@ namespace Tjs2.Sharpen
 		
 		public virtual int Available ()
 		{
-			if (Wrapped is WrappedSystemStream)
-				return ((WrappedSystemStream)Wrapped).InputStream.Available ();
-			else
-				return 0;
-		}
+		    var stream = Wrapped as WrappedSystemStream;
+		    return stream?.InputStream.Available () ?? 0;
+        }
 
-		public virtual void Close ()
-		{
-			if (Wrapped != null) {
-				Wrapped.Close ();
-			}
-		}
+        public void Dispose()
+        {
+            Dispose(true);
+        }
 
-		public void Dispose ()
-		{
-			Close ();
-		}
+        public virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+                Wrapped?.Dispose();
+        }
 
-		internal Stream GetWrappedStream ()
+        internal Stream GetWrappedStream ()
 		{
 			// Always create a wrapper stream (not directly Wrapped) since the subclass
 			// may be overriding methods that need to be called when used through the Stream class

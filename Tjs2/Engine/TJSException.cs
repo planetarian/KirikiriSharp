@@ -6,7 +6,9 @@ using System;
 
 namespace Tjs2.Engine
 {
-	[System.Serializable]
+#if WIN32
+    [Serializable]
+#endif
 	public class TjsException : Exception
 	{
 		private const long serialVersionUID = 1942890050230766470L;

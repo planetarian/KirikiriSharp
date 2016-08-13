@@ -38,15 +38,25 @@ namespace Tjs2.Sharpen
 			os.Attach (this);
 		}
 
-		public override void Close ()
-		{
-			lock (thisLock) {
-				closed = true;
-				dataEvent.Set ();
-			}
-		}
+	    public void Dispose()
+	    {
+            Dispose(true);
+	    }
 
-		public override int Available ()
+	    public override void Dispose(bool disposing)
+	    {
+	        if (disposing)
+	        {
+	            lock (thisLock)
+	            {
+	                closed = true;
+	                dataEvent.Set();
+                    base.Dispose(true);
+	            }
+	        }
+	    }
+
+        public override int Available ()
 		{
 			lock (thisLock) {
 				if (start <= end) {

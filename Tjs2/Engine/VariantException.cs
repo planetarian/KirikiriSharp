@@ -2,10 +2,14 @@
  * TJS2 CSharp
  */
 
+using System;
+
 namespace Tjs2.Engine
 {
-	[System.Serializable]
-	public class VariantException : TjsException
+#if WIN32
+    [Serializable]
+#endif
+    public class VariantException : TjsException
 	{
 		private const long serialVersionUID = -3605064460238917638L;
 

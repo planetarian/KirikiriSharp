@@ -24,9 +24,10 @@ namespace Tjs2.Sharpen
 			return ((MemoryStream)base.Wrapped).ToArray ();
 		}
 		
-		public override void Close ()
+		public override void Dispose(bool disposing)
 		{
 			// Closing a ByteArrayOutputStream has no effect.
+            base.Dispose(true);
 		}
 		
 		public override string ToString ()

@@ -1,6 +1,11 @@
 using System;
 using System.IO;
+#if WIN32
 using System.Security.Cryptography;
+#elif WINDOWS_UWP
+using Windows.Security.Cryptography;
+using Windows.Security.Cryptography.Core;
+#endif
 
 namespace Tjs2.Sharpen
 {

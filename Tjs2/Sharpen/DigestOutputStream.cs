@@ -12,9 +12,18 @@ namespace Tjs2.Sharpen
 			this.digest = md;
 		}
 
-		public override void Close ()
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+
+		public override void Dispose(bool disposing)
 		{
-			os.Close ();
+		    if (disposing)
+		    {
+		        os.Dispose();
+                base.Dispose(true);
+		    }
 		}
 
 		public override void Flush ()

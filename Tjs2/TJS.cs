@@ -651,7 +651,9 @@ namespace Tjs2
 					{
 						int oleline = lineData.GetSrcPosToLine(lexer.GetCurrentPosition());
 						int newline = lineData.GetSrcPosToLine(lex.GetCurrentPosition());
-						System.Console.Out.Write("error line:" + oleline + ", " + newline + "\n");
+#if WIN32
+                        System.Console.Out.Write("error line:" + oleline + ", " + newline + "\n");
+#endif
 					}
 					int v1 = lexer.GetValue();
 					int v2 = lex.GetValue();
@@ -659,7 +661,9 @@ namespace Tjs2
 					{
 						int oleline = lineData.GetSrcPosToLine(lexer.GetCurrentPosition());
 						int newline = lineData.GetSrcPosToLine(lex.GetCurrentPosition());
-						System.Console.Out.Write("error line:" + oleline + ", " + newline + "\n");
+#if WIN32
+                        System.Console.Out.Write("error line:" + oleline + ", " + newline + "\n");
+#endif
 					}
 					if (v1 != 0)
 					{
@@ -669,8 +673,10 @@ namespace Tjs2
 						{
 							int oleline = lineData.GetSrcPosToLine(lexer.GetCurrentPosition());
 							int newline = lineData.GetSrcPosToLine(lex.GetCurrentPosition());
-							System.Console.Out.Write("o1:" + o1.ToString() + ", o2" + o2.ToString() + "\n");
+#if WIN32
+                            System.Console.Out.Write("o1:" + o1.ToString() + ", o2" + o2.ToString() + "\n");
 							System.Console.Out.Write("error line:" + oleline + ", " + newline + "\n");
+#endif
 						}
 					}
 				}
@@ -694,7 +700,9 @@ namespace Tjs2
 			{
 			}
 			long time = Runtime.CurrentTimeMillis() - start;
-			System.Console.Out.Write("old lex : " + time + "ms\n");
+#if WIN32
+            System.Console.Out.Write("old lex : " + time + "ms\n");
+#endif
 			start = Runtime.CurrentTimeMillis();
 			lex = new LexicalAnalyzer(compiler, script, false, false);
 			try
@@ -710,7 +718,9 @@ namespace Tjs2
 			{
 			}
 			time = Runtime.CurrentTimeMillis() - start;
-			System.Console.Out.Write("new lex : " + time + "ms\n");
+#if WIN32
+            System.Console.Out.Write("new lex : " + time + "ms\n");
+#endif
 		}
 	}
 }

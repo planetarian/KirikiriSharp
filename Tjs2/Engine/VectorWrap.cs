@@ -2,13 +2,16 @@
  * TJS2 CSharp
  */
 
+using System;
 using System.Collections.Generic;
 using Tjs2.Sharpen;
 
 namespace Tjs2.Engine
 {
-	[System.Serializable]
-	public class VectorWrap<E> : AList<E>
+#if WIN32
+    [Serializable]
+#endif
+    public class VectorWrap<E> : AList<E>
 	{
 		private const long serialVersionUID = -8162877809635079713L;
 

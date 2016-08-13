@@ -5,59 +5,50 @@ namespace Tjs2.Sharpen
 {
     internal class WrappedSystemStream : Stream
 	{
-		private InputStream ist;
-		private OutputStream ost;
-		int position;
-		int markedPosition;
+		
+		public InputStream InputStream { get; }
+        public OutputStream OutputStream { get; }
+
+        private int _position;
+        private int _markedPosition;
 
 		public WrappedSystemStream (InputStream ist)
 		{
-			this.ist = ist;
+			InputStream = ist;
 		}
 
 		public WrappedSystemStream (OutputStream ost)
 		{
-			this.ost = ost;
-		}
-		
-		public InputStream InputStream {
-			get { return ist; }
+			OutputStream = ost;
 		}
 
-		public OutputStream OutputStream {
-			get { return ost; }
-		}
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                InputStream?.Dispose();
+                OutputStream?.Dispose();
+            }
+        }
 
-		public override void Close ()
+		public override void Flush()
 		{
-			if (this.ist != null) {
-				this.ist.Close ();
-			}
-			if (this.ost != null) {
-				this.ost.Close ();
-			}
+			OutputStream.Flush();
 		}
 
-		public override void Flush ()
+		public override int Read(byte[] buffer, int offset, int count)
 		{
-			this.ost.Flush ();
-		}
-
-		public override int Read (byte[] buffer, int offset, int count)
-		{
-			int res = this.ist.Read (buffer, offset, count);
-			if (res != -1) {
-				position += res;
-				return res;
-			} else
-				return 0;
+			int res = InputStream.Read(buffer, offset, count);
+		    if (res == -1) return 0;
+		    _position += res;
+		    return res;
 		}
 
 		public override int ReadByte ()
 		{
-			int res = this.ist.Read ();
+			int res = InputStream.Read ();
 			if (res != -1)
-				position++;
+				_position++;
 			return res;
 		}
 
@@ -65,8 +56,7 @@ namespace Tjs2.Sharpen
 		{
 			if (origin == SeekOrigin.Begin)
 				return Position = offset;
-			else
-				throw new NotSupportedException ();
+            throw new NotSupportedException ();
 		}
 
 		public override void SetLength (long value)
@@ -76,57 +66,49 @@ namespace Tjs2.Sharpen
 
 		public override void Write (byte[] buffer, int offset, int count)
 		{
-			this.ost.Write (buffer, offset, count);
-			position += count;
+			OutputStream.Write (buffer, offset, count);
+			_position += count;
 		}
 
 		public override void WriteByte (byte value)
 		{
-			this.ost.Write (value);
-			position++;
+			OutputStream.Write (value);
+			_position++;
 		}
 
-		public override bool CanRead {
-			get { return (this.ist != null); }
-		}
+		public override bool CanRead => InputStream != null;
 
-		public override bool CanSeek {
-			get { return true; }
-		}
+        public override bool CanSeek => true;
 
-		public override bool CanWrite {
-			get { return (this.ost != null); }
-		}
+        public override bool CanWrite => OutputStream != null;
 
-		public override long Length {
-			get {
-				throw new NotSupportedException ();
-			}
-		}
-		
-		internal void OnMark (int nb)
+        public override long Length
+        {
+            get { throw new NotSupportedException(); }
+        }
+
+        internal void OnMark (int nb)
 		{
-			markedPosition = position;
-			ist.Mark (nb);
+			_markedPosition = _position;
+			InputStream.Mark (nb);
 		}
 		
 		public override long Position {
 			get {
-				if (ist != null && ist.CanSeek ())
-					return ist.Position;
-				else
-					return position;
+				if (InputStream != null && InputStream.CanSeek ())
+					return InputStream.Position;
+                return _position;
 			}
 			set {
-				if (value == position)
+				if (value == _position)
 					return;
-				else if (value == markedPosition)
-					ist.Reset ();
-				else if (ist != null && ist.CanSeek ()) {
-					ist.Position = value;
+				if (value == _markedPosition)
+					InputStream.Reset();
+				else if (InputStream != null && InputStream.CanSeek()) {
+					InputStream.Position = value;
 				}
 				else
-					throw new NotSupportedException ();
+					throw new NotSupportedException();
 			}
 		}
 	}
