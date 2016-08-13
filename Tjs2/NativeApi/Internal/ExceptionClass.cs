@@ -2,7 +2,9 @@
  * TJS2 CSharp
  */
 
-namespace Tjs2.Engine.NativeApi.Internal
+using Tjs2.Engine;
+
+namespace Tjs2.NativeApi.Internal
 {
 	public class ExceptionClass : NativeClass
 	{

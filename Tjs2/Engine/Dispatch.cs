@@ -2,7 +2,7 @@
  * TJS2 CSharp
  */
 
-using Tjs2.Engine.NativeApi;
+using Tjs2.NativeApi;
 
 namespace Tjs2.Engine
 {

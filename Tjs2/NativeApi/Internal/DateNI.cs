@@ -2,7 +2,7 @@
  * TJS2 CSharp
  */
 
-namespace Tjs2.Engine.NativeApi.Internal
+namespace Tjs2.NativeApi.Internal
 {
 	public class DateNI : NativeInstanceObject
 	{

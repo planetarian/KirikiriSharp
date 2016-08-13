@@ -4,8 +4,9 @@
 
 using System;
 using System.Reflection;
+using Tjs2.Engine;
 
-namespace Tjs2.Engine.NativeApi.Java
+namespace Tjs2.NativeApi.Java
 {
 	public class NativeJavaClassMethod : Dispatch
 	{

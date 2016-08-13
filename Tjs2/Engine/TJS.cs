@@ -4,10 +4,10 @@
 
 using System.Collections.Generic;
 using System.Text;
-using Tjs2.Engine.NativeApi;
-using Tjs2.Engine.NativeApi.Internal;
 using Tjs2.Sharpen;
 using Tjs2.Extended;
+using Tjs2.NativeApi;
+using Tjs2.NativeApi.Internal;
 
 namespace Tjs2.Engine
 {

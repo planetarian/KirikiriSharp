@@ -4,7 +4,7 @@
 
 using System.Text;
 using Tjs2.Engine;
-using Tjs2.Engine.NativeApi;
+using Tjs2.NativeApi;
 
 namespace Tjs2.Extended
 {

@@ -6,9 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Security;
+using Tjs2.Engine;
 using Tjs2.Sharpen;
+using Error = Tjs2.Engine.Error;
 
-namespace Tjs2.Engine.NativeApi.Java
+namespace Tjs2.NativeApi.Java
 {
 	public class NativeJavaClass : NativeClass
 	{

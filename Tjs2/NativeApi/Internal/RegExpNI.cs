@@ -2,9 +2,10 @@
  * TJS2 CSharp
  */
 
+using Tjs2.Engine;
 using Tjs2.Sharpen;
 
-namespace Tjs2.Engine.NativeApi.Internal
+namespace Tjs2.NativeApi.Internal
 {
 	public class RegExpNI : NativeInstanceObject
 	{

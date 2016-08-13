@@ -3,9 +3,10 @@
  */
 
 using System;
+using Tjs2.Engine;
 using Double = Tjs2.Sharpen.Double;
 
-namespace Tjs2.Engine.NativeApi.Internal
+namespace Tjs2.NativeApi.Internal
 {
 	public sealed class MathClass : NativeClass
     {

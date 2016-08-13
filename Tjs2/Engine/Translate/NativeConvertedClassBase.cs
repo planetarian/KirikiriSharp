@@ -3,7 +3,7 @@
  */
 
 using System.Text;
-using Tjs2.Engine.NativeApi;
+using Tjs2.NativeApi;
 using Tjs2.Sharpen;
 
 namespace Tjs2.Engine.Translate

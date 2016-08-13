@@ -3,8 +3,9 @@
  */
 
 using System;
+using Tjs2.Engine;
 
-namespace Tjs2.Engine.NativeApi
+namespace Tjs2.NativeApi
 {
 	public class NativeClass : CustomObject
 	{

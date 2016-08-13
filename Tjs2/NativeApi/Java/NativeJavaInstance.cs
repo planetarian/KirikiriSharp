@@ -2,7 +2,9 @@
  * TJS2 CSharp
  */
 
-namespace Tjs2.Engine.NativeApi.Java
+using Tjs2.Engine;
+
+namespace Tjs2.NativeApi.Java
 {
 	public class NativeJavaInstance : NativeInstance
 	{

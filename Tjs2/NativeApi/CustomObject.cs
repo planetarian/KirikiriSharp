@@ -3,9 +3,11 @@
  */
 
 using System.Text;
+using Tjs2.Engine;
 using Tjs2.Sharpen;
+using Error = Tjs2.Engine.Error;
 
-namespace Tjs2.Engine.NativeApi
+namespace Tjs2.NativeApi
 {
 	public class CustomObject : Dispatch
 	{

@@ -4,9 +4,11 @@
 
 using System.Collections.Generic;
 using System.Text;
+using Tjs2.Engine;
 using Tjs2.Sharpen;
+using Error = Tjs2.Engine.Error;
 
-namespace Tjs2.Engine.NativeApi.Internal
+namespace Tjs2.NativeApi.Internal
 {
 	public class ArrayClass : NativeClass
 	{
