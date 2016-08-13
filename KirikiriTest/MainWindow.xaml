@@ -13,17 +13,19 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <TabControl x:Name="SourceTabs" Grid.Row="0">
-            <TabItem Header="File">
-                <Grid>
-                    <TextBox x:Name="FilenameTextBox" Margin="10,10,10,35" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
-                    <Button x:Name="BrowseButton" Content="Browse" Margin="90,0,0,10" HorizontalAlignment="Left" Width="75" Click="BrowseButton_Click" Height="20" VerticalAlignment="Bottom"/>
-                    <Button x:Name="SubmitFileButton" Content="OK" Margin="10,0,0,10" HorizontalAlignment="Left" Width="75" Click="SubmitFileButton_Click" Height="20" VerticalAlignment="Bottom"/>
-                </Grid>
-            </TabItem>
             <TabItem Header="Text">
                 <Grid>
-                    <Button x:Name="SubmitInputButton" Content="OK" Margin="10,92,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="75" Click="TestStringButton_Click"/>
-                    <TextBox x:Name="InputTextBox" Margin="10,10,10,35" TextWrapping="Wrap" Text="*start" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
+                    <TextBox x:Name="InputTextBox" Margin="10,10,10,35" TextWrapping="Wrap" Text="*start" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" AcceptsReturn="True"/>
+                    <Button x:Name="KagInputButton" Content="KAG" Margin="10,0,0,10.4" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="75" Click="TestKagStringButton_Click"/>
+                    <Button x:Name="TjsInputButton" Content="TJS" Margin="90,0,0,10.4" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="75" Click="TestTjsStringButton_Click"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="File">
+                <Grid>
+                    <TextBox x:Name="FilenameTextBox" Margin="10,10,10.2,35.4" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
+                    <Button x:Name="KagFileButton" Content="KAG" Margin="10,0,0,10.4" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="75" Click="TestKagFileButton_Click" Height="20"/>
+                    <Button x:Name="TjsFileButton" Content="TJS" Margin="90,0,0,10.4" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="75" Click="TestTjsFileButton_Click" Height="20"/>
+                    <Button x:Name="BrowseButton" Content="Browse" Margin="170,0,0,10.4" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="75" Click="BrowseButton_Click" Height="20"/>
                 </Grid>
             </TabItem>
         </TabControl>

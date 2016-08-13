@@ -35,13 +35,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
@@ -62,6 +57,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DebugConsoleOutput.cs" />
+    <Compile Include="DelegateConsoleOutput.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -95,9 +92,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KirikiriSharp\KirikiriSharp.csproj">
-      <Project>{6397b4ac-6492-4471-a27e-9eef0694ed4c}</Project>
-      <Name>KirikiriSharp</Name>
+    <ProjectReference Include="..\KagSharpWin32\KagSharpWin32.csproj">
+      <Project>{bb41b855-828e-468a-bc3d-05efcd574c0d}</Project>
+      <Name>KagSharpWin32</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tjs2Win32\Tjs2Win32.csproj">
+      <Project>{37480026-f759-4936-b229-a5883664365d}</Project>
+      <Name>Tjs2Win32</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

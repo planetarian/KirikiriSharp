@@ -1,10 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KirikiriSharp", "KirikiriSharp\KirikiriSharp.csproj", "{6397B4AC-6492-4471-A27E-9EEF0694ED4C}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0FA49FD3-FCD0-41B2-8E32-A5763D40C97E}"
 	ProjectSection(SolutionItems) = preProject
 		readme.md = readme.md
@@ -12,20 +10,38 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KirikiriTest", "KirikiriTest\KirikiriTest.csproj", "{144FB4F4-566E-49E4-A039-C4562FDE9207}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "KagSharp", "KagSharp\KagSharp.shproj", "{11E82DDA-9168-44DD-8F68-806DED443200}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KagSharpWin32", "KagSharpWin32\KagSharpWin32.csproj", "{BB41B855-828E-468A-BC3D-05EFCD574C0D}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Tjs2", "Tjs2\Tjs2.shproj", "{BE8EAF1D-A34E-4E5E-9363-A72090E9874E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tjs2Win32", "Tjs2Win32\Tjs2Win32.csproj", "{37480026-F759-4936-B229-A5883664365D}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		KagSharp\KagSharp.projitems*{11e82dda-9168-44dd-8f68-806ded443200}*SharedItemsImports = 13
+		Tjs2\Tjs2.projitems*{37480026-f759-4936-b229-a5883664365d}*SharedItemsImports = 4
+		KagSharp\KagSharp.projitems*{bb41b855-828e-468a-bc3d-05efcd574c0d}*SharedItemsImports = 4
+		Tjs2\Tjs2.projitems*{be8eaf1d-a34e-4e5e-9363-a72090e9874e}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6397B4AC-6492-4471-A27E-9EEF0694ED4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6397B4AC-6492-4471-A27E-9EEF0694ED4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6397B4AC-6492-4471-A27E-9EEF0694ED4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6397B4AC-6492-4471-A27E-9EEF0694ED4C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{144FB4F4-566E-49E4-A039-C4562FDE9207}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{144FB4F4-566E-49E4-A039-C4562FDE9207}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{144FB4F4-566E-49E4-A039-C4562FDE9207}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{144FB4F4-566E-49E4-A039-C4562FDE9207}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB41B855-828E-468A-BC3D-05EFCD574C0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB41B855-828E-468A-BC3D-05EFCD574C0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB41B855-828E-468A-BC3D-05EFCD574C0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB41B855-828E-468A-BC3D-05EFCD574C0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37480026-F759-4936-B229-A5883664365D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37480026-F759-4936-B229-A5883664365D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37480026-F759-4936-B229-A5883664365D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37480026-F759-4936-B229-A5883664365D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

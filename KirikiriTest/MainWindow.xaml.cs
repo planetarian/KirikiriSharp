@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using KirikiriSharp.Lexer;
+using Tjs2.Engine;
 
 namespace KirikiriTest
 {
@@ -29,64 +29,68 @@ namespace KirikiriTest
 
         private void BrowseButton_Click(object sender, RoutedEventArgs e)
         {
-            var fileDialog = new Microsoft.Win32.OpenFileDialog();
+            var fileDialog = new Microsoft.Win32.OpenFileDialog {Filter = "KAG/TJS files (*.ks, *.tjs, *.js)|*.ks;*.tjs;*.js"};
             if (fileDialog.ShowDialog() == true)
             {
                 string fileName = fileDialog.FileName;
                 FilenameTextBox.Text = fileName;
-                SubmitFile(fileName);
             }
         }
 
-        private void SubmitFileButton_Click(object sender, RoutedEventArgs e)
+        private void TestTjsFileButton_Click(object sender, RoutedEventArgs e)
         {
-            SubmitFile(FilenameTextBox.Text);
-        }
-
-        private void SubmitFile(string fileName)
-        {
-            FileInfo fileInfo;
-            try
-            {
-                fileInfo = new FileInfo(fileName);
-            }
-            catch (Exception ex)
-            {
-                GraupelTextBox.Text = ex.ToString();
-                return;
-            }
-            if (fileInfo.Length > 1024 * 16)
-            {
-                GraupelTextBox.Text = "File too large!";
-                return;
-            }
-
             string contents;
             try
             {
-                contents = File.ReadAllText(fileName);
+                contents = CheckFile(FilenameTextBox.Text);
             }
             catch (Exception ex)
             {
                 GraupelTextBox.Text = ex.ToString();
                 return;
             }
-
-            TestScript(contents);
+            TestTjs(contents);
         }
 
-        private void TestStringButton_Click(object sender, RoutedEventArgs e)
+        private void TestKagFileButton_Click(object sender, RoutedEventArgs e)
+        {
+            string contents;
+            try
+            {
+                contents = CheckFile(FilenameTextBox.Text);
+            }
+            catch (Exception ex)
+            {
+                GraupelTextBox.Text = ex.ToString();
+                return;
+            }
+            TestKag(contents);
+        }
+
+        private string CheckFile(string fileName)
+        {
+            var fileInfo = new FileInfo(fileName);
+            if (fileInfo.Length > 1024 * 16)
+                throw new InvalidOperationException("File is too large.");
+            return File.ReadAllText(fileName);
+        }
+
+        private void TestKagStringButton_Click(object sender, RoutedEventArgs e)
         {
             string contents = InputTextBox.Text;
-            TestScript(contents);
+            TestKag(contents);
         }
 
-        private void TestScript(string input)
+        private void TestTjsStringButton_Click(object sender, RoutedEventArgs e)
         {
-            GraupelTextBox.Text = String.Empty;
+            string contents = InputTextBox.Text;
+            TestTjs(contents);
+        }
 
+        private void TestKag(string input)
+        {
             var reader = new StringSourceReader("input", input);
-            var lexer = new Lexer(reader);
+            var lexer = new KirikiriSharp.Lexer.Lexer(reader);
 
             var morpher = new Morpher(lexer);
             Token token;
@@ -104,5 +108,44 @@ namespace KirikiriTest
                 GraupelTextBox.Text += token + Environment.NewLine;
             } while (token.Type != TokenType.Eof);
         }
+
+        private void TestTjs(string input)
+        {
+            GraupelTextBox.Text = String.Empty;
+
+            Action<string> outputAction = msg => GraupelTextBox.Text += msg + Environment.NewLine;
+            try
+            {
+                TJS.mStorage = null;
+                TJS.Initialize();
+                var mScriptEngine = new TJS();
+                TJS.SetConsoleOutput(new DelegateConsoleOutput(outputAction));
+
+                Dispatch2 dsp = mScriptEngine.GetGlobal();
+                var ret = new Variant();
+
+                mScriptEngine.ExecScript(input, ret, dsp, null, 0);
+            }
+            catch (Exception ex)
+            {
+                outputAction(ex.ToString());
+            }
+        }
+
+        public class MessageConsoleOutput : IConsoleOutput
+        {
+            public void ExceptionPrint(string msg)
+            {
+                MessageBox.Show(msg, "Error");
+            }
+
+            public void Print(string msg)
+            {
+                MessageBox.Show(msg, "Message");
+            }
+        }
     }
+
+
+
 }

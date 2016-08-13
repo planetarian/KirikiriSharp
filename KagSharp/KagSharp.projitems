@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>11e82dda-9168-44dd-8f68-806ded443200</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>KagSharp</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Expressions\EofExpression.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Expressions\IExpression.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Expressions\IExpressionVisiter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)KirikiriParser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Lexer\ISourceReader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Lexer\ITokenReader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Lexer\Lexer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Lexer\Morpher.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Lexer\StringSourceReader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Lexer\Token.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Lexer\TokenListReader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Lexer\TokenType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ParseException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Parselets\INonPrefixParselet.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Parselets\IPrefixParselet.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Parser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Position.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PrecedenceValues.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Util\Expect.cs" />
+  </ItemGroup>
+</Project>
