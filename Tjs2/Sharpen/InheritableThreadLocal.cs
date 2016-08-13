@@ -1,3 +1,4 @@
+/*
 using System;
 
 namespace Tjs2.Sharpen
@@ -45,3 +46,5 @@ namespace Tjs2.Sharpen
 		}
 	}
 }
+
+//*/

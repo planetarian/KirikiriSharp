@@ -1,3 +1,4 @@
+/*
 namespace Tjs2.Sharpen
 {
     public class DigestOutputStream : OutputStream
@@ -58,3 +59,5 @@ namespace Tjs2.Sharpen
 		}
 	}
 }
+
+//*/

@@ -1,8 +1,8 @@
+/*
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using SThread = System.Threading.Thread;
-
 namespace Tjs2.Sharpen
 {
 	internal class Executors
@@ -164,3 +164,5 @@ namespace Tjs2.Sharpen
 	{
 	}
 }
+
+//*/

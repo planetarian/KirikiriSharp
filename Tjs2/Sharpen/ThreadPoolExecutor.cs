@@ -1,4 +1,5 @@
 using System;
+/*
 using System.Collections.Generic;
 using ST = System.Threading;
 
@@ -160,3 +161,5 @@ namespace Tjs2.Sharpen
 		}
 	}
 }
+
+//*/

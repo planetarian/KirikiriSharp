@@ -1,3 +1,4 @@
+/*
 namespace Tjs2.Sharpen
 {
 	internal class ThreadFactory
@@ -10,3 +11,5 @@ namespace Tjs2.Sharpen
 		}
 	}
 }
+
+//*/

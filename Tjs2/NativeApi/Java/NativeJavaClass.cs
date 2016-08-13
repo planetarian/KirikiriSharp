@@ -49,7 +49,7 @@ namespace Tjs2.NativeApi.Java
 						if (methodName.StartsWith("prop_"))
 						{
 							// プロパティ prop_ で始まるものはプロパティとみなす
-							Type[] @params = Sharpen.Runtime.GetParameterTypes(m);
+							Type[] @params = Runtime.GetParameterTypes(m);
 							MethodInfo setMethod = null;
 							MethodInfo getMethod = null;
 							string propName = null;
@@ -58,7 +58,7 @@ namespace Tjs2.NativeApi.Java
 								if (@params.Length == 1)
 								{
 									setMethod = m;
-									propName = Sharpen.Runtime.Substring(methodName, "prop_set_".Length);
+									propName = Runtime.Substring(methodName, "prop_set_".Length);
 									if (registProp.Contains(propName) == false)
 									{
 										string getMethodName = "prop_get_" + propName;
@@ -66,8 +66,8 @@ namespace Tjs2.NativeApi.Java
 										{
 											if (getm.Name.Equals(getMethodName))
 											{
-												Type[] p = Sharpen.Runtime.GetParameterTypes(getm);
-												if (p.Length == 0 && getm.ReturnType.Equals(typeof(void)) != true)
+												Type[] p = Runtime.GetParameterTypes(getm);
+												if (p.Length == 0 && getm.ReturnType == typeof(void) != true)
 												{
 													getMethod = getm;
 													break;
@@ -81,10 +81,10 @@ namespace Tjs2.NativeApi.Java
 							{
 								if (methodName.StartsWith("prop_get_"))
 								{
-									if (@params.Length == 0 && m.ReturnType.Equals(typeof(void)) != true)
+									if (@params.Length == 0 && m.ReturnType == typeof(void) != true)
 									{
 										getMethod = m;
-										propName = Sharpen.Runtime.Substring(methodName, "prop_get_".Length);
+										propName = Runtime.Substring(methodName, "prop_get_".Length);
 										if (registProp.Contains(propName) == false)
 										{
 											string setMethodName = "prop_set_" + propName;
@@ -92,7 +92,7 @@ namespace Tjs2.NativeApi.Java
 											{
 												if (setm.Name.Equals(setMethodName))
 												{
-													Type[] p = Sharpen.Runtime.GetParameterTypes(setm);
+													Type[] p = Runtime.GetParameterTypes(setm);
 													if (p.Length == 1)
 													{
 														setMethod = setm;
@@ -126,7 +126,7 @@ namespace Tjs2.NativeApi.Java
 			}
 			catch (SecurityException e)
 			{
-				throw new TjsException(Error.InternalError + e.ToString());
+				throw new TjsException(Error.InternalError + e);
 			}
 		}
 
@@ -139,7 +139,7 @@ namespace Tjs2.NativeApi.Java
 			object obj;
 			try
 			{
-				obj = System.Activator.CreateInstance(mJavaClass);
+				obj = Activator.CreateInstance(mJavaClass);
 			}
 			catch (InstantiationException e)
 			{
@@ -161,115 +161,42 @@ namespace Tjs2.NativeApi.Java
 		/// <exception cref="VariantException"></exception>
 		public static object VariantToJavaObject(Variant param, Type type)
 		{
-			if (type.IsPrimitive)
+			if (type.GetTypeInfo().IsPrimitive)
 			{
 				// プリミティブタイプの场合
-				if (type.Equals(typeof(int)))
-				{
-					return Sharpen.Extensions.ValueOf(param.AsInteger());
-				}
-				else
-				{
-					if (type.Equals(typeof(double)))
-					{
-						return (param.AsDouble());
-					}
-					else
-					{
-						if (type.Equals(typeof(bool)))
-						{
-							return Sharpen.Extensions.ValueOf(param.AsInteger() != 0 ? true : false);
-						}
-						else
-						{
-							if (type.Equals(typeof(float)))
-							{
-								return ((float)param.AsDouble());
-							}
-							else
-							{
-								if (type.Equals(typeof(long)))
-								{
-									return Sharpen.Extensions.ValueOf(param.AsInteger());
-								}
-								else
-								{
-									if (type.Equals(typeof(char)))
-									{
-										return ((char)param.AsInteger());
-									}
-									else
-									{
-										if (type.Equals(typeof(byte)))
-										{
-											return (unchecked((byte)param.AsInteger()));
-										}
-										else
-										{
-											if (type.Equals(typeof(short)))
-											{
-												return ((short)param.AsInteger());
-											}
-											else
-											{
-												// may be Void.TYPE
-												return null;
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
+			    if (type == typeof(int))
+			        return Extensions.ValueOf(param.AsInteger());
+			    if (type == typeof(double))
+			        return param.AsDouble();
+			    if (type == typeof(bool))
+			        return Extensions.ValueOf(param.AsInteger() != 0);
+			    if (type == typeof(float))
+			        return (float) param.AsDouble();
+			    if (type == typeof(long))
+			        return Extensions.ValueOf(param.AsInteger());
+			    if (type == typeof(char))
+			        return (char) param.AsInteger();
+			    if (type == typeof(byte))
+			        return unchecked((byte) param.AsInteger());
+			    if (type == typeof(short))
+			        return (short) param.AsInteger();
+			    // may be Void.TYPE
+			    return null;
 			}
-			else
-			{
-				if (type.Equals(typeof(string)))
-				{
-					return param.AsString();
-				}
-				else
-				{
-					if (type.Equals(typeof(ByteBuffer)))
-					{
-						return param.AsOctet();
-					}
-					else
-					{
-						if (type.Equals(typeof(Variant)))
-						{
-							return param;
-						}
-						else
-						{
-							if (type.Equals(typeof(VariantClosure)))
-							{
-								return param.AsObjectClosure();
-							}
-							else
-							{
-								if (type.Equals(typeof(Dispatch2)))
-								{
-									return param.AsObject();
-								}
-								else
-								{
-									if (type.Equals(param.ToJavaObject().GetType()))
-									{
-										return param.ToJavaObject();
-									}
-									else
-									{
-										// その他 のクラス
-										return null;
-									}
-								}
-							}
-						}
-					}
-				}
-			}
+		    if (type == typeof(string))
+		        return param.AsString();
+		    if (type == typeof(ByteBuffer))
+		        return param.AsOctet();
+		    if (type == typeof(Variant))
+		        return param;
+		    if (type == typeof(VariantClosure))
+		        return param.AsObjectClosure();
+		    if (type == typeof(Dispatch2))
+		        return param.AsObject();
+		    if (type == param.ToJavaObject().GetType())
+		        return param.ToJavaObject();
+		    // その他 のクラス
+		    return null;
 		}
 
 		public static void JavaObjectToVariant(Variant result, Type type, object src)
@@ -278,113 +205,49 @@ namespace Tjs2.NativeApi.Java
 			{
 				return;
 			}
-			if (type.IsPrimitive)
+			if (type.GetTypeInfo().IsPrimitive)
 			{
 				// プリミティブタイプの场合
-				if (type.Equals(typeof(int)))
-				{
-					result.Set(((int)src));
-				}
-				else
-				{
-					if (type.Equals(typeof(double)))
-					{
-						result.Set(((double)src));
-					}
-					else
-					{
-						if (type.Equals(typeof(bool)))
-						{
-							result.Set(((bool)src) ? 1 : 0);
-						}
-						else
-						{
-							if (type.Equals(typeof(float)))
-							{
-								result.Set(((float)src));
-							}
-							else
-							{
-								if (type.Equals(typeof(long)))
-								{
-									result.Set(((long)src));
-								}
-								else
-								{
-									if (type.Equals(typeof(char)))
-									{
-										result.Set((int)((char)src));
-									}
-									else
-									{
-										if (type.Equals(typeof(byte)))
-										{
-											result.Set(((byte)src));
-										}
-										else
-										{
-											if (type.Equals(typeof(short)))
-											{
-												result.Set(((short)src));
-											}
-											else
-											{
-												// may be Void.TYPE
-												result.Clear();
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
+			    if (type == typeof(int))
+			        result.Set(((int) src));
+			    else if (type == typeof(double))
+			        result.Set(((double) src));
+			    else if (type == typeof(bool))
+			        result.Set(((bool) src) ? 1 : 0);
+			    else if (type == typeof(float))
+			        result.Set(((float) src));
+			    else if (type == typeof(long))
+			        result.Set(((long) src));
+			    else if (type == typeof(char))
+			        result.Set((char) src);
+			    else if (type == typeof(byte))
+			        result.Set(((byte) src));
+			    else if (type == typeof(short))
+			        result.Set(((short) src));
+			    else
+			    // may be Void.TYPE
+			        result.Clear();
 			}
 			else
 			{
-				if (type.Equals(typeof(string)))
-				{
-					result.Set((string)src);
-				}
-				else
-				{
-					if (type.Equals(typeof(ByteBuffer)))
-					{
-						result.Set((ByteBuffer)src);
-					}
-					else
-					{
-						if (type.Equals(typeof(Variant)))
-						{
-							result.Set((Variant)src);
-						}
-						else
-						{
-							if (type.Equals(typeof(VariantClosure)))
-							{
-								result.Set(((VariantClosure)src).mObject, ((VariantClosure)src).mObjThis);
-							}
-							else
-							{
-								if (type.Equals(typeof(Dispatch2)))
-								{
-									result.Set((Dispatch2)src);
-								}
-								else
-								{
-									// その他 のクラス, 直接入れてしまう
-									result.SetJavaObject(src);
-								}
-							}
-						}
-					}
-				}
+			    if (type == typeof(string))
+			        result.Set((string) src);
+			    else if (type == typeof(ByteBuffer))
+			        result.Set((ByteBuffer) src);
+			    else if (type == typeof(Variant))
+			        result.Set((Variant) src);
+			    else if (type == typeof(VariantClosure))
+			        result.Set(((VariantClosure) src).mObject, ((VariantClosure) src).mObjThis);
+			    else if (type == typeof(Dispatch2))
+			        result.Set((Dispatch2) src);
+			    else
+			    // その他 のクラス, 直接入れてしまう
+			        result.SetJavaObject(src);
 			}
 		}
 
 		/// <exception cref="VariantException"></exception>
-		public static object[] VariantArrayToJavaObjectArray(Variant[] @params, Type[] types
-			)
+		public static object[] VariantArrayToJavaObjectArray(Variant[] @params, Type[] types)
 		{
 			if (types.Length == 0)
 			{
@@ -402,115 +265,44 @@ namespace Tjs2.NativeApi.Java
 			{
 				Type type = types[i];
 				Variant param = @params[i];
-				if (type.IsPrimitive)
-				{
-					// プリミティブタイプの场合
-					if (type.Equals(typeof(int)))
-					{
-						ret[i] = Sharpen.Extensions.ValueOf(param.AsInteger());
-					}
-					else
-					{
-						if (type.Equals(typeof(double)))
-						{
-							ret[i] = (param.AsDouble());
-						}
-						else
-						{
-							if (type.Equals(typeof(bool)))
-							{
-								ret[i] = Sharpen.Extensions.ValueOf(param.AsInteger() != 0 ? true : false);
-							}
-							else
-							{
-								if (type.Equals(typeof(float)))
-								{
-									ret[i] = ((float)param.AsDouble());
-								}
-								else
-								{
-									if (type.Equals(typeof(long)))
-									{
-										ret[i] = Sharpen.Extensions.ValueOf(param.AsInteger());
-									}
-									else
-									{
-										if (type.Equals(typeof(char)))
-										{
-											ret[i] = ((char)param.AsInteger());
-										}
-										else
-										{
-											if (type.Equals(typeof(byte)))
-											{
-												ret[i] = (unchecked((byte)param.AsInteger()));
-											}
-											else
-											{
-												if (type.Equals(typeof(short)))
-												{
-													ret[i] = ((short)param.AsInteger());
-												}
-												else
-												{
-													// may be Void.TYPE
-													ret[i] = null;
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-				else
-				{
-					if (type.Equals(typeof(string)))
-					{
-						ret[i] = param.AsString();
-					}
-					else
-					{
-						if (type.Equals(typeof(ByteBuffer)))
-						{
-							ret[i] = param.AsOctet();
-						}
-						else
-						{
-							if (type.Equals(typeof(Variant)))
-							{
-								ret[i] = param;
-							}
-							else
-							{
-								if (type.Equals(typeof(VariantClosure)))
-								{
-									ret[i] = param.AsObjectClosure();
-								}
-								else
-								{
-									if (type.Equals(typeof(Dispatch2)))
-									{
-										ret[i] = param.AsObject();
-									}
-									else
-									{
-										if (type.Equals(param.ToJavaObject().GetType()))
-										{
-											ret[i] = param.ToJavaObject();
-										}
-										else
-										{
-											// その他 のクラス
-											ret[i] = null;
-										}
-									}
-								}
-							}
-						}
-					}
-				}
+			    if (type.GetTypeInfo().IsPrimitive)
+			    {
+			        // プリミティブタイプの场合
+			        if (type == typeof(int))
+			            ret[i] = Extensions.ValueOf(param.AsInteger());
+			        else if (type == typeof(double))
+			            ret[i] = (param.AsDouble());
+			        else if (type == typeof(bool))
+			            ret[i] = Extensions.ValueOf(param.AsInteger() != 0);
+			        else if (type == typeof(float))
+			            ret[i] = ((float) param.AsDouble());
+			        else if (type == typeof(long))
+			            ret[i] = Extensions.ValueOf(param.AsInteger());
+			        else if (type == typeof(char))
+			            ret[i] = ((char) param.AsInteger());
+			        else if (type == typeof(byte))
+			            ret[i] = (unchecked((byte) param.AsInteger()));
+			        else if (type == typeof(short))
+			            ret[i] = ((short) param.AsInteger());
+			        else
+			        // may be Void.TYPE
+			            ret[i] = null;
+			    }
+			    else if (type == typeof(string))
+			        ret[i] = param.AsString();
+			    else if (type == typeof(ByteBuffer))
+			        ret[i] = param.AsOctet();
+			    else if (type == typeof(Variant))
+			        ret[i] = param;
+			    else if (type == typeof(VariantClosure))
+			        ret[i] = param.AsObjectClosure();
+			    else if (type == typeof(Dispatch2))
+			        ret[i] = param.AsObject();
+			    else if (type == param.ToJavaObject().GetType())
+			        ret[i] = param.ToJavaObject();
+			    else
+			    // その他 のクラス
+			        ret[i] = null;
 			}
 			return ret;
 		}

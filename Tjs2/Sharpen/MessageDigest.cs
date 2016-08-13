@@ -1,3 +1,4 @@
+/*
 using System;
 using System.IO;
 #if WIN32
@@ -106,3 +107,5 @@ namespace Tjs2.Sharpen
 		}
 	}
 }
+
+//*/

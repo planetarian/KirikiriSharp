@@ -2,6 +2,7 @@
  * TJS2 CSharp
  */
 
+using System.Reflection;
 using System.Text;
 using Tjs2.Sharpen;
 using Double = Tjs2.Sharpen.Double;
@@ -357,7 +358,7 @@ namespace Tjs2.Engine
 			}
 			if (mObject != null && val.mObject != null)
 			{
-				if (mObject.GetType().IsAssignableFrom(val.mObject.GetType()))
+				if (mObject.GetType().IsInstanceOfType(val.mObject))
 				{
 					// 同じクラス
 					if (mObject is ByteBuffer)
@@ -506,7 +507,7 @@ namespace Tjs2.Engine
 		{
 			if (mObject != null && val2.mObject != null)
 			{
-				if (mObject.GetType().IsAssignableFrom(val2.mObject.GetType()))
+				if (mObject.GetType().IsInstanceOfType(val2.mObject))
 				{
 					// 同じクラス
 					if (mObject is int)
@@ -688,7 +689,7 @@ namespace Tjs2.Engine
 								}
 								else
 								{
-									if (mObject.GetType().IsAssignableFrom(val.mObject.GetType()))
+									if (mObject.GetType().IsInstanceOfType(val.mObject))
 									{
 										// 同じクラス
 										return mObject.Equals(val.mObject);
@@ -773,7 +774,7 @@ namespace Tjs2.Engine
 								}
 								else
 								{
-									if (mObject.GetType().IsAssignableFrom(val.mObject.GetType()))
+									if (mObject.GetType().IsInstanceOfType(val.mObject))
 									{
 										// 同じクラス
 										return mObject.Equals(val.mObject);
@@ -1639,7 +1640,7 @@ namespace Tjs2.Engine
 			}
 			if (mObject != null && rhs.mObject != null)
 			{
-				if (mObject.GetType().IsAssignableFrom(rhs.mObject.GetType()))
+				if (mObject.GetType().IsInstanceOfType(rhs.mObject))
 				{
 					// 同じクラス
 					if (mObject is ByteBuffer)
