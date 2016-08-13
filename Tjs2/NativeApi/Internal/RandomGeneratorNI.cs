@@ -40,7 +40,7 @@ namespace Tjs2.NativeApi.Internal
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual Dispatch2 Serialize()
 		{
 			// create dictionary object which has reconstructible information
@@ -70,7 +70,7 @@ namespace Tjs2.NativeApi.Internal
 			}
 			state = p.ToString();
 			// create dictionary and store information
-			dic = TJS.CreateDictionaryObject();
+			dic = Tjs.CreateDictionaryObject();
 			val.Set(state);
 			dic.PropSet(Interface.MEMBERENSURE, "state", val, dic);
 			val.Set(data.left);
@@ -80,7 +80,7 @@ namespace Tjs2.NativeApi.Internal
 			return dic;
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		public virtual void Randomize(Variant[] param)
 		{
@@ -130,7 +130,7 @@ namespace Tjs2.NativeApi.Internal
 							VariantClosure clo = param[0].AsObjectClosure();
 							if (clo.mObject == null)
 							{
-								throw new TJSException(Error.NullAccess);
+								throw new TjsException(Error.NullAccess);
 							}
 							string state;
 							Variant val = new Variant();
@@ -145,7 +145,7 @@ namespace Tjs2.NativeApi.Internal
 							state = val.AsString();
 							if (state.Length != MT_N * 8)
 							{
-								throw new TJSException(Error.NotReconstructiveRandomizeData);
+								throw new TjsException(Error.NotReconstructiveRandomizeData);
 							}
 							int p = 0;
 							for (int i = 0; i < MT_N; i++)
@@ -176,7 +176,7 @@ namespace Tjs2.NativeApi.Internal
 									}
 									if (tmp == -1)
 									{
-										throw new TJSException(Error.NotReconstructiveRandomizeData);
+										throw new TjsException(Error.NotReconstructiveRandomizeData);
 									}
 									else
 									{
@@ -205,12 +205,12 @@ namespace Tjs2.NativeApi.Internal
 						catch (VariantException)
 						{
 							data = null;
-							throw new TJSException(Error.NotReconstructiveRandomizeData);
+							throw new TjsException(Error.NotReconstructiveRandomizeData);
 						}
-						catch (TJSException)
+						catch (TjsException)
 						{
 							data = null;
-							throw new TJSException(Error.NotReconstructiveRandomizeData);
+							throw new TjsException(Error.NotReconstructiveRandomizeData);
 						}
 						data = null;
 					}

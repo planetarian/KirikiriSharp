@@ -283,11 +283,11 @@ namespace Tjs2.Engine
 		private static readonly string EXCEPTION_NAME = "Exception";
 
 		/// <summary>TJSGetExceptionObject : retrieves TJS 'Exception' object</summary>
-		/// <exception cref="TJSException">TJSException</exception>
+		/// <exception cref="TjsException">TJSException</exception>
 		/// <exception cref="VariantException">VariantException</exception>
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
-		public static void GetExceptionObject(TJS tjs, Variant res, Variant msg, Variant 
+		/// <exception cref="TjsException"></exception>
+		public static void GetExceptionObject(Tjs tjs, Variant res, Variant msg, Variant 
 			trace)
 		{
 			if (res == null)
@@ -301,7 +301,7 @@ namespace Tjs2.Engine
 			int hr = global.PropGet(0, EXCEPTION_NAME, val, global);
 			if (hr < 0)
 			{
-				throw new TJSException(ExceptionNotFound);
+				throw new TjsException(ExceptionNotFound);
 			}
 			// create an Exception object
 			Holder<Dispatch2> excpobj = new Holder<Dispatch2>(null);
@@ -311,7 +311,7 @@ namespace Tjs2.Engine
 			hr = clo.CreateNew(0, null, excpobj, pmsg, clo.mObjThis);
 			if (hr < 0)
 			{
-				throw new TJSException(ExceptionNotFound);
+				throw new TjsException(ExceptionNotFound);
 			}
 			Dispatch2 disp = excpobj.mValue;
 			if (trace != null)
@@ -326,14 +326,14 @@ namespace Tjs2.Engine
 		public static void ReportExceptionSource(string msg, InterCodeObject context, int
 			 codepos)
 		{
-			if (TJS.EnableDebugMode)
+			if (Tjs.EnableDebugMode)
 			{
-				TJS.OutputExceptionToConsole(msg + " at " + context.GetPositionDescriptionString(
+				Tjs.OutputExceptionToConsole(msg + " at " + context.GetPositionDescriptionString(
 					codepos));
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public static void ThrowFrom_tjs_error(int hr, string name)
 		{
 			switch (hr)
@@ -345,44 +345,44 @@ namespace Tjs2.Engine
 					if (name != null)
 					{
 						string str = MemberNotFound.Replace("%1", name);
-						throw new TJSException(str);
+						throw new TjsException(str);
 					}
-                    throw new TJSException(MemberNotFoundNoNameGiven);
+                    throw new TjsException(MemberNotFoundNoNameGiven);
 				}
 
 				case E_NOTIMPL:
 				{
-					throw new TJSException(NotImplemented);
+					throw new TjsException(NotImplemented);
 				}
 
 				case E_INVALIDPARAM:
 				{
-					throw new TJSException(InvalidParam);
+					throw new TjsException(InvalidParam);
 				}
 
 				case E_BADPARAMCOUNT:
 				{
-					throw new TJSException(BadParamCount);
+					throw new TjsException(BadParamCount);
 				}
 
 				case E_INVALIDTYPE:
 				{
-					throw new TJSException(InvalidType);
+					throw new TjsException(InvalidType);
 				}
 
 				case E_ACCESSDENIED:
 				{
-					throw new TJSException(AccessDenyed);
+					throw new TjsException(AccessDenyed);
 				}
 
 				case E_INVALIDOBJECT:
 				{
-					throw new TJSException(InvalidObject);
+					throw new TjsException(InvalidObject);
 				}
 
 				case E_NATIVECLASSCRASH:
 				{
-					throw new TJSException(NativeClassCrash);
+					throw new TjsException(NativeClassCrash);
 				}
 
 				default:
@@ -390,7 +390,7 @@ namespace Tjs2.Engine
 					if (hr < 0)
 					{
 						string buf = string.Format("Unknown failure : %08X", hr);
-						throw new TJSException(buf);
+						throw new TjsException(buf);
 					}
 					break;
 				}

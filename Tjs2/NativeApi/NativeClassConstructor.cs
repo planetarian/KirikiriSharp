@@ -9,7 +9,7 @@ namespace Tjs2.NativeApi
 	public abstract class NativeClassConstructor : NativeClassMethod
 	{
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int FuncCall(int flag, string membername, Variant result, Variant
 			[] param, Dispatch2 objthis)
 		{

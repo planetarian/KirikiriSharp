@@ -40,18 +40,18 @@ namespace Tjs2.Engine
 		/// <param name="offset">基准位置からのオフセット</param>
 		/// <param name="whence">基准位置、SEEK_SET, SEEK_CUR, SEEK_END のいずれかを指定</param>
 		/// <returns>シーク后の现在位置</returns>
-		/// <exception cref="TJSException">TJSException</exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException">TJSException</exception>
+		/// <exception cref="TjsException"></exception>
 		public abstract long Seek(long offset, int whence);
 
 		/// <summary>returns actually read size</summary>
-		/// <exception cref="TJSException">TJSException</exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException">TJSException</exception>
+		/// <exception cref="TjsException"></exception>
 		public abstract int Read(ByteBuffer buffer);
 
 		/// <summary>returns actually read size</summary>
-		/// <exception cref="TJSException">TJSException</exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException">TJSException</exception>
+		/// <exception cref="TjsException"></exception>
 		public abstract int Read(byte[] buffer);
 
 		/// <summary>ストリームからの读み迂み</summary>
@@ -59,8 +59,8 @@ namespace Tjs2.Engine
 		/// <param name="off">配列オフセット</param>
 		/// <param name="len">读み迂みサイズ</param>
 		/// <returns>实际に读み迂んだ长さ。-1 の时ファイル终端</returns>
-		/// <exception cref="TJSException">TJSException</exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException">TJSException</exception>
+		/// <exception cref="TjsException"></exception>
 		public abstract int Read(byte[] b, int off, int len);
 
 		/// <summary>returns actually written size</summary>
@@ -86,15 +86,15 @@ namespace Tjs2.Engine
 		/// the default behavior is raising a exception
 		/// if error, raises exception
 		/// </summary>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual void SetEndOfStorage()
 		{
-			throw new TJSException(Error.WriteError);
+			throw new TjsException(Error.WriteError);
 		}
 
 		/// <summary>should re-implement for higher performance</summary>
-		/// <exception cref="TJSException">TJSException</exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException">TJSException</exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual long GetSize()
 		{
 			long orgpos = GetPosition();
@@ -103,37 +103,37 @@ namespace Tjs2.Engine
 			return size;
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual long GetPosition()
 		{
 			return Seek(0, SEEK_CUR);
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual void SetPosition(long pos)
 		{
 			if (pos != Seek(pos, SEEK_SET))
 			{
-				throw new TJSException(Error.SeekError);
+				throw new TjsException(Error.SeekError);
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual void ReadBuffer(ByteBuffer buffer)
 		{
 			if (Read(buffer) != -1)
 			{
-				throw new TJSException(Error.ReadError);
+				throw new TjsException(Error.ReadError);
 			}
 			buffer.Flip();
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual void WriteBuffer(ByteBuffer buffer)
 		{
 			if (Write(buffer) != -1)
 			{
-				throw new TJSException(Error.WriteError);
+				throw new TjsException(Error.WriteError);
 			}
 		}
 

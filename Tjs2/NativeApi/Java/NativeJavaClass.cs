@@ -19,12 +19,12 @@ namespace Tjs2.NativeApi.Java
 		private int mClassID;
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public NativeJavaClass(string name, Type c) : base(name)
 		{
 			mJavaClass = c;
 			string classname = name;
-			mClassID = TJS.RegisterNativeClass(classname);
+			mClassID = Tjs.RegisterNativeClass(classname);
 			try
 			{
 				HashSet<string> registProp = new HashSet<string>();
@@ -126,7 +126,7 @@ namespace Tjs2.NativeApi.Java
 			}
 			catch (SecurityException e)
 			{
-				throw new TJSException(Error.InternalError + e.ToString());
+				throw new TjsException(Error.InternalError + e.ToString());
 			}
 		}
 
@@ -143,12 +143,12 @@ namespace Tjs2.NativeApi.Java
 			}
 			catch (InstantiationException e)
 			{
-				TJS.OutputExceptionToConsole(e.ToString());
+				Tjs.OutputExceptionToConsole(e.ToString());
 				return null;
 			}
 			catch (MemberAccessException e)
 			{
-				TJS.OutputExceptionToConsole(e.ToString());
+				Tjs.OutputExceptionToConsole(e.ToString());
 				return null;
 			}
 			if (obj != null)

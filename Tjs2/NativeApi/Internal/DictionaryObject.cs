@@ -26,7 +26,7 @@ namespace Tjs2.NativeApi.Internal
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int PropGet(int flag, string membername, Variant result, Dispatch2
 			 objthis)
 		{
@@ -44,7 +44,7 @@ namespace Tjs2.NativeApi.Internal
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int CreateNew(int flag, string membername, Holder<Dispatch2> result
 			, Variant[] param, Dispatch2 objthis)
 		{
@@ -58,7 +58,7 @@ namespace Tjs2.NativeApi.Internal
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int Operation(int flag, string membername, Variant result, Variant
 			 param, Dispatch2 objthis)
 		{

@@ -49,7 +49,7 @@ namespace Tjs2.Engine
 			{
 				buf = string.Format("#%s %s", name, msg);
 			}
-			TJS.OutputToConsole(buf);
+			Tjs.OutputToConsole(buf);
 		}
 
 		private void OutputFunc(string msg, string comment, int addr, int codestart, int 
@@ -60,7 +60,7 @@ namespace Tjs2.Engine
 			{
 				buf += "\t// " + comment;
 			}
-			TJS.OutputToConsole(buf);
+			Tjs.OutputToConsole(buf);
 		}
 
 		/// <exception cref="VariantException"></exception>

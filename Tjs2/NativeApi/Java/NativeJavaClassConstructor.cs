@@ -9,7 +9,7 @@ namespace Tjs2.NativeApi.Java
 {
 	public class NativeJavaClassConstructor : NativeJavaClassMethod
 	{
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public NativeJavaClassConstructor(MethodInfo m, int classID) : base(m, classID)
 		{
 		}

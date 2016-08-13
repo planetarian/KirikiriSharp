@@ -42,11 +42,11 @@ namespace Tjs2.Engine
 			}
 		}
 
-		private TJS mOwner;
+		private Tjs mOwner;
 
 		private Dictionary<ScriptCache.ScriptCacheData, ScriptBlock> mCache;
 
-		public ScriptCache(TJS owner)
+		public ScriptCache(Tjs owner)
 		{
 			mOwner = owner;
 			mCache = new Dictionary<ScriptCache.ScriptCacheData, ScriptBlock>(SCRIPT_CACHE_MAX
@@ -54,7 +54,7 @@ namespace Tjs2.Engine
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="CompileException"></exception>
 		public virtual void ExecScript(string script, Variant result, Dispatch2 context, 
 			string name, int lineofs)
@@ -76,7 +76,7 @@ namespace Tjs2.Engine
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="CompileException"></exception>
 		public virtual void EvalExpression(string expression, Variant result, Dispatch2 context
 			, string name, int lineofs)

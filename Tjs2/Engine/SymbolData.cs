@@ -34,16 +34,16 @@ namespace Tjs2.Engine
 			mSymFlags = SYMBOL_INIT;
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private void SetNameInternal(string name)
 		{
 			if (name == null)
 			{
-				throw new TJSException(Error.IDExpected);
+				throw new TjsException(Error.IDExpected);
 			}
 			if (name.Length == 0)
 			{
-				throw new TJSException(Error.IDExpected);
+				throw new TjsException(Error.IDExpected);
 			}
 			if (mName != null && mName.Equals(name))
 			{
@@ -53,7 +53,7 @@ namespace Tjs2.Engine
 			mName = name;
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual void SetName(string name, int hash)
 		{
 			// setNameInternal(name);
@@ -64,11 +64,11 @@ namespace Tjs2.Engine
 			}
 			if (name == null)
 			{
-				throw new TJSException(Error.IDExpected);
+				throw new TjsException(Error.IDExpected);
 			}
 			if (name.Length == 0)
 			{
-				throw new TJSException(Error.IDExpected);
+				throw new TjsException(Error.IDExpected);
 			}
 			mName = name;
 		}
@@ -108,7 +108,7 @@ namespace Tjs2.Engine
 			// and ahsre the name string ( if it can )
 			if (mName != null)
 			{
-				mName = TJS.MapGlobalStringMap(mName);
+				mName = Tjs.MapGlobalStringMap(mName);
 			}
 		}
 

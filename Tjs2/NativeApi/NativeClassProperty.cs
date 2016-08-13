@@ -9,7 +9,7 @@ namespace Tjs2.NativeApi
 	public abstract class NativeClassProperty : Dispatch
 	{
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int IsInstanceOf(int flag, string membername, string classname, Dispatch2
 			 objthis)
 		{
@@ -24,7 +24,7 @@ namespace Tjs2.NativeApi
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int PropGet(int flag, string membername, Variant result, Dispatch2
 			 objthis)
 		{
@@ -44,7 +44,7 @@ namespace Tjs2.NativeApi
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int PropSet(int flag, string membername, Variant param, Dispatch2
 			 objthis)
 		{
@@ -63,11 +63,11 @@ namespace Tjs2.NativeApi
 			return Set(param, objthis);
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public abstract int Get(Variant result, Dispatch2 objthis);
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public abstract int Set(Variant param, Dispatch2 objthis);
 	}
 }

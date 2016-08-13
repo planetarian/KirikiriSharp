@@ -13,7 +13,7 @@ namespace Tjs2.Engine
 
 		private static readonly string NO_SCRIPT = "no script";
 
-		private TJS mOwner;
+		private Tjs mOwner;
 
 		private InterCodeObject mTopLevelObject;
 
@@ -27,7 +27,7 @@ namespace Tjs2.Engine
 
 		private ScriptLineData mLineData;
 
-		public ScriptBlock(TJS owner, string name, int lineoffset, string script, ScriptLineData
+		public ScriptBlock(Tjs owner, string name, int lineoffset, string script, ScriptLineData
 			 linedata)
 		{
 			// a class for managing the script block
@@ -64,7 +64,7 @@ namespace Tjs2.Engine
 			}
 		}
 
-		public ScriptBlock(TJS owner)
+		public ScriptBlock(Tjs owner)
 		{
 			mOwner = owner;
 			// Java で初期值となる初期化は省略
@@ -106,7 +106,7 @@ namespace Tjs2.Engine
 
 		public virtual void Compact()
 		{
-			if (TJS.IsLowMemory)
+			if (Tjs.IsLowMemory)
 			{
 				mScript = null;
 				mLineData = null;
@@ -131,7 +131,7 @@ namespace Tjs2.Engine
 			return mLineData.GetSrcPosToLine(pos);
 		}
 
-		public virtual TJS GetTJS()
+		public virtual Tjs GetTJS()
 		{
 			return mOwner;
 		}
@@ -160,7 +160,7 @@ namespace Tjs2.Engine
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="CompileException"></exception>
 		public virtual void ExecuteTopLevel(Variant result, Dispatch2 context)
 		{
@@ -185,7 +185,7 @@ namespace Tjs2.Engine
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual void ExecuteTopLevelScript(Variant result, Dispatch2 context)
 		{
 			if (mTopLevelObject != null)
@@ -329,7 +329,7 @@ namespace Tjs2.Engine
 
 		public static void ConsoleOutput(string msg, ScriptBlock blk)
 		{
-			TJS.OutputToConsole(msg);
+			Tjs.OutputToConsole(msg);
 		}
 
 		/// <exception cref="VariantException"></exception>

@@ -6,10 +6,10 @@ namespace Tjs2.Engine
 {
 	public interface TextWriteStreamInterface
 	{
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		void Write(string val);
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		void Destruct();
 	}
 }

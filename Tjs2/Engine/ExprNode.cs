@@ -124,7 +124,7 @@ namespace Tjs2.Engine
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		public void AddArrayElement(Variant val)
 		{
@@ -134,7 +134,7 @@ namespace Tjs2.Engine
 			mVal.AsObjectClosure().FuncCall(0, ss_add, null, args, null);
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		public void AddDictionaryElement(string name, Variant val)
 		{

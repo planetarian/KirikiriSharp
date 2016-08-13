@@ -5,7 +5,7 @@
 namespace Tjs2.Engine
 {
 	[System.Serializable]
-	public class TJSScriptError : TJSException
+	public class TjsScriptError : TjsException
 	{
 		private const long serialVersionUID = -1727870605938357683L;
 
@@ -73,7 +73,7 @@ namespace Tjs2.Engine
 			return true;
 		}
 
-		public TJSScriptError(string Msg, SourceCodeAccessor accessor, int pos) : base(Msg
+		public TjsScriptError(string Msg, SourceCodeAccessor accessor, int pos) : base(Msg
 			)
 		{
 			mAccessor = accessor;
@@ -81,7 +81,7 @@ namespace Tjs2.Engine
 			mTrace = string.Empty;
 		}
 
-		public TJSScriptError(TJSScriptError @ref)
+		public TjsScriptError(TjsScriptError @ref)
 		{
 			mAccessor = @ref.mAccessor;
 			mPosition = @ref.mPosition;

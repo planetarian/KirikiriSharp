@@ -4,14 +4,15 @@
 
 using System.Collections.Generic;
 using System.Text;
-using Tjs2.Sharpen;
+using Tjs2.Engine;
 using Tjs2.Extended;
 using Tjs2.NativeApi;
 using Tjs2.NativeApi.Internal;
+using Tjs2.Sharpen;
 
-namespace Tjs2.Engine
+namespace Tjs2
 {
-	public class TJS
+	public class Tjs
 	{
 		public const int VERSION_MAJOR = 2;
 
@@ -112,7 +113,7 @@ namespace Tjs2.Engine
 			catch (VariantException)
 			{
 			}
-			catch (TJSException)
+			catch (TjsException)
 			{
 			}
 		}
@@ -139,8 +140,8 @@ namespace Tjs2.Engine
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
-		public TJS()
+		/// <exception cref="TjsException"></exception>
+		public Tjs()
 		{
 			// create script cache object
 			mCache = new ScriptCache(this);
@@ -301,7 +302,7 @@ namespace Tjs2.Engine
 		//public static int getDictionaryClassID() { return DictionaryClass.ClassID; }
 		//public static int getArrayClassID() { return ArrayClass.ClassID; }
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="CompileException"></exception>
 		public virtual void ExecScript(string script, Variant result, Dispatch2 context, 
 			string name, int lineofs)
@@ -310,7 +311,7 @@ namespace Tjs2.Engine
 		}
 
 	    /// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="CompileException"></exception>
 		public virtual void EvalExpression(string expression, Variant result, Dispatch2 context
 			, string name, int lineofs)
@@ -320,7 +321,7 @@ namespace Tjs2.Engine
 
 	    /// <exception cref="CompileException"></exception>
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual void CompileScript(string script, string name, int lineofs, bool isresultneeded
 			, BinaryStream output)
 		{
@@ -335,7 +336,7 @@ namespace Tjs2.Engine
 
 		/// <exception cref="CompileException"></exception>
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual void ToJavaCode(string script, string name, int lineofs, bool isresultneeded
 			)
 		{
@@ -348,7 +349,7 @@ namespace Tjs2.Engine
 			compiler = null;
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual void LoadByteCode(Variant result, Dispatch2 context, string name, 
 			BinaryStream input)
 		{
@@ -368,14 +369,14 @@ namespace Tjs2.Engine
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public static Dispatch2 CreateArrayObject()
 		{
 			return CreateArrayObject(null);
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public static Dispatch2 CreateArrayObject(Holder<Dispatch2> classout)
 		{
 			if (classout != null)
@@ -388,14 +389,14 @@ namespace Tjs2.Engine
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public static Dispatch2 CreateDictionaryObject()
 		{
 			return CreateDictionaryObject(null);
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public static Dispatch2 CreateDictionaryObject(Holder<Dispatch2> classout)
 		{
 			if (classout != null)
@@ -605,7 +606,7 @@ namespace Tjs2.Engine
 				catch (VariantException)
 				{
 				}
-				catch (TJSException)
+				catch (TjsException)
 				{
 				}
 				mGlobal.Clear();

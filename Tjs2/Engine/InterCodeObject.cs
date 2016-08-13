@@ -173,7 +173,7 @@ namespace Tjs2.Engine
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		protected internal override void FinalizeObject()
 		{
 			if (mPropSetter != null)
@@ -198,14 +198,14 @@ namespace Tjs2.Engine
 
 		public virtual void Compact()
 		{
-			if (TJS.IsLowMemory)
+			if (Tjs.IsLowMemory)
 			{
 				mSourcePosArray = null;
 			}
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private void ExecuteAsFunction(Dispatch2 objthis, Variant[] args, Variant result, 
 			int start_ip)
 		{
@@ -303,7 +303,7 @@ namespace Tjs2.Engine
 						//Variant *r = ra - 3 - mFuncDeclCollapseBase; // target variant
 						int r = arrayOffset - 3 - mFuncDeclCollapseBase;
 						// target variant
-						Dispatch2 dsp = TJS.CreateArrayObject();
+						Dispatch2 dsp = Tjs.CreateArrayObject();
 						//*r = new Variant(dsp, dsp);
 						regs[r].Set(dsp, dsp);
 						//dsp->Release();
@@ -340,7 +340,7 @@ namespace Tjs2.Engine
 			}
 		}
 
-		/// <exception cref="TJSScriptError"></exception>
+		/// <exception cref="TjsScriptError"></exception>
 		/// <exception cref="VariantException"></exception>
 		private int ExecuteCode(Variant[] ra_org, int ra_offset, int startip, Variant[] args
 			, Variant result)
@@ -1118,7 +1118,7 @@ namespace Tjs2.Engine
 
 						case VM_EVAL:
 						{
-							Eval(ra[ra_offset + ca[code + 1]], TJS.mEvalOperatorIsOnGlobal ? null : ra[ra_offset
+							Eval(ra[ra_offset + ca[code + 1]], Tjs.mEvalOperatorIsOnGlobal ? null : ra[ra_offset
 								 - 1].AsObject(), true);
 							code += 2;
 							break;
@@ -1126,7 +1126,7 @@ namespace Tjs2.Engine
 
 						case VM_EEXP:
 						{
-							Eval(ra[ra_offset + ca[code + 1]], TJS.mEvalOperatorIsOnGlobal ? null : ra[ra_offset
+							Eval(ra[ra_offset + ca[code + 1]], Tjs.mEvalOperatorIsOnGlobal ? null : ra[ra_offset
 								 - 1].AsObject(), false);
 							code += 2;
 							break;
@@ -1349,25 +1349,25 @@ namespace Tjs2.Engine
 					}
 				}
 			}
-			catch (TJSScriptException e)
+			catch (TjsScriptException e)
 			{
 				e.AddTrace(this, codesave);
 				//e.printStackTrace();
 				throw;
 			}
-			catch (TJSScriptError e)
+			catch (TjsScriptError e)
 			{
 				e.AddTrace(this, codesave);
 				//e.printStackTrace();
 				throw;
 			}
-			catch (TJSException e)
+			catch (TjsException e)
 			{
 				DisplayExceptionGeneratedCode(codesave, ra_org, ra_offset);
 				//TJS_eTJSScriptError( e.getMessage(), this, codesave );
 				//e.printStackTrace();
 				Error.ReportExceptionSource(e.Message, this, CodePosToSrcPos(codesave));
-				throw new TJSScriptError(e.Message, mBlock, CodePosToSrcPos(codesave));
+				throw new TjsScriptError(e.Message, mBlock, CodePosToSrcPos(codesave));
 			}
 			catch (Exception e)
 			{
@@ -1375,12 +1375,12 @@ namespace Tjs2.Engine
 				DisplayExceptionGeneratedCode(codesave, ra_org, ra_offset);
 				//TJS_eTJSScriptError( e.getMessage(), this, codesave );
 				Error.ReportExceptionSource(e.Message, this, CodePosToSrcPos(codesave));
-				throw new TJSScriptError(e.Message, mBlock, CodePosToSrcPos(codesave));
+				throw new TjsScriptError(e.Message, mBlock, CodePosToSrcPos(codesave));
 			}
 		}
 
 		//return codesave;
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private void OperateProperty(Variant[] ra, int ra_offset, int code, int ope)
 		{
@@ -1398,7 +1398,7 @@ namespace Tjs2.Engine
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private void OperatePropertyIndirect(Variant[] ra, int ra_offset, int code, int ope
 			)
@@ -1431,7 +1431,7 @@ namespace Tjs2.Engine
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private void OperatePropertyDirect(Variant[] ra, int ra_offset, int code, int ope
 			)
@@ -1463,11 +1463,11 @@ namespace Tjs2.Engine
 			builder.Append(codepos);
 			builder.Append(" ====");
 			int info_len = builder.Length;
-			TJS.OutputToConsole(builder.ToString());
+			Tjs.OutputToConsole(builder.ToString());
 			builder.Delete(0, builder.Length);
-			TJS.OutputToConsole("-- Disassembled VM code --");
+			Tjs.OutputToConsole("-- Disassembled VM code --");
 			DisassenbleSrcLine(codepos);
-			TJS.OutputToConsole("-- Register dump --");
+			Tjs.OutputToConsole("-- Register dump --");
 			int ra_start = ra_offset - (mMaxVariableCount + mVariableReserveCount);
 			int ra_count = mMaxVariableCount + mVariableReserveCount + 1 + mMaxFrameCount;
 			StringBuilder line = new StringBuilder(128);
@@ -1480,7 +1480,7 @@ namespace Tjs2.Engine
 				builder.Append(Utils.VariantToReadableString(ra[ra_start + i]));
 				if (line.Length + builder.Length + 2 > info_len)
 				{
-					TJS.OutputToConsole(line.ToString());
+					Tjs.OutputToConsole(line.ToString());
 					line.Delete(0, line.Length);
 					line.Append(builder);
 				}
@@ -1496,9 +1496,9 @@ namespace Tjs2.Engine
 			}
 			if (line.Length > 0)
 			{
-				TJS.OutputToConsole(line.ToString());
+				Tjs.OutputToConsole(line.ToString());
 			}
-			TJS.OutputToConsoleSeparator("-", info_len);
+			Tjs.OutputToConsoleSeparator("-", info_len);
 		}
 
 		/// <exception cref="VariantException"></exception>
@@ -1572,10 +1572,10 @@ namespace Tjs2.Engine
 			return codeposmin;
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private static void ThrowInvalidVMCode()
 		{
-			throw new TJSException(Error.InvalidOpecode);
+			throw new TjsException(Error.InvalidOpecode);
 		}
 
 		/// <exception cref="VariantException"></exception>
@@ -1592,7 +1592,7 @@ namespace Tjs2.Engine
 		}
 
 		// ?? must be an error
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private void ThrowScriptException(Variant val, ScriptBlock block, int srcpos)
 		{
@@ -1616,7 +1616,7 @@ namespace Tjs2.Engine
 				msg = "script exception";
 			}
 			//TJSReportExceptionSource(msg, block, srcpos);
-			throw new TJSScriptException(msg, block, srcpos, val);
+			throw new TjsScriptException(msg, block, srcpos, val);
 		}
 
 		public virtual int CodePosToSrcPos(int codepos)
@@ -1652,7 +1652,7 @@ namespace Tjs2.Engine
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private int ExecuteCodeInTryBlock(Variant[] ra, int ra_offset, int startip, Variant
 			[] args, Variant result, int catchip, int exobjreg)
 		{
@@ -1671,7 +1671,7 @@ namespace Tjs2.Engine
 				//if(TJSStackTracerEnabled()) TJSStackTracerPop();
 				return ret;
 			}
-			catch (TJSScriptException e)
+			catch (TjsScriptException e)
 			{
 				if (exobjreg != 0)
 				{
@@ -1679,7 +1679,7 @@ namespace Tjs2.Engine
 				}
 				return catchip;
 			}
-			catch (TJSScriptError e)
+			catch (TjsScriptError e)
 			{
 				if (exobjreg != 0)
 				{
@@ -1691,7 +1691,7 @@ namespace Tjs2.Engine
 				}
 				return catchip;
 			}
-			catch (TJSException e)
+			catch (TjsException e)
 			{
 				if (exobjreg != 0)
 				{
@@ -1715,7 +1715,7 @@ namespace Tjs2.Engine
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private void DeleteMemberIndirect(Variant[] ra, int ra_offset, int code)
 		{
@@ -1747,7 +1747,7 @@ namespace Tjs2.Engine
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private void DeleteMemberDirect(Variant[] ra, int ra_offset, int code)
 		{
@@ -1778,7 +1778,7 @@ namespace Tjs2.Engine
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private void SetProperty(Variant[] ra, int ra_offset, int code)
 		{
@@ -1793,19 +1793,19 @@ namespace Tjs2.Engine
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private static void ThrowFrom_tjs_error_num(int hr, int num)
 		{
 			Error.ThrowFrom_tjs_error(hr, num.ToString());
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private static void ThrowFrom_tjs_error(int hr, string name)
 		{
 			Error.ThrowFrom_tjs_error(hr, name);
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private void GetProperty(Variant[] ra, int ra_offset, int code)
 		{
@@ -1819,7 +1819,7 @@ namespace Tjs2.Engine
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private void SetPropertyIndirect(Variant[] ra, int ra_offset, int code, int flags
 			)
@@ -1876,7 +1876,7 @@ namespace Tjs2.Engine
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private void GetOctetProperty(Variant result, Variant octet, Variant member)
 		{
@@ -1911,7 +1911,7 @@ namespace Tjs2.Engine
 						int len = o != null ? o.Capacity() : 0;
 						if (n < 0 || n >= len)
 						{
-							throw new TJSException(Error.RangeError);
+							throw new TjsException(Error.RangeError);
 						}
 						result.Set(o.Get(n));
 						return;
@@ -1927,14 +1927,14 @@ namespace Tjs2.Engine
 				int len = o != null ? o.Capacity() : 0;
 				if (n < 0 || n >= len)
 				{
-					throw new TJSException(Error.RangeError);
+					throw new TjsException(Error.RangeError);
 				}
 				result.Set(o.Get(n));
 				return;
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private void SetOctetProperty(Variant param, Variant octet, Variant member)
 		{
@@ -1966,7 +1966,7 @@ namespace Tjs2.Engine
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private void GetStringProperty(Variant result, Variant str, Variant member)
 		{
@@ -2007,7 +2007,7 @@ namespace Tjs2.Engine
 						}
 						if (n < 0 || n > len)
 						{
-							throw new TJSException(Error.RangeError);
+							throw new TjsException(Error.RangeError);
 						}
 						result.Set(Sharpen.Runtime.Substring(s, n, n + 1));
 						return;
@@ -2028,14 +2028,14 @@ namespace Tjs2.Engine
 				}
 				if (n < 0 || n > len)
 				{
-					throw new TJSException(Error.RangeError);
+					throw new TjsException(Error.RangeError);
 				}
 				result.Set(Sharpen.Runtime.Substring(s, n, n + 1));
 				return;
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private void SetStringProperty(Variant param, Variant str, Variant member)
 		{
@@ -2067,7 +2067,7 @@ namespace Tjs2.Engine
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private void GetPropertyIndirect(Variant[] ra, int ra_offset, int code, int flags
 			)
@@ -2122,7 +2122,7 @@ namespace Tjs2.Engine
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private void SetPropertyDirect(Variant[] ra, int ra_offset, int code, int flags)
 		{
@@ -2167,7 +2167,7 @@ namespace Tjs2.Engine
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private void GetPropertyDirect(Variant[] ra, int ra_offset, int code, int flags)
 		{
@@ -2208,7 +2208,7 @@ namespace Tjs2.Engine
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private void ProcessOctetFunction(string member, string target, Variant[] args, Variant
 			 result)
 		{
@@ -2216,7 +2216,7 @@ namespace Tjs2.Engine
 			ThrowFrom_tjs_error(Error.E_MEMBERNOTFOUND, member);
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		public static void ProcessStringFunction(string member, string target, Variant[] 
 			args, Variant result)
@@ -2437,7 +2437,7 @@ namespace Tjs2.Engine
 												{
 													ThrowFrom_tjs_error(Error.E_BADPARAMCOUNT, null);
 												}
-												Dispatch2 array = TJS.CreateArrayObject();
+												Dispatch2 array = Tjs.CreateArrayObject();
 												try
 												{
 													Variant str = new Variant(target);
@@ -2560,7 +2560,7 @@ namespace Tjs2.Engine
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private int CallFunctionIndirect(Variant[] ra, int ra_offset, int code, Variant[]
 			 args)
 		{
@@ -2711,7 +2711,7 @@ namespace Tjs2.Engine
 			return code_size + 4;
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private int CallFunctionDirect(Variant[] ra, int ra_offset, int code, Variant[] args
 			)
@@ -2866,7 +2866,7 @@ namespace Tjs2.Engine
 			return code_size + 4;
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private int CallFunction(Variant[] ra, int ra_offset, int code, Variant[] args)
 		{
@@ -2998,18 +2998,18 @@ namespace Tjs2.Engine
 					}
 				}
 			}
-			catch (TJSScriptException e)
+			catch (TjsScriptException e)
 			{
 				// OriginalTODO: Null Check
 				Sharpen.Runtime.PrintStackTrace(e);
 				throw;
 			}
-			catch (TJSScriptError e)
+			catch (TjsScriptError e)
 			{
 				Sharpen.Runtime.PrintStackTrace(e);
 				throw;
 			}
-			catch (TJSException e)
+			catch (TjsException e)
 			{
 				Sharpen.Runtime.PrintStackTrace(e);
 				throw;
@@ -3017,7 +3017,7 @@ namespace Tjs2.Engine
 			catch (Exception e)
 			{
 				Sharpen.Runtime.PrintStackTrace(e);
-				throw new TJSException(e.Message);
+				throw new TjsException(e.Message);
 			}
 			finally
 			{
@@ -3031,7 +3031,7 @@ namespace Tjs2.Engine
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private void InstanceOf(Variant name, Variant targ)
 		{
 			// checks instance inheritance.
@@ -3050,7 +3050,7 @@ namespace Tjs2.Engine
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="CompileException"></exception>
 		private void Eval(Variant val, Dispatch2 objthis, bool resneed)
 		{
@@ -3073,7 +3073,7 @@ namespace Tjs2.Engine
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private void TypeOfMemberIndirect(Variant[] ra, int ra_offset, int code, int flags
 			)
@@ -3158,7 +3158,7 @@ namespace Tjs2.Engine
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private void TypeOfMemberDirect(Variant[] ra, int ra_offset, int code, int flags)
 		{
@@ -3226,7 +3226,7 @@ namespace Tjs2.Engine
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private void OperateProperty0(Variant[] ra, int ra_offset, int code, int ope)
 		{
@@ -3241,7 +3241,7 @@ namespace Tjs2.Engine
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private void OperatePropertyIndirect0(Variant[] ra, int ra_offset, int code, int 
 			ope)
@@ -3272,7 +3272,7 @@ namespace Tjs2.Engine
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private void OperatePropertyDirect0(Variant[] ra, int ra_offset, int code, int ope
 			)
@@ -3388,7 +3388,7 @@ namespace Tjs2.Engine
 		// Dispatch2 implementation
 		// function invocation
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int FuncCall(int flag, string membername, Variant result, Variant
 			[] param, Dispatch2 objthis)
 		{
@@ -3458,7 +3458,7 @@ namespace Tjs2.Engine
 
 		// property get
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int PropGet(int flag, string membername, Variant result, Dispatch2
 			 objthis)
 		{
@@ -3508,7 +3508,7 @@ namespace Tjs2.Engine
 
 		// property set
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int PropSet(int flag, string membername, Variant param, Dispatch2
 			 objthis)
 		{
@@ -3576,7 +3576,7 @@ namespace Tjs2.Engine
 
 		// create new object
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int CreateNew(int flag, string membername, Holder<Dispatch2> result
 			, Variant[] param, Dispatch2 objthis)
 		{
@@ -3623,7 +3623,7 @@ namespace Tjs2.Engine
 
 		// class instance matching returns false or true
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int IsInstanceOf(int flag, string membername, string classname, Dispatch2
 			 objthis)
 		{
@@ -3699,7 +3699,7 @@ namespace Tjs2.Engine
 
 		// get member count
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int GetCount(IntWrapper result, string membername, Dispatch2 objthis
 			)
 		{
@@ -3730,7 +3730,7 @@ namespace Tjs2.Engine
 
 		// delete member
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int DeleteMember(int flag, string membername, Dispatch2 objthis)
 		{
 			int hr = base.DeleteMember(flag, membername, objthis);
@@ -3760,7 +3760,7 @@ namespace Tjs2.Engine
 
 		// invalidation
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int Invalidate(int flag, string membername, Dispatch2 objthis)
 		{
 			int hr = base.Invalidate(flag, membername, objthis);
@@ -3790,7 +3790,7 @@ namespace Tjs2.Engine
 
 		// get validation, returns true or false
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int IsValid(int flag, string membername, Dispatch2 objthis)
 		{
 			int hr = base.IsValid(flag, membername, objthis);
@@ -3820,7 +3820,7 @@ namespace Tjs2.Engine
 
 		// operation with member
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int Operation(int flag, string membername, Variant result, Variant
 			 param, Dispatch2 objthis)
 		{
@@ -4238,7 +4238,7 @@ namespace Tjs2.Engine
 					int idx = compiler.GetCodeIndex((InterCodeGenerator)o);
 					if (idx < 0)
 					{
-						TJS.OutputToConsole("not found");
+						Tjs.OutputToConsole("not found");
 					}
 					d.Set(compiler.GetCodeObject(idx));
 				}

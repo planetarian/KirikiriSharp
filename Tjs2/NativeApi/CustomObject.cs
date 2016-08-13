@@ -162,14 +162,14 @@ namespace Tjs2.NativeApi
 
 		//if(TJSObjectHashMapEnabled()) TJSRemoveObjectHashRecord(this);
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		protected internal virtual void FinalizeObject()
 		{
 			// call this object's "finalize"
-			if (mCallFinalize && TJS.IsTarminating == false)
+			if (mCallFinalize && Tjs.IsTarminating == false)
 			{
 				//funcCall( 0, mfinalize_name, mfinalize_name.hashCode(), null, 0, null, this );
-				FuncCall(0, mfinalize_name, null, TJS.NULL_ARG, this);
+				FuncCall(0, mfinalize_name, null, Tjs.NULL_ARG, this);
 			}
 			for (int i = MAX_NATIVE_CLASS - 1; i >= 0; i--)
 			{
@@ -186,7 +186,7 @@ namespace Tjs2.NativeApi
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual void FinalizeInternal()
 		{
 			if (mIsInvalidating)
@@ -237,8 +237,8 @@ namespace Tjs2.NativeApi
 			if (mFinalizeName == null)
 			{
 				// first time; initialize 'finalize' name and 'missing' name
-				mFinalizeName = TJS.MapGlobalStringMap("finalize");
-				mMissingName = TJS.MapGlobalStringMap("missing");
+				mFinalizeName = Tjs.MapGlobalStringMap("finalize");
+				mMissingName = Tjs.MapGlobalStringMap("missing");
 			}
 			mfinalize_name = mFinalizeName;
 			mmissing_name = mMissingName;
@@ -254,7 +254,7 @@ namespace Tjs2.NativeApi
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		protected internal override void BeforeDestruction()
 		{
 			// デバッグ系はなし
@@ -270,7 +270,7 @@ namespace Tjs2.NativeApi
 		//private void checkObjectClosureRemove( final Variant val ) {
 		//}
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private bool CallGetMissing(string name, Variant result)
 		{
 			// call 'missing' method for PopGet
@@ -318,7 +318,7 @@ namespace Tjs2.NativeApi
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private bool CallSetMissing(string name, Variant value)
 		{
 			// call 'missing' method for PopSet
@@ -366,7 +366,7 @@ namespace Tjs2.NativeApi
 
 		// Adds the symbol, returns the newly created data;
 		// if already exists, returns the data.
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private SymbolData Add(string name)
 		{
 			// add a data element named "name".
@@ -412,7 +412,7 @@ namespace Tjs2.NativeApi
 			return data;
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private SymbolData AddTo(string name, SymbolData[] newdata, int newhashmask)
 		{
 			// similar to Add, except for adding member to new hash space.
@@ -451,7 +451,7 @@ namespace Tjs2.NativeApi
 			return data;
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private void RebuildHash()
 		{
 			// rebuild hash table
@@ -544,7 +544,7 @@ namespace Tjs2.NativeApi
 					}
 				}
 			}
-			catch (TJSException)
+			catch (TjsException)
 			{
 				//checkObjectClosureAdd( (Variant)data.mValue );
 				// recover
@@ -732,7 +732,7 @@ namespace Tjs2.NativeApi
 			return null;
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private static bool EnumCallback(int flags, EnumMembersCallback callback, Variant
 			 value, Dispatch2 objthis, SymbolData data)
 		{
@@ -783,7 +783,7 @@ namespace Tjs2.NativeApi
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int EnumMembers(int flags, EnumMembersCallback callback, Dispatch2
 			 objthis)
 		{
@@ -824,7 +824,7 @@ namespace Tjs2.NativeApi
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		protected internal static int DefaultPropGet(int flag, Variant targ, Variant result
 			, Dispatch2 objthis)
 		{
@@ -866,8 +866,8 @@ namespace Tjs2.NativeApi
 		/// <summary>new する时のメンバコピー</summary>
 		/// <param name="dest">コピー先</param>
 		/// <returns>エラーコード</returns>
-		/// <exception cref="TJSException">TJSException</exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException">TJSException</exception>
+		/// <exception cref="TjsException"></exception>
 		protected internal virtual int CopyAllMembers(CustomObject dest)
 		{
 			if (!GetValidity())
@@ -955,7 +955,7 @@ namespace Tjs2.NativeApi
 
 		// オリジナルでは、强制的に int で返す(アドレスになるかもしれない)もののようだが……
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private static int TryFuncCallViaPropGet(VariantClosure tvclosure, int flag, Variant
 			 result, Variant[] param, Dispatch2 objthis)
 		{
@@ -973,7 +973,7 @@ namespace Tjs2.NativeApi
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		protected internal static int DefaultFuncCall(int flag, Variant targ, Variant result
 			, Variant[] param, Dispatch2 objthis)
 		{
@@ -998,7 +998,7 @@ namespace Tjs2.NativeApi
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int FuncCall(int flag, string membername, Variant result, Variant
 			[] param, Dispatch2 objthis)
 		{
@@ -1032,7 +1032,7 @@ namespace Tjs2.NativeApi
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int PropGet(int flag, string membername, Variant result, Dispatch2
 			 objthis)
 		{
@@ -1079,7 +1079,7 @@ namespace Tjs2.NativeApi
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		protected internal static int DefaultPropSet(int flag, Variant targ, Variant param
 			, Dispatch2 objthis)
 		{
@@ -1115,7 +1115,7 @@ namespace Tjs2.NativeApi
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int PropSet(int flag, string membername, Variant param, Dispatch2
 			 objthis)
 		{
@@ -1204,7 +1204,7 @@ namespace Tjs2.NativeApi
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int GetCount(IntWrapper result, string membername, Dispatch2 objthis
 			)
 		{
@@ -1221,7 +1221,7 @@ namespace Tjs2.NativeApi
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int DeleteMember(int flag, string membername, Dispatch2 objthis)
 		{
 			if (!GetValidity())
@@ -1240,7 +1240,7 @@ namespace Tjs2.NativeApi
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		protected internal static int DefaultInvalidate(int flag, Variant targ, Dispatch2
 			 objthis)
 		{
@@ -1258,7 +1258,7 @@ namespace Tjs2.NativeApi
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int Invalidate(int flag, string membername, Dispatch2 objthis)
 		{
 			if (!GetValidity())
@@ -1296,7 +1296,7 @@ namespace Tjs2.NativeApi
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		protected internal static int DefaultIsValid(int flag, Variant targ, Dispatch2 objthis
 			)
 		{
@@ -1315,7 +1315,7 @@ namespace Tjs2.NativeApi
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int IsValid(int flag, string membername, Dispatch2 objthis)
 		{
 			if (membername == null)
@@ -1348,7 +1348,7 @@ namespace Tjs2.NativeApi
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		protected internal static int DefaultCreateNew(int flag, Variant targ, Holder<Dispatch2
 			> result, Variant[] param, Dispatch2 objthis)
 		{
@@ -1366,7 +1366,7 @@ namespace Tjs2.NativeApi
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int CreateNew(int flag, string membername, Holder<Dispatch2> result
 			, Variant[] param, Dispatch2 objthis)
 		{
@@ -1402,7 +1402,7 @@ namespace Tjs2.NativeApi
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public static int DefaultIsInstanceOf(int flag, Variant targ, string name, Dispatch2
 			 objthis)
 		{
@@ -1471,7 +1471,7 @@ namespace Tjs2.NativeApi
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int IsInstanceOf(int flag, string membername, string classname, Dispatch2
 			 objthis)
 		{
@@ -1519,7 +1519,7 @@ namespace Tjs2.NativeApi
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		protected internal static int DefaultOperation(int flag, Variant targ, Variant result
 			, Variant param, Dispatch2 objthis)
 		{
@@ -1576,7 +1576,7 @@ namespace Tjs2.NativeApi
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int Operation(int flag, string membername, Variant result, Variant
 			 param, Dispatch2 objthis)
 		{
@@ -1665,7 +1665,7 @@ namespace Tjs2.NativeApi
 
 		// Dispatch クラスのメソッドを呼び出すため
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int DispatchOperation(int flag, string membername, Variant result, 
 			Variant param, Dispatch2 objthis)
 		{
@@ -1872,9 +1872,9 @@ namespace Tjs2.NativeApi
 		/// <param name="objthis"></param>
 		/// <returns></returns>
 		/// <exception cref="VariantException">VariantException</exception>
-		/// <exception cref="TJSException">TJSException</exception>
+		/// <exception cref="TjsException">TJSException</exception>
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int PropSetConstArray(string[] membername, int[] param, Dispatch2 
 			objthis)
 		{
@@ -1884,22 +1884,22 @@ namespace Tjs2.NativeApi
 			}
 			if (membername.Length != param.Length)
 			{
-				throw new TJSException(Error.InternalError);
+				throw new TjsException(Error.InternalError);
 			}
 			int count = membername.Length;
 			for (int i = 0; i < count; i++)
 			{
 				if (membername[i] == null)
 				{
-					throw new TJSException(Error.InternalError);
+					throw new TjsException(Error.InternalError);
 				}
-				string name = TJS.MapGlobalStringMap(membername[i]);
+				string name = Tjs.MapGlobalStringMap(membername[i]);
 				SymbolData data = Add(name);
 				data.mSymFlags &= ~SYMBOL_HIDDEN;
 				data.mSymFlags &= ~SYMBOL_STATIC;
 				if (data.mValue.IsObject())
 				{
-					throw new TJSException(Error.InternalError);
+					throw new TjsException(Error.InternalError);
 				}
 				data.mValue.Set(param[i]);
 			}

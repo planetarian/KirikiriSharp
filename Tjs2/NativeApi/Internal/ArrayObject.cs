@@ -37,13 +37,13 @@ namespace Tjs2.NativeApi.Internal
 			mCallFinalize = false;
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		protected internal override void FinalizeObject()
 		{
 			ArrayNI ni = (ArrayNI)GetNativeInstance(ArrayClass.ClassID);
 			if (ni == null)
 			{
-				throw new TJSException(Error.NativeClassCrash);
+				throw new TjsException(Error.NativeClassCrash);
 			}
 			Clear(ni);
 			base.FinalizeObject();
@@ -61,7 +61,7 @@ namespace Tjs2.NativeApi.Internal
 			ni.mItems.Clear();
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual void Erase(ArrayNI ni, int num)
 		{
 			if (num < 0)
@@ -70,11 +70,11 @@ namespace Tjs2.NativeApi.Internal
 			}
 			if (num < 0)
 			{
-				throw new TJSException(Error.RangeError);
+				throw new TjsException(Error.RangeError);
 			}
 			if (num >= ni.mItems.Count)
 			{
-				throw new TJSException(Error.RangeError);
+				throw new TjsException(Error.RangeError);
 			}
 			ni.mItems.Remove(num);
 		}
@@ -114,7 +114,7 @@ namespace Tjs2.NativeApi.Internal
 			return count;
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual void Insert(ArrayNI ni, Variant val, int num)
 		{
 			if (num < 0)
@@ -123,12 +123,12 @@ namespace Tjs2.NativeApi.Internal
 			}
 			if (num < 0)
 			{
-				throw new TJSException(Error.RangeError);
+				throw new TjsException(Error.RangeError);
 			}
 			int count = ni.mItems.Count;
 			if (num > count)
 			{
-				throw new TJSException(Error.RangeError);
+				throw new TjsException(Error.RangeError);
 			}
 			ni.mItems.Add(num, new Variant(val));
 		}
@@ -138,7 +138,7 @@ namespace Tjs2.NativeApi.Internal
 			ni.mItems.AddItem(new Variant(val));
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual void Insert(ArrayNI ni, Variant[] val, int num)
 		{
 			if (num < 0)
@@ -147,12 +147,12 @@ namespace Tjs2.NativeApi.Internal
 			}
 			if (num < 0)
 			{
-				throw new TJSException(Error.RangeError);
+				throw new TjsException(Error.RangeError);
 			}
 			int count = ni.mItems.Count;
 			if (num > count)
 			{
-				throw new TJSException(Error.RangeError);
+				throw new TjsException(Error.RangeError);
 			}
 			int end = val.Length;
 			ni.mItems.EnsureCapacity(count + end);
@@ -319,7 +319,7 @@ namespace Tjs2.NativeApi.Internal
 
 		// function invocation
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int FuncCall(int flag, string memberName, Variant result, Variant
 			[] param, Dispatch2 objThis)
 		{
@@ -332,7 +332,7 @@ namespace Tjs2.NativeApi.Internal
 
 		// function invocation by index number
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int FuncCallByNum(int flag, int num, Variant result, Variant[] param
 			, Dispatch2 objthis)
 		{
@@ -361,7 +361,7 @@ namespace Tjs2.NativeApi.Internal
 
 		// property get
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int PropGet(int flag, string memberName, Variant result, Dispatch2
 			 objThis)
 		{
@@ -374,7 +374,7 @@ namespace Tjs2.NativeApi.Internal
 
 		// property get by index number
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int PropGetByNum(int flag, int num, Variant result, Dispatch2 objthis
 			)
 		{
@@ -403,7 +403,7 @@ namespace Tjs2.NativeApi.Internal
 
 		// property set
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int PropSet(int flag, string memberName, Variant param, Dispatch2
 			 objThis)
 		{
@@ -416,7 +416,7 @@ namespace Tjs2.NativeApi.Internal
 
 		// property set by index number
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int PropSetByNum(int flag, int num, Variant param, Dispatch2 objthis
 			)
 		{
@@ -455,7 +455,7 @@ namespace Tjs2.NativeApi.Internal
 
 		// enumerate members
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int EnumMembers(int flag, VariantClosure callback, Dispatch2 objThis
 			)
 		{
@@ -465,7 +465,7 @@ namespace Tjs2.NativeApi.Internal
 		// currently not implemented
 		// delete member
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int DeleteMember(int flag, string memberName, Dispatch2 objThis)
 		{
 			if (IsNumber(memberName, Result))
@@ -477,7 +477,7 @@ namespace Tjs2.NativeApi.Internal
 
 		// delete member by index number
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int DeleteMemberByNum(int flag, int num, Dispatch2 objthis)
 		{
 			if (!GetValidity())
@@ -503,7 +503,7 @@ namespace Tjs2.NativeApi.Internal
 
 		// invalidation
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int Invalidate(int flag, string memberName, Dispatch2 objThis)
 		{
 			if (IsNumber(memberName, Result))
@@ -515,7 +515,7 @@ namespace Tjs2.NativeApi.Internal
 
 		// invalidation by index number
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int InvalidateByNum(int flag, int num, Dispatch2 objthis)
 		{
 			if (!GetValidity())
@@ -543,7 +543,7 @@ namespace Tjs2.NativeApi.Internal
 
 		// get validation, returns true or false
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int IsValid(int flag, string memberName, Dispatch2 objThis)
 		{
 			if (IsNumber(memberName, Result))
@@ -555,7 +555,7 @@ namespace Tjs2.NativeApi.Internal
 
 		// get validation by index number, returns true or false
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int IsValidByNum(int flag, int num, Dispatch2 objthis)
 		{
 			if (!GetValidity())
@@ -583,7 +583,7 @@ namespace Tjs2.NativeApi.Internal
 
 		// create new object
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int CreateNew(int flag, string memberName, Holder<Dispatch2> result
 			, Variant[] param, Dispatch2 objThis)
 		{
@@ -596,7 +596,7 @@ namespace Tjs2.NativeApi.Internal
 
 		// create new object by index number
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int CreateNewByNum(int flag, int num, Holder<Dispatch2> result, Variant
 			[] param, Dispatch2 objthis)
 		{
@@ -626,7 +626,7 @@ namespace Tjs2.NativeApi.Internal
 		// reserved1 not use
 		// class instance matching returns false or true
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int IsInstanceOf(int flag, string memberName, string className, Dispatch2
 			 objThis)
 		{
@@ -639,7 +639,7 @@ namespace Tjs2.NativeApi.Internal
 
 		// class instance matching by index number
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int IsInstanceOfByNum(int flag, int num, string className, Dispatch2
 			 objthis)
 		{
@@ -668,7 +668,7 @@ namespace Tjs2.NativeApi.Internal
 
 		// operation with member
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int Operation(int flag, string memberName, Variant result, Variant
 			 param, Dispatch2 objThis)
 		{
@@ -681,7 +681,7 @@ namespace Tjs2.NativeApi.Internal
 
 		// operation with member by index number
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int OperationByNum(int flag, int num, Variant result, Variant param
 			, Dispatch2 objthis)
 		{

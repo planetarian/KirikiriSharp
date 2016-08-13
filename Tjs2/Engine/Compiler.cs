@@ -17,7 +17,7 @@ namespace Tjs2.Engine
 
 		private static readonly string ERROR_TAG = "Syntax error";
 
-		private TJS mOwner;
+		private Tjs mOwner;
 
 		private bool mUsingPreProcessor;
 
@@ -80,7 +80,7 @@ namespace Tjs2.Engine
 		private ScriptLineData mLineData;
 
 		// 以下の4つは实行时にいるかな、名前以外はエラー発生时に必要になるだけだろうけど。
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private void PushContextStack(string name, int type)
 		{
@@ -90,7 +90,7 @@ namespace Tjs2.Engine
 			{
 				if (mTopLevelGenerator != null)
 				{
-					throw new TJSException(Engine.Error.InternalError);
+					throw new TjsException(Engine.Error.InternalError);
 				}
 				mTopLevelGenerator = ctx;
 			}
@@ -99,7 +99,7 @@ namespace Tjs2.Engine
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private void PopContextStack()
 		{
 			mInterCodeGenerator.Commit();
@@ -114,7 +114,7 @@ namespace Tjs2.Engine
 			}
 		}
 
-		public Compiler(TJS owner)
+		public Compiler(Tjs owner)
 		{
 			mOwner = owner;
 			// Java で初期值となる初期化は省略
@@ -210,7 +210,7 @@ namespace Tjs2.Engine
 
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual void Parse(string script, bool isexpr, bool resultneeded)
 		{
 			mCompileErrorCount = 0;
@@ -220,7 +220,7 @@ namespace Tjs2.Engine
 			mLexicalAnalyzer = null;
 			if (mCompileErrorCount > 0)
 			{
-				throw new TJSScriptError(mFirstError, this, mFirstErrorPos);
+				throw new TjsScriptError(mFirstError, this, mFirstErrorPos);
 			}
 		}
 
@@ -249,7 +249,7 @@ namespace Tjs2.Engine
 		// const_dic_elm
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprConstDicElm()
 		{
 			int token = Lex();
@@ -336,7 +336,7 @@ namespace Tjs2.Engine
 		// const_dic_elm_list
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprConstDicElmList()
 		{
 			int token;
@@ -353,11 +353,11 @@ namespace Tjs2.Engine
 		// const_inline_dic
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprConstInlineDic()
 		{
 			ExprNode node = mInterCodeGenerator.MakeNP0(Token.T_CONSTVAL);
-			Dispatch2 dsp = TJS.CreateDictionaryObject();
+			Dispatch2 dsp = Tjs.CreateDictionaryObject();
 			node.SetValue(new Variant(dsp, dsp));
 			mInterCodeGenerator.PushCurrentNode(node);
 			ExprConstDicElmList();
@@ -380,7 +380,7 @@ namespace Tjs2.Engine
 		// const_array_elm
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprConstArrayElm()
 		{
 			int token = Lex();
@@ -447,7 +447,7 @@ namespace Tjs2.Engine
 		// const_array_elm_list, const_array_elm_list_opt
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprConstArrayElmList()
 		{
 			int token;
@@ -464,11 +464,11 @@ namespace Tjs2.Engine
 		// const_inline_array
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprConstInlineArray()
 		{
 			ExprNode node = mInterCodeGenerator.MakeNP0(Token.T_CONSTVAL);
-			Dispatch2 dsp = TJS.CreateArrayObject();
+			Dispatch2 dsp = Tjs.CreateArrayObject();
 			node.SetValue(new Variant(dsp, dsp));
 			mInterCodeGenerator.PushCurrentNode(node);
 			ExprConstArrayElmList();
@@ -490,7 +490,7 @@ namespace Tjs2.Engine
 
 		/// <exception cref="CompileException"></exception>
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprConstInlineArrayOrDic()
 		{
 			int token = Lex();
@@ -578,7 +578,7 @@ namespace Tjs2.Engine
 		// dic_elm
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprDicElm()
 		{
 			ExprNode node = null;
@@ -621,7 +621,7 @@ namespace Tjs2.Engine
 		// dic_elm_list
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprDicElmList()
 		{
 			int token = Lex();
@@ -655,7 +655,7 @@ namespace Tjs2.Engine
 		// inline_dic
 		/// <exception cref="CompileException"></exception>
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprInlineDic()
 		{
 			int token = Lex();
@@ -698,7 +698,7 @@ namespace Tjs2.Engine
 		// array_elm
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprArrayElm()
 		{
 			int token = Lex();
@@ -718,7 +718,7 @@ namespace Tjs2.Engine
 		// array_elm_list
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprArrayElmList()
 		{
 			int token;
@@ -736,7 +736,7 @@ namespace Tjs2.Engine
 		// inline_array
 		/// <exception cref="CompileException"></exception>
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprInlineArray()
 		{
 			int token = Lex();
@@ -769,7 +769,7 @@ namespace Tjs2.Engine
 		// call_arg
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprCallArg()
 		{
 			int token = Lex();
@@ -839,7 +839,7 @@ namespace Tjs2.Engine
 
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprCallArgList2(ExprNode node)
 		{
 			int token;
@@ -858,7 +858,7 @@ namespace Tjs2.Engine
 		// call_arg_list
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprCallArgList()
 		{
 			int token = Lex();
@@ -886,7 +886,7 @@ namespace Tjs2.Engine
 		// func_call_expr
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprFuncCallExpr(ExprNode node)
 		{
 			bool newExpression = false;
@@ -918,7 +918,7 @@ namespace Tjs2.Engine
 		// factor_expr
 		/// <exception cref="CompileException"></exception>
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprFactorExpr()
 		{
 			int token = Lex();
@@ -1065,7 +1065,7 @@ namespace Tjs2.Engine
 		// priority_expr'
 		/// <exception cref="CompileException"></exception>
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprPriorityExpr1()
 		{
 			ExprNode node = ExprFactorExpr();
@@ -1109,7 +1109,7 @@ namespace Tjs2.Engine
 		// priority_expr
 		/// <exception cref="CompileException"></exception>
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprPriorityExpr()
 		{
 			ExprNode node = ExprPriorityExpr1();
@@ -1199,7 +1199,7 @@ namespace Tjs2.Engine
 		// incontextof_expr
 		/// <exception cref="CompileException"></exception>
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprIncontextOfExpr()
 		{
 			ExprNode node = ExprPriorityExpr();
@@ -1219,7 +1219,7 @@ namespace Tjs2.Engine
 		// unary_expr
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprUnaryExpr()
 		{
 			int token = Lex();
@@ -1524,7 +1524,7 @@ namespace Tjs2.Engine
 		// mul_div_expr, mul_div_expr_and_asterisk
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprMulDivExpr()
 		{
 			ExprNode node = ExprUnaryExpr();
@@ -1568,7 +1568,7 @@ namespace Tjs2.Engine
 		// add_sub_expr
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprAddSubExpr()
 		{
 			ExprNode node = ExprMulDivExpr();
@@ -1589,7 +1589,7 @@ namespace Tjs2.Engine
 		// shift_expr
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprShiftExpr()
 		{
 			ExprNode node = ExprAddSubExpr();
@@ -1612,7 +1612,7 @@ namespace Tjs2.Engine
 		// compare_expr
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprCompareExpr()
 		{
 			ExprNode node = ExprShiftExpr();
@@ -1634,7 +1634,7 @@ namespace Tjs2.Engine
 		// identical_expr
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprIdenticalExpr()
 		{
 			ExprNode node = ExprCompareExpr();
@@ -1656,7 +1656,7 @@ namespace Tjs2.Engine
 		// and_expr
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprAndExpr()
 		{
 			ExprNode node = ExprIdenticalExpr();
@@ -1679,7 +1679,7 @@ namespace Tjs2.Engine
 		// exclusive_or_expr
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprExclusiveOrExpr()
 		{
 			ExprNode node = ExprAndExpr();
@@ -1702,7 +1702,7 @@ namespace Tjs2.Engine
 		// inclusive_or_expr
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprInclusiveOrExpr()
 		{
 			ExprNode node = ExprExclusiveOrExpr();
@@ -1725,7 +1725,7 @@ namespace Tjs2.Engine
 		// logical_and_expr
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprLogicalAndExpr()
 		{
 			ExprNode node = ExprInclusiveOrExpr();
@@ -1748,7 +1748,7 @@ namespace Tjs2.Engine
 		// logical_or_expr
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprLogicalOrExpr()
 		{
 			ExprNode node = ExprLogicalAndExpr();
@@ -1771,7 +1771,7 @@ namespace Tjs2.Engine
 		// cond_expr
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprCondExpr()
 		{
 			ExprNode node = ExprLogicalOrExpr();
@@ -1800,7 +1800,7 @@ namespace Tjs2.Engine
 		// assign_expr
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprAssignExpr()
 		{
 			ExprNode node = ExprCondExpr();
@@ -1827,7 +1827,7 @@ namespace Tjs2.Engine
 		//  comma_expr
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprCommaExpr()
 		{
 			ExprNode node = ExprAssignExpr();
@@ -1848,7 +1848,7 @@ namespace Tjs2.Engine
 		// expr
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode Expr()
 		{
 			ExprNode node = ExprCommaExpr();
@@ -1869,7 +1869,7 @@ namespace Tjs2.Engine
 		// expr_no_comma
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprExprNoComma()
 		{
 			return ExprAssignExpr();
@@ -1878,7 +1878,7 @@ namespace Tjs2.Engine
 		// throw
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprThrow()
 		{
 			// throw は消化济み
@@ -1952,7 +1952,7 @@ namespace Tjs2.Engine
 		// try
 		/// <exception cref="CompileException"></exception>
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprTry()
 		{
 			// try は消化济み
@@ -1967,7 +1967,7 @@ namespace Tjs2.Engine
 		// case
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprCase()
 		{
 			int token = Lex();
@@ -2007,7 +2007,7 @@ namespace Tjs2.Engine
 		// with
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprWith()
 		{
 			// with は消化济み
@@ -2035,7 +2035,7 @@ namespace Tjs2.Engine
 		// switch
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprSwitch()
 		{
 			// switch は消化济み
@@ -2063,7 +2063,7 @@ namespace Tjs2.Engine
 		// a return statement.
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprReturn()
 		{
 			// return は消化济み
@@ -2090,7 +2090,7 @@ namespace Tjs2.Engine
 		// extends_list, extends_name
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprExtendsList()
 		{
 			ExprNode node = ExprExprNoComma();
@@ -2110,7 +2110,7 @@ namespace Tjs2.Engine
 		// class_extender
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprClassExtender()
 		{
 			ExprNode node = ExprExprNoComma();
@@ -2129,7 +2129,7 @@ namespace Tjs2.Engine
 		}
 
 		// class_def
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="CompileException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private ExprNode ExprClassDef()
@@ -2165,7 +2165,7 @@ namespace Tjs2.Engine
 
 		// property_handler_getter
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private ExprNode ExprPropertyGetter()
 		{
@@ -2195,7 +2195,7 @@ namespace Tjs2.Engine
 
 		// property_handler_setter
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private ExprNode ExprPropertySetter()
 		{
@@ -2231,7 +2231,7 @@ namespace Tjs2.Engine
 
 		// property_handler_def_list
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private ExprNode ExprPropertyHandlerDefList()
 		{
@@ -2275,7 +2275,7 @@ namespace Tjs2.Engine
 
 		// property_def
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private ExprNode ExprPropertyDef()
 		{
@@ -2317,7 +2317,7 @@ namespace Tjs2.Engine
 		// func_decl_arg_opt +
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprFuncDeclArgs()
 		{
 			int token = Lex();
@@ -2379,7 +2379,7 @@ namespace Tjs2.Engine
 		// func_decl_arg_opt
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprFuncDeclArgOpt()
 		{
 			int token = Lex();
@@ -2404,7 +2404,7 @@ namespace Tjs2.Engine
 
 		// func_def
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private ExprNode ExprFunctionDef()
 		{
@@ -2428,13 +2428,13 @@ namespace Tjs2.Engine
 			{
 				Unlex();
 				// ここに来ることはないはず
-				throw new TJSException(Engine.Error.InternalError);
+				throw new TjsException(Engine.Error.InternalError);
 			}
 			return null;
 		}
 
 		// func_expr_def
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
 		private ExprNode ExprFuncExprDef()
@@ -2456,7 +2456,7 @@ namespace Tjs2.Engine
 			else
 			{
 				Unlex();
-				throw new TJSException(Engine.Error.InternalError);
+				throw new TjsException(Engine.Error.InternalError);
 			}
 			return node;
 		}
@@ -2464,7 +2464,7 @@ namespace Tjs2.Engine
 		// variable_id
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprVariableId()
 		{
 			int token = Lex();
@@ -2494,7 +2494,7 @@ namespace Tjs2.Engine
 		// variable_id_list
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprVariableIdList()
 		{
 			ExprVariableId();
@@ -2513,7 +2513,7 @@ namespace Tjs2.Engine
 		// variable_def_inner
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprVariableDefInner()
 		{
 			// 现在のバージョンではconstを明确に区别してない
@@ -2531,7 +2531,7 @@ namespace Tjs2.Engine
 				else
 				{
 					Unlex();
-					throw new TJSException(Engine.Error.InternalError);
+					throw new TjsException(Engine.Error.InternalError);
 				}
 			}
 			return null;
@@ -2540,7 +2540,7 @@ namespace Tjs2.Engine
 		// variable_def
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprVariableDef()
 		{
 			ExprVariableDefInner();
@@ -2556,7 +2556,7 @@ namespace Tjs2.Engine
 		// for_third_clause
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprForThridClause()
 		{
 			int token = Lex();
@@ -2577,7 +2577,7 @@ namespace Tjs2.Engine
 		// for_second_clause
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprForSecondClause()
 		{
 			int token = Lex();
@@ -2598,7 +2598,7 @@ namespace Tjs2.Engine
 		// for_first_clause
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprForFirstClause()
 		{
 			int token = Lex();
@@ -2629,7 +2629,7 @@ namespace Tjs2.Engine
 		// for
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprFor()
 		{
 			int token = Lex();
@@ -2668,7 +2668,7 @@ namespace Tjs2.Engine
 		// if, if_else
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprIf()
 		{
 			int token = Lex();
@@ -2707,7 +2707,7 @@ namespace Tjs2.Engine
 		// do_while
 		/// <exception cref="CompileException"></exception>
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprDo()
 		{
 			mInterCodeGenerator.EnterWhileCode(true);
@@ -2748,7 +2748,7 @@ namespace Tjs2.Engine
 		// while
 		/// <exception cref="CompileException"></exception>
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprWhile()
 		{
 			mInterCodeGenerator.EnterWhileCode(false);
@@ -2776,7 +2776,7 @@ namespace Tjs2.Engine
 		// block
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprBlock()
 		{
 			int token = Lex();
@@ -2802,7 +2802,7 @@ namespace Tjs2.Engine
 		// statement
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprStatement()
 		{
 			int token = Lex();
@@ -2963,7 +2963,7 @@ namespace Tjs2.Engine
 		// block_or_statement
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprBlockOrStatment()
 		{
 			int token = Lex();
@@ -2991,7 +2991,7 @@ namespace Tjs2.Engine
 		// def_list
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ExprNode ExprDefList()
 		{
 			int token = Lex();
@@ -3008,7 +3008,7 @@ namespace Tjs2.Engine
 		// program, global_list
 		/// <exception cref="VariantException"></exception>
 		/// <exception cref="CompileException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private void Program()
 		{
 			PushContextStack("global", ContextType.TOP_LEVEL);
@@ -3027,7 +3027,7 @@ namespace Tjs2.Engine
 			PopContextStack();
 		}
 
-		public virtual TJS GetTJS()
+		public virtual Tjs GetTJS()
 		{
 			return mOwner;
 		}
@@ -3054,7 +3054,7 @@ namespace Tjs2.Engine
 
 		/// <exception cref="CompileException"></exception>
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual ScriptBlock DoCompile(string text, bool isexpression, bool isresultneeded
 			)
 		{
@@ -3082,7 +3082,7 @@ namespace Tjs2.Engine
 		// create a member if not exists
 		// ignore property invoking
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private ScriptBlock GenerateInterCodeObjects()
 		{
 			// dumpClassStructure();
@@ -3169,7 +3169,7 @@ namespace Tjs2.Engine
 
 		/// <exception cref="CompileException"></exception>
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual void Compile(string text, bool isexpression, bool isresultneeded, 
 			BinaryStream output)
 		{
@@ -3193,7 +3193,7 @@ namespace Tjs2.Engine
 
 		/// <exception cref="CompileException"></exception>
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual void ToJavaCode(string text, bool isexpression, bool isresultneeded
 			)
 		{
@@ -3368,7 +3368,7 @@ namespace Tjs2.Engine
 		public static readonly byte[] FILE_TAG = new byte[] { (byte)('T'), (byte)('J'), (
 			byte)('S'), (byte)('2'), (byte)('1'), (byte)('0'), (byte)('0'), 0 };
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private void ExportByteCode(BinaryStream output)
 		{
 			byte[] filetag = FILE_TAG;

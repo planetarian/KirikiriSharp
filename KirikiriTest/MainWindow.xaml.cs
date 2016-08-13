@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using KirikiriSharp.Lexer;
+using Tjs2;
 using Tjs2.Engine;
 
 namespace KirikiriTest
@@ -116,10 +117,10 @@ namespace KirikiriTest
             Action<string> outputAction = msg => GraupelTextBox.Text += msg + Environment.NewLine;
             try
             {
-                TJS.mStorage = null;
-                TJS.Initialize();
-                var mScriptEngine = new TJS();
-                TJS.SetConsoleOutput(new DelegateConsoleOutput(outputAction));
+                Tjs.mStorage = null;
+                Tjs.Initialize();
+                var mScriptEngine = new Tjs();
+                Tjs.SetConsoleOutput(new DelegateConsoleOutput(outputAction));
 
                 Dispatch2 dsp = mScriptEngine.GetGlobal();
                 var ret = new Variant();

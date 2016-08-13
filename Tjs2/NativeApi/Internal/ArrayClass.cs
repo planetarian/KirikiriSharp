@@ -27,19 +27,19 @@ namespace Tjs2.NativeApi.Internal
 			return new ArrayObject();
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public static int GetArrayElementCount(Dispatch2 dsp)
 		{
 			// returns array element count
 			ArrayNI ni = (ArrayNI)dsp.GetNativeInstance(ClassID);
 			if (ni == null)
 			{
-				throw new TJSException(Error.SpecifyArray);
+				throw new TjsException(Error.SpecifyArray);
 			}
 			return ni.mItems.Count;
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public static int CopyArrayElementTo(Dispatch2 dsp, Variant[] dest, int dest_offset
 			, int start, int count)
 		{
@@ -48,7 +48,7 @@ namespace Tjs2.NativeApi.Internal
 			ArrayNI ni = (ArrayNI)dsp.GetNativeInstance(ClassID);
 			if (ni == null)
 			{
-				throw new TJSException(Error.SpecifyArray);
+				throw new TjsException(Error.SpecifyArray);
 			}
 			if (count < 0)
 			{
@@ -69,7 +69,7 @@ namespace Tjs2.NativeApi.Internal
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public ArrayClass() : base(CLASS_NAME)
 		{
 			// constructor
@@ -209,7 +209,7 @@ namespace Tjs2.NativeApi.Internal
 			{
 			}
 
-			/// <exception cref="TJSException"></exception>
+			/// <exception cref="TjsException"></exception>
 			protected internal override int Process(Variant result, Variant[] param, Dispatch2
 				 objthis)
 			{
@@ -217,7 +217,7 @@ namespace Tjs2.NativeApi.Internal
 				{
 					return Error.E_NATIVECLASSCRASH;
 				}
-				if (TJS.mStorage == null)
+				if (Tjs.mStorage == null)
 				{
 					return Error.E_NATIVECLASSCRASH;
 				}
@@ -237,7 +237,7 @@ namespace Tjs2.NativeApi.Internal
 					mode = param[1].AsString();
 				}
 				ni.mItems.Clear();
-				string content = TJS.mStorage.ReadText(name, mode);
+				string content = Tjs.mStorage.ReadText(name, mode);
 				int count = content.Length;
 				int lines = 0;
 				int reamain = 0;
@@ -300,7 +300,7 @@ namespace Tjs2.NativeApi.Internal
 			{
 			}
 
-			/// <exception cref="TJSException"></exception>
+			/// <exception cref="TjsException"></exception>
 			protected internal override int Process(Variant result, Variant[] param, Dispatch2
 				 objthis)
 			{
@@ -319,7 +319,7 @@ namespace Tjs2.NativeApi.Internal
 				{
 					mode = param[1].AsString();
 				}
-				TextWriteStreamInterface stream = TJS.mStorage.CreateTextWriteStream(name, mode);
+				TextWriteStreamInterface stream = Tjs.mStorage.CreateTextWriteStream(name, mode);
 				try
 				{
 					Iterator<Variant> i = ni.mItems.Iterator();
@@ -351,7 +351,7 @@ namespace Tjs2.NativeApi.Internal
 			{
 			}
 
-			/// <exception cref="TJSException"></exception>
+			/// <exception cref="TjsException"></exception>
 			protected internal override int Process(Variant result, Variant[] param, Dispatch2
 				 objthis)
 			{
@@ -370,7 +370,7 @@ namespace Tjs2.NativeApi.Internal
 				{
 					mode = param[1].AsString();
 				}
-				TextWriteStreamInterface stream = TJS.mStorage.CreateTextWriteStream(name, mode);
+				TextWriteStreamInterface stream = Tjs.mStorage.CreateTextWriteStream(name, mode);
 				try
 				{
 					AList<Dispatch2> stack = new AList<Dispatch2>();
@@ -395,7 +395,7 @@ namespace Tjs2.NativeApi.Internal
 			{
 			}
 
-			/// <exception cref="TJSException"></exception>
+			/// <exception cref="TjsException"></exception>
 			protected internal override int Process(Variant result, Variant[] param, Dispatch2
 				 objthis)
 			{
@@ -634,7 +634,7 @@ namespace Tjs2.NativeApi.Internal
 			{
 			}
 
-			/// <exception cref="TJSException"></exception>
+			/// <exception cref="TjsException"></exception>
 			protected internal override int Process(Variant result, Variant[] param, Dispatch2
 				 objthis)
 			{
@@ -661,7 +661,7 @@ namespace Tjs2.NativeApi.Internal
 					}
 					else
 					{
-						throw new TJSException(Error.NullAccess);
+						throw new TjsException(Error.NullAccess);
 					}
 				}
 				return Error.S_OK;
@@ -674,7 +674,7 @@ namespace Tjs2.NativeApi.Internal
 			{
 			}
 
-			/// <exception cref="TJSException"></exception>
+			/// <exception cref="TjsException"></exception>
 			protected internal override int Process(Variant result, Variant[] param, Dispatch2
 				 objthis)
 			{
@@ -702,7 +702,7 @@ namespace Tjs2.NativeApi.Internal
 					}
 					else
 					{
-						throw new TJSException(Error.NullAccess);
+						throw new TjsException(Error.NullAccess);
 					}
 				}
 				return Error.S_OK;
@@ -731,7 +731,7 @@ namespace Tjs2.NativeApi.Internal
 			{
 			}
 
-			/// <exception cref="TJSException"></exception>
+			/// <exception cref="TjsException"></exception>
 			protected internal override int Process(Variant result, Variant[] param, Dispatch2
 				 objthis)
 			{
@@ -794,7 +794,7 @@ namespace Tjs2.NativeApi.Internal
 			{
 			}
 
-			/// <exception cref="TJSException"></exception>
+			/// <exception cref="TjsException"></exception>
 			protected internal override int Process(Variant result, Variant[] param, Dispatch2
 				 objthis)
 			{
@@ -847,7 +847,7 @@ namespace Tjs2.NativeApi.Internal
 			{
 			}
 
-			/// <exception cref="TJSException"></exception>
+			/// <exception cref="TjsException"></exception>
 			protected internal override int Process(Variant result, Variant[] param, Dispatch2
 				 objthis)
 			{
@@ -871,7 +871,7 @@ namespace Tjs2.NativeApi.Internal
 			{
 			}
 
-			/// <exception cref="TJSException"></exception>
+			/// <exception cref="TjsException"></exception>
 			protected internal override int Process(Variant result, Variant[] param, Dispatch2
 				 objthis)
 			{
@@ -905,7 +905,7 @@ namespace Tjs2.NativeApi.Internal
 			{
 			}
 
-			/// <exception cref="TJSException"></exception>
+			/// <exception cref="TjsException"></exception>
 			protected internal override int Process(Variant result, Variant[] param, Dispatch2
 				 objthis)
 			{
@@ -939,7 +939,7 @@ namespace Tjs2.NativeApi.Internal
 			{
 			}
 
-			/// <exception cref="TJSException"></exception>
+			/// <exception cref="TjsException"></exception>
 			protected internal override int Process(Variant result, Variant[] param, Dispatch2
 				 objthis)
 			{
@@ -1312,7 +1312,7 @@ namespace Tjs2.NativeApi.Internal
 				{
 					return 0;
 				}
-				catch (TJSException)
+				catch (TjsException)
 				{
 					return 0;
 				}

@@ -20,7 +20,7 @@ namespace Tjs2.Extended
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public DebugClass() : base(CLASS_NAME)
 		{
 			// constructor
@@ -52,7 +52,7 @@ namespace Tjs2.Extended
 			{
 			}
 
-			/// <exception cref="TJSException"></exception>
+			/// <exception cref="TjsException"></exception>
 			protected internal override int Process(Variant result, Variant[] param, Dispatch2
 				 objthis)
 			{
@@ -66,13 +66,13 @@ namespace Tjs2.Extended
 			{
 			}
 
-			/// <exception cref="TJSException"></exception>
+			/// <exception cref="TjsException"></exception>
 			protected internal override int Process(Variant result, Variant[] param, Dispatch2
 				 objthis)
 			{
 				if( param.Length < 1 ) return Error.E_BADPARAMCOUNT;
 				if( param.Length == 1 ) {
-                    TJS.OutputToConsole(param[0].AsString());
+                    Tjs.OutputToConsole(param[0].AsString());
 					//Console.WriteLine( param[0].AsString() );
 				} else {
 					// display the arguments separated with ", "
@@ -82,7 +82,7 @@ namespace Tjs2.Extended
 						builder.Append( param[i].AsString() );
                     }
                     //Console.WriteLine(builder.ToString());
-                    TJS.OutputToConsole(builder.ToString());
+                    Tjs.OutputToConsole(builder.ToString());
                 }
 				return Error.S_OK;
 			}

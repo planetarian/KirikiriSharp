@@ -7,15 +7,15 @@ using System;
 namespace Tjs2.Engine
 {
 	[System.Serializable]
-	public class TJSSilentException : Exception
+	public class TjsSilentException : Exception
 	{
 		private const long serialVersionUID = 51839351639123183L;
 
-		public TJSSilentException()
+		public TjsSilentException()
 		{
 		}
 
-		public TJSSilentException(string msg) : base(msg)
+		public TjsSilentException(string msg) : base(msg)
 		{
 		}
 	}

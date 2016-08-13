@@ -42,19 +42,19 @@ namespace Tjs2.Engine.Translate
 
 		protected internal const int OP_DEC = unchecked((int)(0x0010));
 
-		internal WeakReference<TJS> mOwner;
+		internal WeakReference<Tjs> mOwner;
 
-		public virtual TJS GetOwner()
+		public virtual Tjs GetOwner()
 		{
 			return mOwner.Get();
 		}
 
-		public NativeConvertedClassBase(TJS owner)
+		public NativeConvertedClassBase(Tjs owner)
 		{
-			mOwner = new WeakReference<TJS>(owner);
+			mOwner = new WeakReference<Tjs>(owner);
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		protected internal static void OperateProperty(VariantClosure clo, Variant result
 			, Variant param, Dispatch2 objthis, int ope)
@@ -67,7 +67,7 @@ namespace Tjs2.Engine.Translate
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		protected internal static void OperatePropertyIndirect(VariantClosure clo, Variant
 			 name, Variant result, Variant param, Dispatch2 objthis, int ope)
@@ -93,7 +93,7 @@ namespace Tjs2.Engine.Translate
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		protected internal static void OperatePropertyDirect(VariantClosure clo, string name
 			, Variant result, Variant param, Dispatch2 objthis, int ope)
@@ -115,15 +115,15 @@ namespace Tjs2.Engine.Translate
 			builder.Append(", VM ip = ");
 			builder.Append(codepos);
 			builder.Append(" ====");
-			TJS.OutputToConsole(builder.ToString());
+			Tjs.OutputToConsole(builder.ToString());
 		}
 
 		// ディスアセンブルコードは出力できない
 		// レジスタダンプもほとんど意味がないので出力しない
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		protected internal static void ThrowInvalidVMCode()
 		{
-			throw new TJSException(Error.InvalidOpecode);
+			throw new TjsException(Error.InvalidOpecode);
 		}
 
 		/// <exception cref="VariantException"></exception>
@@ -136,7 +136,7 @@ namespace Tjs2.Engine.Translate
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		protected internal static void ThrowScriptException(Variant val, ScriptBlock block
 			, int srcpos)
@@ -160,22 +160,22 @@ namespace Tjs2.Engine.Translate
 			{
 				msg = "script exception";
 			}
-			throw new TJSScriptException(msg, block, srcpos, val);
+			throw new TjsScriptException(msg, block, srcpos, val);
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public static void ThrowFrom_tjs_error_num(int hr, int num)
 		{
 			Error.ThrowFrom_tjs_error(hr, num.ToString());
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public static void ThrowFrom_tjs_error(int hr, string name)
 		{
 			Error.ThrowFrom_tjs_error(hr, name);
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		protected internal static void SetPropertyIndirect(Variant target, Variant member
 			, Variant param, Dispatch2 objthis, int flags)
@@ -225,7 +225,7 @@ namespace Tjs2.Engine.Translate
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private static void GetOctetProperty(Variant result, Variant octet, Variant member
 			)
@@ -261,7 +261,7 @@ namespace Tjs2.Engine.Translate
 						int len = o != null ? o.Capacity() : 0;
 						if (n < 0 || n >= len)
 						{
-							throw new TJSException(Error.RangeError);
+							throw new TjsException(Error.RangeError);
 						}
 						result.Set(o.Get(n));
 						return;
@@ -277,14 +277,14 @@ namespace Tjs2.Engine.Translate
 				int len = o != null ? o.Capacity() : 0;
 				if (n < 0 || n >= len)
 				{
-					throw new TJSException(Error.RangeError);
+					throw new TjsException(Error.RangeError);
 				}
 				result.Set(o.Get(n));
 				return;
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private static void GetOctetProperty(Variant result, Variant octet, string name)
 		{
@@ -316,7 +316,7 @@ namespace Tjs2.Engine.Translate
 					int len = o != null ? o.Capacity() : 0;
 					if (n < 0 || n >= len)
 					{
-						throw new TJSException(Error.RangeError);
+						throw new TjsException(Error.RangeError);
 					}
 					result.Set(o.Get(n));
 					return;
@@ -325,7 +325,7 @@ namespace Tjs2.Engine.Translate
 			ThrowFrom_tjs_error(Error.E_MEMBERNOTFOUND, name);
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private static void GetOctetProperty(Variant result, Variant octet, int n)
 		{
@@ -334,13 +334,13 @@ namespace Tjs2.Engine.Translate
 			int len = o != null ? o.Capacity() : 0;
 			if (n < 0 || n >= len)
 			{
-				throw new TJSException(Error.RangeError);
+				throw new TjsException(Error.RangeError);
 			}
 			result.Set(o.Get(n));
 			return;
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private static void SetOctetProperty(Variant param, Variant octet, Variant member
 			)
@@ -373,7 +373,7 @@ namespace Tjs2.Engine.Translate
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private static void SetOctetProperty(Variant param, Variant octet, string name)
 		{
@@ -396,14 +396,14 @@ namespace Tjs2.Engine.Translate
 			ThrowFrom_tjs_error(Error.E_MEMBERNOTFOUND, name);
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private static void SetOctetProperty(Variant param, Variant octet, int member)
 		{
 			ThrowFrom_tjs_error(Error.E_ACCESSDENIED, string.Empty);
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private static void GetStringProperty(Variant result, Variant str, Variant member
 			)
@@ -445,7 +445,7 @@ namespace Tjs2.Engine.Translate
 						}
 						if (n < 0 || n > len)
 						{
-							throw new TJSException(Error.RangeError);
+							throw new TjsException(Error.RangeError);
 						}
 						result.Set(Sharpen.Runtime.Substring(s, n, n + 1));
 						return;
@@ -466,14 +466,14 @@ namespace Tjs2.Engine.Translate
 				}
 				if (n < 0 || n > len)
 				{
-					throw new TJSException(Error.RangeError);
+					throw new TjsException(Error.RangeError);
 				}
 				result.Set(Sharpen.Runtime.Substring(s, n, n + 1));
 				return;
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private static void GetStringProperty(Variant result, Variant str, string name)
 		{
@@ -511,7 +511,7 @@ namespace Tjs2.Engine.Translate
 					}
 					if (n < 0 || n > len)
 					{
-						throw new TJSException(Error.RangeError);
+						throw new TjsException(Error.RangeError);
 					}
 					result.Set(Sharpen.Runtime.Substring(s, n, n + 1));
 					return;
@@ -520,7 +520,7 @@ namespace Tjs2.Engine.Translate
 			ThrowFrom_tjs_error(Error.E_MEMBERNOTFOUND, name);
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private static void GetStringProperty(Variant result, Variant str, int n)
 		{
@@ -534,13 +534,13 @@ namespace Tjs2.Engine.Translate
 			}
 			if (n < 0 || n > len)
 			{
-				throw new TJSException(Error.RangeError);
+				throw new TjsException(Error.RangeError);
 			}
 			result.Set(Sharpen.Runtime.Substring(s, n, n + 1));
 			return;
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private static void SetStringProperty(Variant param, Variant str, Variant member)
 		{
@@ -572,7 +572,7 @@ namespace Tjs2.Engine.Translate
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private static void SetStringProperty(Variant param, Variant str, string name)
 		{
@@ -595,7 +595,7 @@ namespace Tjs2.Engine.Translate
 			ThrowFrom_tjs_error(Error.E_MEMBERNOTFOUND, name);
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		private static void SetStringProperty(Variant param, Variant str, int member)
 		{
@@ -604,7 +604,7 @@ namespace Tjs2.Engine.Translate
 		}
 
 		// getPropertyIndirect( ra[ra_offset+ca[code+1]], ra[ra_offset+ca[code+2]], ra[ra_offset+ca[code+3]], objthis, flags );
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		protected internal static void GetPropertyIndirect(Variant result, Variant target
 			, Variant member, Dispatch2 objthis, int flags)
@@ -656,7 +656,7 @@ namespace Tjs2.Engine.Translate
 
 		// setPropertyDirect( ra[ra_offset+ca[code+1]], da[ca[code+2]], ra[ra_offset+ca[code+3]], objthis, flags );
 		// member は、固定值なので、事前に分岐判定出来るから、展开するようにした方がいいな
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		protected internal static void SetPropertyDirect(Variant target, string member, Variant
 			 param, Dispatch2 objthis, int flags)
@@ -693,7 +693,7 @@ namespace Tjs2.Engine.Translate
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		protected internal static void SetPropertyDirect(Variant target, int member, Variant
 			 param, Dispatch2 objthis, int flags)
@@ -733,7 +733,7 @@ namespace Tjs2.Engine.Translate
 
 		//getPropertyDirect( ra[ra_offset+ca[code+1]], ra[ra_offset+ca[code+2]], da[ca[code+3]], objthis, flags );
 		// member は、固定值なので、事前に条件分岐できる、文字か数值で割り分け
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		protected internal static void GetPropertyDirect(Variant result, Variant target, 
 			string member, Dispatch2 objthis, int flags)
@@ -770,7 +770,7 @@ namespace Tjs2.Engine.Translate
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		protected internal static void GetPropertyDirect(Variant result, Variant target, 
 			int member, Dispatch2 objthis, int flags)
@@ -808,14 +808,14 @@ namespace Tjs2.Engine.Translate
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		protected internal static void ProcessOctetFunction(string member, string target, 
 			Variant[] args, Variant result)
 		{
 			ThrowFrom_tjs_error(Error.E_MEMBERNOTFOUND, member);
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		protected internal static void ProcessStringFunction(string member, string target
 			, Variant[] args, Variant result)
@@ -824,7 +824,7 @@ namespace Tjs2.Engine.Translate
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		protected internal static void InstanceOf(Variant name, Variant targ)
 		{
 			// checks instance inheritance.
@@ -843,7 +843,7 @@ namespace Tjs2.Engine.Translate
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="CompileException"></exception>
 		protected internal virtual void Eval(Variant val, Dispatch2 objthis, bool resneed
 			)
@@ -867,7 +867,7 @@ namespace Tjs2.Engine.Translate
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		protected internal static void TypeOfMemberIndirect(Variant result, Variant target
 			, Variant member, Dispatch2 objthis, int flags)
@@ -947,7 +947,7 @@ namespace Tjs2.Engine.Translate
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		protected internal static void TypeOfMemberDirect(Variant result, Variant target, 
 			string member, Dispatch2 objthis, int flags)
@@ -1001,7 +1001,7 @@ namespace Tjs2.Engine.Translate
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		protected internal static void TypeOfMemberDirect(Variant result, Variant target, 
 			int member, Dispatch2 objthis, int flags)
@@ -1066,7 +1066,7 @@ namespace Tjs2.Engine.Translate
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		protected internal static void OperatePropertyIndirect0(VariantClosure clo, Variant
 			 name, Variant result, Dispatch2 objthis, int ope)

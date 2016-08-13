@@ -19,7 +19,7 @@ namespace Tjs2.NativeApi
 		//this(null);
 		// 'name' is just to be used as a label for debugging
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int FuncCall(int flag, string membername, Variant result, Variant
 			[] param, Dispatch2 objthis)
 		{
@@ -31,7 +31,7 @@ namespace Tjs2.NativeApi
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int IsInstanceOf(int flag, string membername, string classname, Dispatch2
 			 objthis)
 		{

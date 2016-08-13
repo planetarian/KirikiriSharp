@@ -21,9 +21,9 @@ namespace Tjs2.Engine
 
 		private bool mIsUnlex;
 
-		private TJS mTJS;
+		private Tjs mTJS;
 
-		public PreprocessorExpressionParser(TJS tjs, string script) : base(script)
+		public PreprocessorExpressionParser(Tjs tjs, string script) : base(script)
 		{
 			//	private int mResult;
 			mIDs = new AList<string>();

@@ -191,11 +191,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Engine\StringStream.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Engine\SymbolData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Engine\TextWriteStreamInterface.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Engine\TJS.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Engine\TJSException.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Engine\TJSScriptError.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Engine\TJSScriptException.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Engine\TJSSilentException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Engine\TjsException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Engine\TjsScriptError.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Engine\TjsScriptException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Engine\TjsSilentException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Engine\Token.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Engine\TokenPair.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Engine\Translate\JavaCodeGenerator.cs" />
@@ -211,5 +210,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Engine\VariantException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Engine\VariantPool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Engine\VectorWrap.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tjs.cs" />
   </ItemGroup>
 </Project>

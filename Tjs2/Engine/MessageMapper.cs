@@ -23,7 +23,7 @@ namespace Tjs2.Engine
 				//mAssignedMessage = null;
 				mDefaultMessage = defmsg;
 				mName = name;
-				TJS.RegisterMessageMap(mName, this);
+				Tjs.RegisterMessageMap(mName, this);
 			}
 
 			public MessageHolder(string name, string defmsg, bool regist)
@@ -33,7 +33,7 @@ namespace Tjs2.Engine
 				if (regist)
 				{
 					mName = name;
-					TJS.RegisterMessageMap(mName, this);
+					Tjs.RegisterMessageMap(mName, this);
 				}
 				else
 				{
@@ -45,7 +45,7 @@ namespace Tjs2.Engine
 			{
 				if (mName != null)
 				{
-					TJS.UnregisterMessageMap(mName);
+					Tjs.UnregisterMessageMap(mName);
 				}
 				if (mAssignedMessage != null)
 				{

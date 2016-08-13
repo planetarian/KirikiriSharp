@@ -23,7 +23,7 @@ namespace Tjs2.Engine
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int FuncCall(int flag, string membername, Variant result, Variant[]
 			 param, Dispatch2 objthis)
 		{
@@ -38,7 +38,7 @@ namespace Tjs2.Engine
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int FuncCallByNum(int flag, int num, Variant result, Variant[] param
 			, Dispatch2 objthis)
 		{
@@ -53,7 +53,7 @@ namespace Tjs2.Engine
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int PropGet(int flag, string membername, Variant result, Dispatch2
 			 objthis)
 		{
@@ -68,7 +68,7 @@ namespace Tjs2.Engine
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int PropGetByNum(int flag, int num, Variant result, Dispatch2 objthis
 			)
 		{
@@ -83,7 +83,7 @@ namespace Tjs2.Engine
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int PropSet(int flag, string membername, Variant param, Dispatch2 
 			objthis)
 		{
@@ -98,7 +98,7 @@ namespace Tjs2.Engine
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int PropSetByNum(int flag, int num, Variant param, Dispatch2 objthis
 			)
 		{
@@ -113,7 +113,7 @@ namespace Tjs2.Engine
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int GetCount(IntWrapper result, string membername, Dispatch2 objthis
 			)
 		{
@@ -128,7 +128,7 @@ namespace Tjs2.Engine
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int GetCountByNum(IntWrapper result, int num, Dispatch2 objthis)
 		{
 			Dispatch2 OBJ1 = ((objthis != null) ? (objthis) : (mDispatch1));
@@ -142,7 +142,7 @@ namespace Tjs2.Engine
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int EnumMembers(int flags, EnumMembersCallback callback, Dispatch2
 			 objthis)
 		{
@@ -150,7 +150,7 @@ namespace Tjs2.Engine
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int DeleteMember(int flag, string membername, Dispatch2 objthis)
 		{
 			Dispatch2 OBJ1 = ((objthis != null) ? (objthis) : (mDispatch1));
@@ -164,7 +164,7 @@ namespace Tjs2.Engine
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int DeleteMemberByNum(int flag, int num, Dispatch2 objthis)
 		{
 			Dispatch2 OBJ1 = ((objthis != null) ? (objthis) : (mDispatch1));
@@ -178,7 +178,7 @@ namespace Tjs2.Engine
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int Invalidate(int flag, string membername, Dispatch2 objthis)
 		{
 			Dispatch2 OBJ1 = ((objthis != null) ? (objthis) : (mDispatch1));
@@ -192,7 +192,7 @@ namespace Tjs2.Engine
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int InvalidateByNum(int flag, int num, Dispatch2 objthis)
 		{
 			Dispatch2 OBJ1 = ((objthis != null) ? (objthis) : (mDispatch1));
@@ -206,7 +206,7 @@ namespace Tjs2.Engine
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int IsValid(int flag, string membername, Dispatch2 objthis)
 		{
 			Dispatch2 OBJ1 = ((objthis != null) ? (objthis) : (mDispatch1));
@@ -220,7 +220,7 @@ namespace Tjs2.Engine
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int IsValidByNum(int flag, int num, Dispatch2 objthis)
 		{
 			Dispatch2 OBJ1 = ((objthis != null) ? (objthis) : (mDispatch1));
@@ -234,7 +234,7 @@ namespace Tjs2.Engine
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int CreateNew(int flag, string membername, Holder<Dispatch2> result
 			, Variant[] param, Dispatch2 objthis)
 		{
@@ -249,7 +249,7 @@ namespace Tjs2.Engine
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int CreateNewByNum(int flag, int num, Holder<Dispatch2> result, Variant
 			[] param, Dispatch2 objthis)
 		{
@@ -264,7 +264,7 @@ namespace Tjs2.Engine
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int IsInstanceOf(int flag, string membername, string classname, Dispatch2
 			 objthis)
 		{
@@ -279,7 +279,7 @@ namespace Tjs2.Engine
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int IsInstanceOfByNum(int flag, int num, string classname, Dispatch2
 			 objthis)
 		{
@@ -294,7 +294,7 @@ namespace Tjs2.Engine
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int Operation(int flag, string membername, Variant result, Variant
 			 param, Dispatch2 objthis)
 		{
@@ -309,7 +309,7 @@ namespace Tjs2.Engine
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int OperationByNum(int flag, int num, Variant result, Variant param
 			, Dispatch2 objthis)
 		{

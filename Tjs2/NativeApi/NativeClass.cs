@@ -24,7 +24,7 @@ namespace Tjs2.NativeApi
 			// a class to receive member callback from class
 			// destination object
 			/// <exception cref="VariantException"></exception>
-			/// <exception cref="TJSException"></exception>
+			/// <exception cref="TjsException"></exception>
 			public override int FuncCall(int flag, string membername, Variant result, Variant
 				[] param, Dispatch2 objthis)
 			{
@@ -58,15 +58,15 @@ namespace Tjs2.NativeApi
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name), "Must provide a class name.");
 			mCallFinalize = false;
-			ClassName = TJS.MapGlobalStringMap(name);
-            ClassId = TJS.RegisterNativeClass(name);
+			ClassName = Tjs.MapGlobalStringMap(name);
+            ClassId = Tjs.RegisterNativeClass(name);
             mWorkParam = new Variant();
 		}
 
 		//mCallback = new Callback();
 		//mCallbackClosure = new VariantClosure(mCallback,null);
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual void RegisterNCM(string name, Dispatch2 dsp, string className, int
 			 type)
 		{
@@ -74,11 +74,11 @@ namespace Tjs2.NativeApi
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual void RegisterNCM(string name, Dispatch2 dsp, string className, int
 			 type, int flags)
 		{
-			string tname = TJS.MapGlobalStringMap(name);
+			string tname = Tjs.MapGlobalStringMap(name);
 			// add to this
 			//Variant val = new Variant(dsp);
 			//propSet( (Interface.MEMBERENSURE | Interface.IGNOREPROP) | flags, tname, val, this);
@@ -95,7 +95,7 @@ namespace Tjs2.NativeApi
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		protected internal override void FinalizeObject()
 		{
 			base.FinalizeObject();
@@ -106,7 +106,7 @@ namespace Tjs2.NativeApi
 			return new CustomObject();
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		protected internal virtual NativeInstance CreateNativeInstance()
 		{
 			return null;
@@ -118,7 +118,7 @@ namespace Tjs2.NativeApi
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int FuncCall(int flag, string membername, Variant result, Variant
 			[] param, Dispatch2 objthis)
 		{
@@ -143,7 +143,7 @@ namespace Tjs2.NativeApi
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int CreateNew(int flag, string membername, Holder<Dispatch2> result
 			, Variant[] param, Dispatch2 objthis)
 		{
@@ -176,7 +176,7 @@ namespace Tjs2.NativeApi
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int IsInstanceOf(int flag, string membername, string classname, Dispatch2
 			 objthis)
 		{

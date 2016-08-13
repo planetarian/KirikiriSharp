@@ -18,7 +18,7 @@ namespace Tjs2.NativeApi.Internal
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public RandomGeneratorClass() : base(CLASS_NAME)
 		{
 			// constructor
@@ -58,7 +58,7 @@ namespace Tjs2.NativeApi.Internal
 			}
 
 			/// <exception cref="VariantException"></exception>
-			/// <exception cref="TJSException"></exception>
+			/// <exception cref="TjsException"></exception>
 			protected internal override int Process(Variant result, Variant[] param, Dispatch2
 				 objthis)
 			{
@@ -97,7 +97,7 @@ namespace Tjs2.NativeApi.Internal
 			{
 			}
 
-			/// <exception cref="TJSException"></exception>
+			/// <exception cref="TjsException"></exception>
 			protected internal override int Process(Variant result, Variant[] param, Dispatch2
 				 objthis)
 			{
@@ -230,7 +230,7 @@ namespace Tjs2.NativeApi.Internal
 			{
 			}
 
-			/// <exception cref="TJSException"></exception>
+			/// <exception cref="TjsException"></exception>
 			protected internal override int Process(Variant result, Variant[] param, Dispatch2
 				 objthis)
 			{

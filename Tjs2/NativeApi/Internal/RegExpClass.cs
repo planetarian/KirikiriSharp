@@ -27,7 +27,7 @@ namespace Tjs2.NativeApi.Internal
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private static void Compile(Variant[] param, RegExpNI _this)
 		{
 			string expr = param[0].AsString();
@@ -66,7 +66,7 @@ namespace Tjs2.NativeApi.Internal
 			catch (ArgumentException e)
 			{
 				_this.RegEx = null;
-				throw new TJSException(e.Message);
+				throw new TjsException(e.Message);
 			}
 			_this.mFlags = flags;
 		}
@@ -99,7 +99,7 @@ namespace Tjs2.NativeApi.Internal
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private static bool Exec(string target, RegExpNI _this)
 		{
 			bool matched = Match(target, _this);
@@ -133,10 +133,10 @@ namespace Tjs2.NativeApi.Internal
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private static Dispatch2 GetResultArray(bool matched, RegExpNI _this, Matcher m)
 		{
-			Dispatch2 array = TJS.CreateArrayObject();
+			Dispatch2 array = Tjs.CreateArrayObject();
 			if (matched)
 			{
 				if (_this.RegEx == null)
@@ -169,7 +169,7 @@ namespace Tjs2.NativeApi.Internal
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public RegExpClass() : base(CLASS_NAME)
 		{
 			// constructor
@@ -222,7 +222,7 @@ namespace Tjs2.NativeApi.Internal
 			}
 
 			/// <exception cref="VariantException"></exception>
-			/// <exception cref="TJSException"></exception>
+			/// <exception cref="TjsException"></exception>
 			protected internal override int Process(Variant result, Variant[] param, Dispatch2
 				 objthis)
 			{
@@ -264,7 +264,7 @@ namespace Tjs2.NativeApi.Internal
 			{
 			}
 
-			/// <exception cref="TJSException"></exception>
+			/// <exception cref="TjsException"></exception>
 			protected internal override int Process(Variant result, Variant[] param, Dispatch2
 				 objthis)
 			{
@@ -289,7 +289,7 @@ namespace Tjs2.NativeApi.Internal
 			{
 			}
 
-			/// <exception cref="TJSException"></exception>
+			/// <exception cref="TjsException"></exception>
 			protected internal override int Process(Variant result, Variant[] param, Dispatch2
 				 objthis)
 			{
@@ -338,7 +338,7 @@ namespace Tjs2.NativeApi.Internal
                 //}
 				catch (ArgumentException e)
 				{
-					throw new TJSException(e.Message);
+					throw new TjsException(e.Message);
 				}
 				_this.mFlags = flags;
 				return Error.S_OK;
@@ -351,7 +351,7 @@ namespace Tjs2.NativeApi.Internal
 			{
 			}
 
-			/// <exception cref="TJSException"></exception>
+			/// <exception cref="TjsException"></exception>
 			protected internal override int Process(Variant result, Variant[] param, Dispatch2
 				 objthis)
 			{
@@ -382,7 +382,7 @@ namespace Tjs2.NativeApi.Internal
 			{
 			}
 
-			/// <exception cref="TJSException"></exception>
+			/// <exception cref="TjsException"></exception>
 			protected internal override int Process(Variant result, Variant[] param, Dispatch2
 				 objthis)
 			{
@@ -414,7 +414,7 @@ namespace Tjs2.NativeApi.Internal
 			{
 			}
 
-			/// <exception cref="TJSException"></exception>
+			/// <exception cref="TjsException"></exception>
 			protected internal override int Process(Variant result, Variant[] param, Dispatch2
 				 objthis)
 			{
@@ -445,7 +445,7 @@ namespace Tjs2.NativeApi.Internal
 			{
 			}
 
-			/// <exception cref="TJSException"></exception>
+			/// <exception cref="TjsException"></exception>
 			protected internal override int Process(Variant result, Variant[] param, Dispatch2
 				 objthis)
 			{
@@ -527,7 +527,7 @@ namespace Tjs2.NativeApi.Internal
 			{
 			}
 
-			/// <exception cref="TJSException"></exception>
+			/// <exception cref="TjsException"></exception>
 			protected internal override int Process(Variant result, Variant[] param, Dispatch2
 				 objthis)
 			{

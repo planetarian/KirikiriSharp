@@ -24,7 +24,7 @@ namespace Tjs2.NativeApi.Java
 
 		private int mClassID;
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public NativeJavaClassProperty(MethodInfo get, MethodInfo set, int classID)
 		{
 			mClassID = classID;
@@ -34,7 +34,7 @@ namespace Tjs2.NativeApi.Java
 				mReturnType = get.ReturnType;
 				if (mReturnType.Equals(typeof(void)))
 				{
-					throw new TJSException(Error.InternalError);
+					throw new TjsException(Error.InternalError);
 				}
 				if (get.IsStatic)
 				{
@@ -51,7 +51,7 @@ namespace Tjs2.NativeApi.Java
 				}
 				else
 				{
-					throw new TJSException(Error.InternalError);
+					throw new TjsException(Error.InternalError);
 				}
 				if (set.IsStatic)
 				{
@@ -61,7 +61,7 @@ namespace Tjs2.NativeApi.Java
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int IsInstanceOf(int flag, string membername, string classname, Dispatch2
 			 objthis)
 		{
@@ -76,7 +76,7 @@ namespace Tjs2.NativeApi.Java
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int PropGet(int flag, string membername, Variant result, Dispatch2
 			 objthis)
 		{
@@ -138,13 +138,13 @@ namespace Tjs2.NativeApi.Java
 				}
 				else
 				{
-					if (t is TJSException)
+					if (t is TjsException)
 					{
-						throw (TJSException)t;
+						throw (TjsException)t;
 					}
 					else
 					{
-						throw new TJSException(t.ToString());
+						throw new TjsException(t.ToString());
 					}
 				}
 			}
@@ -152,7 +152,7 @@ namespace Tjs2.NativeApi.Java
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int PropSet(int flag, string membername, Variant param, Dispatch2
 			 objthis)
 		{
@@ -220,13 +220,13 @@ namespace Tjs2.NativeApi.Java
 				}
 				else
 				{
-					if (t is TJSException)
+					if (t is TjsException)
 					{
-						throw (TJSException)t;
+						throw (TjsException)t;
 					}
 					else
 					{
-						throw new TJSException(t.ToString());
+						throw new TjsException(t.ToString());
 					}
 				}
 			}

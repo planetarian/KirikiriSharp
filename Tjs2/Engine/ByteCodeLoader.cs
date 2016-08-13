@@ -187,8 +187,8 @@ namespace Tjs2.Engine
 		{
 		}
 
-		/// <exception cref="TJSException"></exception>
-		public virtual ScriptBlock ReadByteCode(TJS owner, string name, BinaryStream input
+		/// <exception cref="TjsException"></exception>
+		public virtual ScriptBlock ReadByteCode(Tjs owner, string name, BinaryStream input
 			)
 		{
 			try
@@ -291,7 +291,7 @@ namespace Tjs2.Engine
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private void ReadObjects(ScriptBlock block, byte[] buff, int offset, int size)
 		{
 			string[] strarray = mStringArray;
@@ -326,7 +326,7 @@ namespace Tjs2.Engine
 				offset += 4;
 				if (tag != FILE_TAG_LE)
 				{
-					throw new TJSException(Error.ByteCodeBroken);
+					throw new TjsException(Error.ByteCodeBroken);
 				}
 				//int objsize = (buff[offset]&0xff) | (buff[offset+1]&0xff) << 8 | (buff[offset+2]&0xff) << 16 | (buff[offset+3]&0xff) << 24;
 				offset += 4;
@@ -739,7 +739,7 @@ namespace Tjs2.Engine
 							(int)(0xff))) << 8);
 						offset += 2;
 					}
-					mStringArray[i] = TJS.MapGlobalStringMap(new string(ch));
+					mStringArray[i] = Tjs.MapGlobalStringMap(new string(ch));
 					offset += (len & 1) << 1;
 				}
 			}

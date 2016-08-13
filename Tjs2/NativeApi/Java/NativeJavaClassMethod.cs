@@ -20,14 +20,14 @@ namespace Tjs2.NativeApi.Java
 
 		private bool mIsStatic;
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public NativeJavaClassMethod(MethodInfo m, int classID)
 		{
 			mProcess = m;
 			mClassID = classID;
 			if (m == null)
 			{
-				throw new TJSException(Error.InternalError);
+				throw new TjsException(Error.InternalError);
 			}
 			mParamTypes = Sharpen.Runtime.GetParameterTypes(m);
 			mReturnType = m.ReturnType;
@@ -38,7 +38,7 @@ namespace Tjs2.NativeApi.Java
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int IsInstanceOf(int flag, string membername, string classname, Dispatch2
 			 objthis)
 		{
@@ -54,7 +54,7 @@ namespace Tjs2.NativeApi.Java
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int FuncCall(int flag, string membername, Variant result, Variant
 			[] param, Dispatch2 objthis)
 		{
@@ -121,13 +121,13 @@ namespace Tjs2.NativeApi.Java
 				}
 				else
 				{
-					if (t is TJSException)
+					if (t is TjsException)
 					{
-						throw (TJSException)t;
+						throw (TjsException)t;
 					}
 					else
 					{
-						throw new TJSException(t.ToString());
+						throw new TjsException(t.ToString());
 					}
 				}
 			}

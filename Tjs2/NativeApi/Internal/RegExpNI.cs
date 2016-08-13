@@ -96,13 +96,13 @@ namespace Tjs2.NativeApi.Internal
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual void Split(Holder<Dispatch2> array, string target, bool purgeempty
 			)
 		{
 			if (array.mValue == null)
 			{
-				array.mValue = TJS.CreateArrayObject();
+				array.mValue = Tjs.CreateArrayObject();
 			}
 			if (RegEx != null)
 			{

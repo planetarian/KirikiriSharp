@@ -25,7 +25,7 @@ namespace Tjs2.Engine.Translate
 				mCode = code;
 			}
 
-			/// <exception cref="TJSException"></exception>
+			/// <exception cref="TjsException"></exception>
 			public virtual void Write(string classname, TextWriteStreamInterface stream)
 			{
 				if (mType == ContextType.FUNCTION)
@@ -123,12 +123,12 @@ namespace Tjs2.Engine.Translate
 			return mName;
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual void Write()
 		{
 			string classname = mName + "Class";
 			string filename = mName + "Class.java";
-			TextWriteStreamInterface stream = TJS.mStorage.CreateTextWriteStream(filename, "utf-8"
+			TextWriteStreamInterface stream = Tjs.mStorage.CreateTextWriteStream(filename, "utf-8"
 				);
 			stream.Write("package jp.kirikiri.tjs2java;\n");
 			stream.Write("import jp.kirikiri.tjs2.*;\n");

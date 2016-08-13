@@ -5,7 +5,7 @@
 namespace Tjs2.Engine
 {
 	[System.Serializable]
-	public class VariantException : TJSException
+	public class VariantException : TjsException
 	{
 		private const long serialVersionUID = -3605064460238917638L;
 

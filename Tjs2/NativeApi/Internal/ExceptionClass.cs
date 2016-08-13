@@ -13,7 +13,7 @@ namespace Tjs2.NativeApi.Internal
 		private static readonly string CLASS_NAME = "Exception";
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public ExceptionClass() : base(CLASS_NAME)
 		{
 			// constructor
@@ -30,7 +30,7 @@ namespace Tjs2.NativeApi.Internal
 			}
 
 			/// <exception cref="VariantException"></exception>
-			/// <exception cref="TJSException"></exception>
+			/// <exception cref="TjsException"></exception>
 			protected internal override int Process(Variant result, Variant[] param, Dispatch2
 				 objthis)
 			{

@@ -47,7 +47,7 @@ namespace Tjs2.Engine
 		private const int OP_MAX = OP_DEC;
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		protected internal virtual void BeforeDestruction()
 		{
 		}
@@ -72,7 +72,7 @@ namespace Tjs2.Engine
 				catch (VariantException)
 				{
 				}
-				catch (TJSException)
+				catch (TjsException)
 				{
 				}
 			}
@@ -87,7 +87,7 @@ namespace Tjs2.Engine
 
 		// function invocation
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int FuncCall(int flag, string memberName, Variant result, Variant[]
 			 param, Dispatch2 objThis)
 		{
@@ -96,7 +96,7 @@ namespace Tjs2.Engine
 
 		// function invocation by index number
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int FuncCallByNum(int flag, int num, Variant result, Variant[] param
 			, Dispatch2 objThis)
 		{
@@ -105,7 +105,7 @@ namespace Tjs2.Engine
 
 		// property get
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int PropGet(int flag, string memberName, Variant result, Dispatch2
 			 objThis)
 		{
@@ -114,7 +114,7 @@ namespace Tjs2.Engine
 
 		// property get by index number
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int PropGetByNum(int flag, int num, Variant result, Dispatch2 objThis
 			)
 		{
@@ -123,7 +123,7 @@ namespace Tjs2.Engine
 
 		// property set
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int PropSet(int flag, string memberName, Variant param, Dispatch2 
 			objThis)
 		{
@@ -132,7 +132,7 @@ namespace Tjs2.Engine
 
 		// property set by index number
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int PropSetByNum(int flag, int num, Variant param, Dispatch2 objThis
 			)
 		{
@@ -141,7 +141,7 @@ namespace Tjs2.Engine
 
 		// get member count
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int GetCount(IntWrapper result, string memberName, Dispatch2 objThis
 			)
 		{
@@ -150,7 +150,7 @@ namespace Tjs2.Engine
 
 		// get member count by index number ( result is Integer )
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int GetCountByNum(IntWrapper result, int num, Dispatch2 objThis)
 		{
 			return GetCount(result, num.ToString(), objThis);
@@ -158,7 +158,7 @@ namespace Tjs2.Engine
 
 		// enumerate members
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int EnumMembers(int flags, EnumMembersCallback callback, Dispatch2
 			 objthis)
 		{
@@ -167,7 +167,7 @@ namespace Tjs2.Engine
 
 		// delete member
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int DeleteMember(int flag, string memberName, Dispatch2 objThis)
 		{
 			return memberName != null ? Error.E_MEMBERNOTFOUND : Error.E_NOTIMPL;
@@ -175,7 +175,7 @@ namespace Tjs2.Engine
 
 		// delete member by index number
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int DeleteMemberByNum(int flag, int num, Dispatch2 objThis)
 		{
 			return DeleteMember(flag, num.ToString(), objThis);
@@ -183,7 +183,7 @@ namespace Tjs2.Engine
 
 		// invalidation
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int Invalidate(int flag, string memberName, Dispatch2 objThis)
 		{
 			return memberName != null ? Error.E_MEMBERNOTFOUND : Error.E_NOTIMPL;
@@ -191,7 +191,7 @@ namespace Tjs2.Engine
 
 		// invalidation by index number
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int InvalidateByNum(int flag, int num, Dispatch2 objThis)
 		{
 			return Invalidate(flag, num.ToString(), objThis);
@@ -199,7 +199,7 @@ namespace Tjs2.Engine
 
 		// get validation, returns true or false
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int IsValid(int flag, string memberName, Dispatch2 objThis)
 		{
 			return memberName != null ? Error.E_MEMBERNOTFOUND : Error.E_NOTIMPL;
@@ -207,7 +207,7 @@ namespace Tjs2.Engine
 
 		// get validation by index number, returns true or false
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int IsValidByNum(int flag, int num, Dispatch2 objThis)
 		{
 			return IsValid(flag, num.ToString(), objThis);
@@ -215,7 +215,7 @@ namespace Tjs2.Engine
 
 		// create new object
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int CreateNew(int flag, string memberName, Holder<Dispatch2> result
 			, Variant[] param, Dispatch2 objThis)
 		{
@@ -224,7 +224,7 @@ namespace Tjs2.Engine
 
 		// create new object by index number
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int CreateNewByNum(int flag, int num, Holder<Dispatch2> result, Variant
 			[] param, Dispatch2 objThis)
 		{
@@ -234,7 +234,7 @@ namespace Tjs2.Engine
 		// reserved1 not use
 		// class instance matching returns false or true
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int IsInstanceOf(int flag, string memberName, string className, Dispatch2
 			 objThis)
 		{
@@ -243,7 +243,7 @@ namespace Tjs2.Engine
 
 		// class instance matching by index number
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int IsInstanceOfByNum(int flag, int num, string className, Dispatch2
 			 objThis)
 		{
@@ -252,7 +252,7 @@ namespace Tjs2.Engine
 
 		// operation with member
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int Operation(int flag, string memberName, Variant result, Variant
 			 param, Dispatch2 objThis)
 		{
@@ -287,7 +287,7 @@ namespace Tjs2.Engine
 
 		// operation with member by index number
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int OperationByNum(int flag, int num, Variant result, Variant param
 			, Dispatch2 objThis)
 		{

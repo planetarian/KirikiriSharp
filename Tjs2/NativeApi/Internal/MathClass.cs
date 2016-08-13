@@ -26,7 +26,7 @@ namespace Tjs2.NativeApi.Internal
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public MathClass() : base(CLASS_NAME)
 		{
 			if (mRandomGenerator == null)

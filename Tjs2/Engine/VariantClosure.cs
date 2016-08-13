@@ -67,228 +67,228 @@ namespace Tjs2.Engine
 			}
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		public virtual int FuncCall(int flag, string memberName, Variant result, Variant[]
 			 param, Dispatch2 objThis)
 		{
 			if (mObject == null)
 			{
-				throw new TJSException(Error.NullAccess);
+				throw new TjsException(Error.NullAccess);
 			}
 			return mObject.FuncCall(flag, memberName, result, param, mObjThis != null ? mObjThis
 				 : (objThis != null ? objThis : mObject));
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		public virtual int FuncCallByNum(int flag, int num, Variant result, Variant[] param
 			, Dispatch2 objThis)
 		{
 			if (mObject == null)
 			{
-				throw new TJSException(Error.NullAccess);
+				throw new TjsException(Error.NullAccess);
 			}
 			return mObject.FuncCallByNum(flag, num, result, param, mObjThis != null ? mObjThis
 				 : (objThis != null ? objThis : mObject));
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		public virtual int PropGet(int flag, string mumberName, Variant result, Dispatch2
 			 objThis)
 		{
 			if (mObject == null)
 			{
-				throw new TJSException(Error.NullAccess);
+				throw new TjsException(Error.NullAccess);
 			}
 			return mObject.PropGet(flag, mumberName, result, mObjThis != null ? mObjThis : (objThis
 				 != null ? objThis : mObject));
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		public virtual int PropGetByNum(int flag, int num, Variant result, Dispatch2 objThis
 			)
 		{
 			if (mObject == null)
 			{
-				throw new TJSException(Error.NullAccess);
+				throw new TjsException(Error.NullAccess);
 			}
 			return mObject.PropGetByNum(flag, num, result, mObjThis != null ? mObjThis : (objThis
 				 != null ? objThis : mObject));
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		public virtual int PropSet(int flag, string mumberName, Variant param, Dispatch2 
 			objThis)
 		{
 			if (mObject == null)
 			{
-				throw new TJSException(Error.NullAccess);
+				throw new TjsException(Error.NullAccess);
 			}
 			return mObject.PropSet(flag, mumberName, param, mObjThis != null ? mObjThis : (objThis
 				 != null ? objThis : mObject));
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		public virtual int PropSetByNum(int flag, int num, Variant param, Dispatch2 objThis
 			)
 		{
 			if (mObject == null)
 			{
-				throw new TJSException(Error.NullAccess);
+				throw new TjsException(Error.NullAccess);
 			}
 			return mObject.PropSetByNum(flag, num, param, mObjThis != null ? mObjThis : (objThis
 				 != null ? objThis : mObject));
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		public virtual int GetCount(IntWrapper result, string memberName, Dispatch2 objThis
 			)
 		{
 			if (mObject == null)
 			{
-				throw new TJSException(Error.NullAccess);
+				throw new TjsException(Error.NullAccess);
 			}
 			return mObject.GetCount(result, memberName, mObjThis != null ? mObjThis : (objThis
 				 != null ? objThis : mObject));
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		public virtual int GetCountByNum(IntWrapper result, int num, Dispatch2 objThis)
 		{
 			if (mObject == null)
 			{
-				throw new TJSException(Error.NullAccess);
+				throw new TjsException(Error.NullAccess);
 			}
 			return mObject.GetCountByNum(result, num, mObjThis != null ? mObjThis : (objThis 
 				!= null ? objThis : mObject));
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int EnumMembers(int flags, EnumMembersCallback callback, Dispatch2
 			 objthis)
 		{
 			if (mObject == null)
 			{
-				throw new TJSException(Error.NullAccess);
+				throw new TjsException(Error.NullAccess);
 			}
 			return mObject.EnumMembers(flags, callback, mObjThis != null ? mObjThis : (objthis
 				 != null ? objthis : mObject));
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		public virtual int DeleteMember(int flag, string memberName, Dispatch2 objThis)
 		{
 			if (mObject == null)
 			{
-				throw new TJSException(Error.NullAccess);
+				throw new TjsException(Error.NullAccess);
 			}
 			return mObject.DeleteMember(flag, memberName, mObjThis != null ? mObjThis : (objThis
 				 != null ? objThis : mObject));
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		public virtual int DeleteMemberByNum(int flag, int num, Dispatch2 objThis)
 		{
 			if (mObject == null)
 			{
-				throw new TJSException(Error.NullAccess);
+				throw new TjsException(Error.NullAccess);
 			}
 			return mObject.DeleteMemberByNum(flag, num, mObjThis != null ? mObjThis : (objThis
 				 != null ? objThis : mObject));
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		public virtual int Invalidate(int flag, string memberName, Dispatch2 objThis)
 		{
 			if (mObject == null)
 			{
-				throw new TJSException(Error.NullAccess);
+				throw new TjsException(Error.NullAccess);
 			}
 			return mObject.Invalidate(flag, memberName, mObjThis != null ? mObjThis : (objThis
 				 != null ? objThis : mObject));
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		public virtual int InvalidateByNum(int flag, int num, Dispatch2 objThis)
 		{
 			if (mObject == null)
 			{
-				throw new TJSException(Error.NullAccess);
+				throw new TjsException(Error.NullAccess);
 			}
 			return mObject.InvalidateByNum(flag, num, mObjThis != null ? mObjThis : (objThis 
 				!= null ? objThis : mObject));
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		public virtual int IsValid(int flag, string memberName, Dispatch2 objThis)
 		{
 			if (mObject == null)
 			{
-				throw new TJSException(Error.NullAccess);
+				throw new TjsException(Error.NullAccess);
 			}
 			return mObject.IsValid(flag, memberName, mObjThis != null ? mObjThis : (objThis !=
 				 null ? objThis : mObject));
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		public virtual int IsValidByNum(int flag, int num, Dispatch2 objThis)
 		{
 			if (mObject == null)
 			{
-				throw new TJSException(Error.NullAccess);
+				throw new TjsException(Error.NullAccess);
 			}
 			return mObject.IsValidByNum(flag, num, mObjThis != null ? mObjThis : (objThis != 
 				null ? objThis : mObject));
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		public virtual int CreateNew(int flag, string memberName, Holder<Dispatch2> result
 			, Variant[] param, Dispatch2 objThis)
 		{
 			if (mObject == null)
 			{
-				throw new TJSException(Error.NullAccess);
+				throw new TjsException(Error.NullAccess);
 			}
 			return mObject.CreateNew(flag, memberName, result, param, mObjThis != null ? mObjThis
 				 : (objThis != null ? objThis : mObject));
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		public virtual int CreateNewByNum(int flag, int num, Holder<Dispatch2> result, Variant
 			[] param, Dispatch2 objThis)
 		{
 			if (mObject == null)
 			{
-				throw new TJSException(Error.NullAccess);
+				throw new TjsException(Error.NullAccess);
 			}
 			return mObject.CreateNewByNum(flag, num, result, param, mObjThis != null ? mObjThis
 				 : (objThis != null ? objThis : mObject));
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		public virtual int IsInstanceOf(int flag, string memberName, string className, Dispatch2
 			 objThis)
 		{
 			if (mObject == null)
 			{
-				throw new TJSException(Error.NullAccess);
+				throw new TjsException(Error.NullAccess);
 			}
 			return mObject.IsInstanceOf(flag, memberName, className, mObjThis != null ? mObjThis
 				 : (objThis != null ? objThis : mObject));
@@ -296,40 +296,40 @@ namespace Tjs2.Engine
 
 		// オリジナルはバグ？ 关数名が一致していない
 		//tjs_error IsInstanceOf(tjs_uint32 flag, tjs_int num, tjs_char *classname, iTJSDispatch2 *objthis) const {
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		public virtual int IsInstanceOfByNum(int flag, int num, string className, Dispatch2
 			 objThis)
 		{
 			if (mObject == null)
 			{
-				throw new TJSException(Error.NullAccess);
+				throw new TjsException(Error.NullAccess);
 			}
 			return mObject.IsInstanceOfByNum(flag, num, className, mObjThis != null ? mObjThis
 				 : (objThis != null ? objThis : mObject));
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		public virtual int Operation(int flag, string memberName, Variant result, Variant
 			 param, Dispatch2 objThis)
 		{
 			if (mObject == null)
 			{
-				throw new TJSException(Error.NullAccess);
+				throw new TjsException(Error.NullAccess);
 			}
 			return mObject.Operation(flag, memberName, result, param, mObjThis != null ? mObjThis
 				 : (objThis != null ? objThis : mObject));
 		}
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		/// <exception cref="VariantException"></exception>
 		public virtual int OperationByNum(int flag, int num, Variant result, Variant param
 			, Dispatch2 objThis)
 		{
 			if (mObject == null)
 			{
-				throw new TJSException(Error.NullAccess);
+				throw new TjsException(Error.NullAccess);
 			}
 			return mObject.OperationByNum(flag, num, result, param, mObjThis != null ? mObjThis
 				 : (objThis != null ? objThis : mObject));

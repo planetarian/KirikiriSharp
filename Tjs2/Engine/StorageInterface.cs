@@ -6,13 +6,13 @@ namespace Tjs2.Engine
 {
 	public interface StorageInterface
 	{
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		string ReadText(string name, string modestr);
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		TextWriteStreamInterface CreateTextWriteStream(string name, string modestr);
 
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		BinaryStream CreateBinaryWriteStream(string name);
 	}
 }

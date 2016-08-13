@@ -25,7 +25,7 @@ namespace Tjs2.NativeApi.Internal
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public DictionaryClass() : base(CLASS_NAME)
 		{
 			// constructor
@@ -125,7 +125,7 @@ namespace Tjs2.NativeApi.Internal
 			{
 			}
 
-			/// <exception cref="TJSException"></exception>
+			/// <exception cref="TjsException"></exception>
 			protected internal override int Process(Variant result, Variant[] param, Dispatch2
 				 objthis)
 			{
@@ -149,7 +149,7 @@ namespace Tjs2.NativeApi.Internal
 				{
 					mode = param[1].AsString();
 				}
-				TextWriteStreamInterface stream = TJS.mStorage.CreateTextWriteStream(name, mode);
+				TextWriteStreamInterface stream = Tjs.mStorage.CreateTextWriteStream(name, mode);
 				try
 				{
 					AList<Dispatch2> stack = new AList<Dispatch2>();
@@ -174,7 +174,7 @@ namespace Tjs2.NativeApi.Internal
 			{
 			}
 
-			/// <exception cref="TJSException"></exception>
+			/// <exception cref="TjsException"></exception>
 			protected internal override int Process(Variant result, Variant[] param, Dispatch2
 				 objthis)
 			{
@@ -210,7 +210,7 @@ namespace Tjs2.NativeApi.Internal
 					}
 					else
 					{
-						throw new TJSException(Error.NullAccess);
+						throw new TjsException(Error.NullAccess);
 					}
 				}
 				return Error.S_OK;
@@ -223,7 +223,7 @@ namespace Tjs2.NativeApi.Internal
 			{
 			}
 
-			/// <exception cref="TJSException"></exception>
+			/// <exception cref="TjsException"></exception>
 			protected internal override int Process(Variant result, Variant[] param, Dispatch2
 				 objthis)
 			{
@@ -255,7 +255,7 @@ namespace Tjs2.NativeApi.Internal
 					}
 					else
 					{
-						throw new TJSException(Error.NullAccess);
+						throw new TjsException(Error.NullAccess);
 					}
 				}
 				return Error.S_OK;

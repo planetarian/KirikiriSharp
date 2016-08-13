@@ -6,12 +6,12 @@ namespace Tjs2.Engine.Translate
 {
 	public abstract class NativeConvertedClassMethod : NativeConvertedClassBase
 	{
-		public NativeConvertedClassMethod(TJS owner) : base(owner)
+		public NativeConvertedClassMethod(Tjs owner) : base(owner)
 		{
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int IsInstanceOf(int flag, string membername, string classname, Dispatch2
 			 objthis)
 		{
@@ -26,7 +26,7 @@ namespace Tjs2.Engine.Translate
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override int FuncCall(int flag, string membername, Variant result, Variant
 			[] param, Dispatch2 objthis)
 		{
@@ -47,7 +47,7 @@ namespace Tjs2.Engine.Translate
 
 		// override this instead of FuncCall
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		protected internal abstract int Process(Variant result, Variant[] param, Dispatch2
 			 objthis);
 	}

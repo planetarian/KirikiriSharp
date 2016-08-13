@@ -22,7 +22,7 @@ namespace Tjs2.NativeApi.Internal
 			}
 
 			/// <exception cref="VariantException"></exception>
-			/// <exception cref="TJSException"></exception>
+			/// <exception cref="TjsException"></exception>
 			public virtual bool Callback(string name, int flags, Variant value)
 			{
 				// hidden members are not copied
@@ -55,7 +55,7 @@ namespace Tjs2.NativeApi.Internal
 			}
 
 			/// <exception cref="VariantException"></exception>
-			/// <exception cref="TJSException"></exception>
+			/// <exception cref="TjsException"></exception>
 			public virtual bool Callback(string name, int flags, Variant value)
 			{
 				if ((flags & Interface.HIDDENMEMBER) != 0)
@@ -99,7 +99,7 @@ namespace Tjs2.NativeApi.Internal
 			}
 
 			/// <exception cref="VariantException"></exception>
-			/// <exception cref="TJSException"></exception>
+			/// <exception cref="TjsException"></exception>
 			public virtual bool Callback(string name, int flags, Variant value)
 			{
 				if ((flags & Interface.HIDDENMEMBER) != 0)
@@ -137,7 +137,7 @@ namespace Tjs2.NativeApi.Internal
 							else
 							{
 								// becomes null
-								Dispatch2 newobj = TJS.CreateDictionaryObject();
+								Dispatch2 newobj = Tjs.CreateDictionaryObject();
 								val.SetObject(newobj, newobj);
 								DictionaryNI newni;
 								if ((newni = (DictionaryNI)newobj.GetNativeInstance(DictionaryClass.ClassID)) != 
@@ -172,7 +172,7 @@ namespace Tjs2.NativeApi.Internal
 								else
 								{
 									// becomes null
-									Dispatch2 newobj = TJS.CreateArrayObject();
+									Dispatch2 newobj = Tjs.CreateArrayObject();
 									val.SetObject(newobj, newobj);
 									ArrayNI newni;
 									if ((newni = (ArrayNI)newobj.GetNativeInstance(ArrayClass.ClassID)) != null)
@@ -222,7 +222,7 @@ namespace Tjs2.NativeApi.Internal
 
 		// Invalidate override
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public override void Invalidate()
 		{
 			// put here something on invalidation
@@ -238,14 +238,14 @@ namespace Tjs2.NativeApi.Internal
 
 		// check validation
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual void Assign(Dispatch2 dsp)
 		{
 			Assign(dsp, true);
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual void Assign(Dispatch2 dsp, bool clear)
 		{
 			// copy members from "dsp" to "Owner"
@@ -296,7 +296,7 @@ namespace Tjs2.NativeApi.Internal
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual void SaveStructuredData(AList<Dispatch2> stack, TextWriteStreamInterface
 			 stream, string indentstr)
 		{
@@ -315,7 +315,7 @@ namespace Tjs2.NativeApi.Internal
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual void AssignStructure(Dispatch2 dsp, AList<Dispatch2> stack)
 		{
 			// assign structured data from dsp
@@ -339,7 +339,7 @@ namespace Tjs2.NativeApi.Internal
 			}
 			else
 			{
-				throw new TJSException(Error.SpecifyDicOrArray);
+				throw new TjsException(Error.SpecifyDicOrArray);
 			}
 		}
 

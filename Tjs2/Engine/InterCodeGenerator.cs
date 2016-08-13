@@ -420,7 +420,7 @@ namespace Tjs2.Engine
 
 		// update FunctionRegisterCodePoint
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		protected internal virtual void FinalizeObject()
 		{
 			if (mPropSetter != null)
@@ -556,7 +556,7 @@ namespace Tjs2.Engine
 			Variant v;
 			if (val.IsString())
 			{
-				v = new Variant(TJS.MapGlobalStringMap(val.AsString()));
+				v = new Variant(Tjs.MapGlobalStringMap(val.AsString()));
 			}
 			else
 			{
@@ -585,7 +585,7 @@ namespace Tjs2.Engine
 					int idx = compiler.GetCodeIndex((InterCodeGenerator)o);
 					if (idx < 0)
 					{
-						TJS.OutputToConsole("not found");
+						Tjs.OutputToConsole("not found");
 					}
 					d.Set(compiler.GetCodeObject(idx));
 				}
@@ -3741,7 +3741,7 @@ namespace Tjs2.Engine
 						{
 							code = (restype & RT_NEEDED) != 0 ? VM_EVAL : VM_EEXP;
 							// warn if T_EVAL is used in non-global position
-							if (TJS.mWarnOnNonGlobalEvalOperator && mContextType != ContextType.TOP_LEVEL)
+							if (Tjs.mWarnOnNonGlobalEvalOperator && mContextType != ContextType.TOP_LEVEL)
 							{
 								OutputWarning(Error.WarnEvalOperator);
 							}
@@ -4687,7 +4687,7 @@ namespace Tjs2.Engine
 				{
 					// unary '&' operator
 					// unary '*' operator
-					if (node.GetOpecode() == (TJS.mUnaryAsteriskIgnoresPropAccess ? Token.T_PROPACCESS
+					if (node.GetOpecode() == (Tjs.mUnaryAsteriskIgnoresPropAccess ? Token.T_PROPACCESS
 						 : Token.T_IGNOREPROP))
 					{
 						// unary '&' operator
@@ -5368,7 +5368,7 @@ namespace Tjs2.Engine
 			strBuilder.Append(" line ");
 			strBuilder.Append((1 + mBlock.SrcPosToLine(errpos)).ToString());
 			//mBlock.getTJS().outputToConsole( strBuilder.toString() );
-			TJS.OutputToConsole(strBuilder.ToString());
+			Tjs.OutputToConsole(strBuilder.ToString());
 			strBuilder = null;
 		}
 
@@ -5387,7 +5387,7 @@ namespace Tjs2.Engine
 		// has expanding node
 		//void addJumpList() { mJumpList.add( mCodeAreaPos ); }
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual void Commit()
 		{
 			// some context-related processing at final, and commits it
@@ -5751,7 +5751,7 @@ namespace Tjs2.Engine
 		}
 
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		private void RegisterFunction()
 		{
 			// registration of function to the parent's context
@@ -5862,93 +5862,93 @@ namespace Tjs2.Engine
 			{
 				case ContextType.TOP_LEVEL:
 				{
-					TJS.OutputToConsole(space + "Top level Name: " + mName);
+					Tjs.OutputToConsole(space + "Top level Name: " + mName);
 					break;
 				}
 
 				case ContextType.FUNCTION:
 				{
-					TJS.OutputToConsole(space + "Function Name: " + mName);
+					Tjs.OutputToConsole(space + "Function Name: " + mName);
 					break;
 				}
 
 				case ContextType.EXPR_FUNCTION:
 				{
-					TJS.OutputToConsole(space + "Expr function Name: " + mName);
+					Tjs.OutputToConsole(space + "Expr function Name: " + mName);
 					break;
 				}
 
 				case ContextType.PROPERTY:
 				{
-					TJS.OutputToConsole(space + "Property Name: " + mName);
+					Tjs.OutputToConsole(space + "Property Name: " + mName);
 					break;
 				}
 
 				case ContextType.PROPERTY_SETTER:
 				{
-					TJS.OutputToConsole(space + "Property setter Name: " + mName);
+					Tjs.OutputToConsole(space + "Property setter Name: " + mName);
 					break;
 				}
 
 				case ContextType.PROPERTY_GETTER:
 				{
-					TJS.OutputToConsole(space + "Property getter Name: " + mName);
+					Tjs.OutputToConsole(space + "Property getter Name: " + mName);
 					break;
 				}
 
 				case ContextType.CLASS:
 				{
-					TJS.OutputToConsole(space + "Class Name: " + mName);
+					Tjs.OutputToConsole(space + "Class Name: " + mName);
 					break;
 				}
 
 				case ContextType.SUPER_CLASS_GETTER:
 				{
-					TJS.OutputToConsole(space + "Super class getter Name: " + mName);
+					Tjs.OutputToConsole(space + "Super class getter Name: " + mName);
 					break;
 				}
 			}
-			TJS.OutputToConsole(space + "  Max variable count: " + mMaxVariableCount);
-			TJS.OutputToConsole(space + "  Variable reserve count: " + mVariableReserveCount);
-			TJS.OutputToConsole(space + "  Max frame count: " + mMaxFrameCount);
-			TJS.OutputToConsole(space + "  Func decl arg count: " + mFuncDeclArgCount);
-			TJS.OutputToConsole(space + "  Func decl unnamed arg array base: " + mFuncDeclUnnamedArgArrayBase
+			Tjs.OutputToConsole(space + "  Max variable count: " + mMaxVariableCount);
+			Tjs.OutputToConsole(space + "  Variable reserve count: " + mVariableReserveCount);
+			Tjs.OutputToConsole(space + "  Max frame count: " + mMaxFrameCount);
+			Tjs.OutputToConsole(space + "  Func decl arg count: " + mFuncDeclArgCount);
+			Tjs.OutputToConsole(space + "  Func decl unnamed arg array base: " + mFuncDeclUnnamedArgArrayBase
 				);
-			TJS.OutputToConsole(space + "  Func decl collapse base: " + mFuncDeclCollapseBase
+			Tjs.OutputToConsole(space + "  Func decl collapse base: " + mFuncDeclCollapseBase
 				);
 			if (mPropSetter != null)
 			{
-				TJS.OutputToConsole(space + "  Prop setter:");
+				Tjs.OutputToConsole(space + "  Prop setter:");
 				mPropSetter.DumpClassStructure(nest + 1);
 			}
 			else
 			{
-				TJS.OutputToConsole(space + "  Prop setter: not found");
+				Tjs.OutputToConsole(space + "  Prop setter: not found");
 			}
 			if (mPropGetter != null)
 			{
-				TJS.OutputToConsole(space + "  Prop getter: true");
+				Tjs.OutputToConsole(space + "  Prop getter: true");
 				mPropGetter.DumpClassStructure(nest + 1);
 			}
 			else
 			{
-				TJS.OutputToConsole(space + "  Prop getter: not found");
+				Tjs.OutputToConsole(space + "  Prop getter: not found");
 			}
 			if (mSuperClassGetter != null)
 			{
-				TJS.OutputToConsole(space + "  Super class getter:");
+				Tjs.OutputToConsole(space + "  Super class getter:");
 				mSuperClassGetter.DumpClassStructure(nest + 1);
 			}
 			else
 			{
-				TJS.OutputToConsole(space + "  Super class getter: not found");
+				Tjs.OutputToConsole(space + "  Super class getter: not found");
 			}
 			if (mProperties != null)
 			{
 				int count = mProperties.Count;
 				if (count > 0)
 				{
-					TJS.OutputToConsole(space + "  Members:");
+					Tjs.OutputToConsole(space + "  Members:");
 					for (int i_1 = 0; i_1 < count; i_1++)
 					{
 						mProperties[i_1].Value.DumpClassStructure(nest + 1);
@@ -5956,15 +5956,15 @@ namespace Tjs2.Engine
 				}
 				else
 				{
-					TJS.OutputToConsole(space + "  Members: not found");
+					Tjs.OutputToConsole(space + "  Members: not found");
 				}
 			}
 			else
 			{
-				TJS.OutputToConsole(space + "  Members: not found");
+				Tjs.OutputToConsole(space + "  Members: not found");
 			}
 			{
-				TJS.OutputToConsole(space + "  Data array members:");
+				Tjs.OutputToConsole(space + "  Data array members:");
 				int count = mDataArray.Length;
 				Variant[] da = mDataArray;
 				for (int i_1 = 0; i_1 < count; i_1++)

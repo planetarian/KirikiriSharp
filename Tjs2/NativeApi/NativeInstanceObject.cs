@@ -10,7 +10,7 @@ namespace Tjs2.NativeApi
 	{
 		// TJS constructor
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual int Construct(Variant[] param, Dispatch2 tjsObj)
 		{
 			return Error.S_OK;
@@ -18,7 +18,7 @@ namespace Tjs2.NativeApi
 
 		// called before destruction
 		/// <exception cref="VariantException"></exception>
-		/// <exception cref="TJSException"></exception>
+		/// <exception cref="TjsException"></exception>
 		public virtual void Invalidate()
 		{
 		}
