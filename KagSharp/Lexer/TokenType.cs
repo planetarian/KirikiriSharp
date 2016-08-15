@@ -17,8 +17,11 @@
         Integer,
         Float,
 
-        OpenBracket,
-        CloseBracket,
+        Pipe,
+        At,
+
+        LeftBracket,
+        RightBracket,
 
         /*
 
@@ -49,7 +52,6 @@
         Caret,
         Plus,
         Minus,
-        At,
 
         LeftParen,
         RightParen,

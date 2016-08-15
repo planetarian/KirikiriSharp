@@ -26,6 +26,10 @@ namespace KirikiriSharp.Lexer
         static Lexer()
         {
             Keywords.Add("*", TokenType.Asterisk);
+            Keywords.Add("|", TokenType.Pipe);
+            Keywords.Add("@", TokenType.At);
+            Keywords.Add("[", TokenType.LeftBracket);
+            Keywords.Add("]", TokenType.RightBracket);
             /*
             Keywords.Add("global", TokenType.Global);
             Keywords.Add("scene", TokenType.Scene);
@@ -49,7 +53,7 @@ namespace KirikiriSharp.Lexer
             Keywords.Add("+", TokenType.Plus);
             Keywords.Add("-", TokenType.Minus);
             Keywords.Add("^", TokenType.Caret);
-            Keywords.Add("@", TokenType.At);*/
+            */
         }
 
         public Lexer(ISourceReader reader)
@@ -156,8 +160,7 @@ namespace KirikiriSharp.Lexer
             }
         }
 
-        /*
-        private Token ReadString()
+        /* TODO: private Token ReadString()
         {
             var escaped = new StringBuilder();
             while (true)
@@ -246,8 +249,7 @@ namespace KirikiriSharp.Lexer
             return digit;
         }
 
-        /* TODO
-        private Token ReadLineComment()
+        /* TODO private Token ReadLineComment()
         {
             Advance(); // second '/'
 
@@ -276,8 +278,7 @@ namespace KirikiriSharp.Lexer
 
         }*/
 
-        /* TODO
-        private Token ReadBlockComment()
+        /* TODO private Token ReadBlockComment()
         {
             const string nullError = "Unexpected end of file inside block comment.";
             while (true)
