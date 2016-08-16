@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using KirikiriSharp;
 using KirikiriSharp.Lexer;
 using Tjs2;
 using Tjs2.Engine;
@@ -23,9 +24,13 @@ namespace KirikiriTest
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly object _lock = new object();
+
         public MainWindow()
         {
             InitializeComponent();
+
+            GraupelTextBox.TextChanged += (o, a) => GraupelTextBox.ScrollToEnd();
         }
 
         private void BrowseButton_Click(object sender, RoutedEventArgs e)
@@ -71,7 +76,7 @@ namespace KirikiriTest
         private string CheckFile(string fileName)
         {
             var fileInfo = new FileInfo(fileName);
-            if (fileInfo.Length > 1024 * 16)
+            if (fileInfo.Length > 1024 * 256)
                 throw new InvalidOperationException("File is too large.");
             return File.ReadAllText(fileName);
         }
@@ -79,13 +84,13 @@ namespace KirikiriTest
         private void TestKagStringButton_Click(object sender, RoutedEventArgs e)
         {
             string contents = InputTextBox.Text;
-            TestKag(contents);
+            Task.Run(()=>TestKag(contents));
         }
 
         private void TestTjsStringButton_Click(object sender, RoutedEventArgs e)
         {
             string contents = InputTextBox.Text;
-            TestTjs(contents);
+            Task.Run(() => TestTjs(contents));
         }
 
         private void TestKag(string input)
@@ -101,26 +106,36 @@ namespace KirikiriTest
                 {
                     token = morpher.ReadToken();
                 }
+                catch (ParseException ex)
+                {
+                    Log(Environment.NewLine +
+                        ex.Position + Environment.NewLine +
+                        ex.GetType() + Environment.NewLine +
+                        ex.Message + Environment.NewLine);
+                    break;
+                }
                 catch (Exception ex)
                 {
-                    GraupelTextBox.Text += Environment.NewLine + ex.Message + Environment.NewLine;
-                    return;
+                    Log(Environment.NewLine +
+                        ex.GetType() + Environment.NewLine +
+                        ex.Message + Environment.NewLine);
+                    break;
                 }
-                GraupelTextBox.Text += token + Environment.NewLine;
+                Log(token.ToString());
             } while (token.Type != TokenType.Eof);
+            Log("Done." + Environment.NewLine);
         }
 
         private void TestTjs(string input)
         {
-            GraupelTextBox.Text = String.Empty;
-
-            Action<string> outputAction = msg => GraupelTextBox.Text += msg + Environment.NewLine;
+            //GraupelTextBox.Text = String.Empty;
+            
             try
             {
                 Tjs.mStorage = null;
                 Tjs.Initialize();
                 var mScriptEngine = new Tjs();
-                Tjs.SetConsoleOutput(new DelegateConsoleOutput(outputAction));
+                Tjs.SetConsoleOutput(new DelegateConsoleOutput(Log));
 
                 Dispatch2 dsp = mScriptEngine.GetGlobal();
                 var ret = new Variant();
@@ -129,8 +144,14 @@ namespace KirikiriTest
             }
             catch (Exception ex)
             {
-                outputAction(ex.ToString());
+                Log(ex + Environment.NewLine);
             }
+            Log("Done." + Environment.NewLine);
+        }
+
+        public void Log(string data)
+        {
+            Dispatcher.BeginInvoke(new Action(() =>GraupelTextBox.AppendText(data + Environment.NewLine)));
         }
 
         public class MessageConsoleOutput : IConsoleOutput

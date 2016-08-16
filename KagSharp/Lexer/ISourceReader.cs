@@ -4,6 +4,7 @@
     {
         string Description { get; }
         char Current { get; }
+        char Next { get; }
         void Advance();
     }
 }

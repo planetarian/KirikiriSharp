@@ -22,6 +22,6 @@ namespace KirikiriSharp.Lexer
 
         public bool IsType(TokenType type) => Type == type;
 
-        public override string ToString() => $"({Type}) {Regex.Escape(Text)}";
+        public override string ToString() => $"({Type}) {Regex.Escape(Text)} : {Regex.Escape(Value.ToString())}";
     }
 }

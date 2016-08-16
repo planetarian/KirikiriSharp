@@ -3,13 +3,17 @@
     public enum TokenType
     {
         // Ignored by parser
-        
+
+        Asterisk,
+        Hash,
+        LineComment,
+
+
         Invalid,
 
         WhiteSpace,
         LineEnd,
 
-        Asterisk,
         Label,
         Identifier,
 
@@ -22,10 +26,11 @@
 
         LeftBracket,
         RightBracket,
-
+        
+        Equals,
+        Text,
         /*
 
-        LineComment,
         BlockComment,
 
 
@@ -35,7 +40,6 @@
         Question,
         Bang,
 
-        String,
         Integer,
         Float,
 

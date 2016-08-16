@@ -15,7 +15,7 @@
         <TabControl x:Name="SourceTabs" Grid.Row="0">
             <TabItem Header="Text">
                 <Grid>
-                    <TextBox x:Name="InputTextBox" Margin="10,10,10,35" TextWrapping="Wrap" Text="*start" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" AcceptsReturn="True"/>
+                    <TextBox x:Name="InputTextBox" Margin="10,10,10,35" TextWrapping="Wrap" Text="*start" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" AcceptsReturn="True" AcceptsTab="True"/>
                     <Button x:Name="KagInputButton" Content="KAG" Margin="10,0,0,10.4" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="75" Click="TestKagStringButton_Click"/>
                     <Button x:Name="TjsInputButton" Content="TJS" Margin="90,0,0,10.4" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="75" Click="TestTjsStringButton_Click"/>
                 </Grid>
@@ -33,7 +33,7 @@
         <TabControl x:Name="ResultTabs" Grid.Row="2">
             <TabItem Header="List">
                 <Grid>
-                    <TextBox x:Name="GraupelTextBox" Margin="0" AcceptsReturn="True"/>
+                    <TextBox x:Name="GraupelTextBox" Margin="0" AcceptsReturn="True" IsReadOnly="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Tree">

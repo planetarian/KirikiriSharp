@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using KirikiriSharp.Util;
 
@@ -15,6 +16,13 @@ namespace KirikiriSharp.Lexer
         private int _col;
         private char _cur;
         private char _prev;
+
+        private bool _insideTitle;
+        private bool _insideLabel;
+        private bool _insideTag;
+        private bool _inlineTag;
+
+        private readonly char[] _eolChars = {'\r', '\n', '\0'};
 
         private static Dictionary<string, TokenType> Keywords { get; }
             = new Dictionary<string, TokenType>();
@@ -68,99 +76,227 @@ namespace KirikiriSharp.Lexer
             _read = String.Empty;
         }
 
-        public Token ReadToken()
+        private char Advance()
+        {
+            char c = Current;
+            _reader.Advance();
+            _read += c;
+
+            // update position
+            if (c == '\n' || (c == '\r' && Current != '\n'))
+            {
+                _line++;
+                _col = 1;
+            }
+            else _col++;
+
+            return c;
+        }
+
+        private char Consume()
         {
             _prev = _cur;
             _cur = Advance();
-            switch (_cur)
-            {
-                case ' ':
-                case '\t':
-                    return ReadWhitespace();
-                case '\r':
-                case '\n':
-                    if (_cur == '\r' && Current == '\n')
-                        Advance();
-                    return MakeToken(TokenType.LineEnd);
-                case '*':
-                    return MakeToken(TokenType.Asterisk);
-
-                    /* TODO
-                case '(':
-                    return MakeToken(TokenType.LeftParen);
-                case ')':
-                    return MakeToken(TokenType.RightParen);
-                case '{':
-                    return MakeToken(TokenType.LeftBrace);
-                case '}':
-                    return MakeToken(TokenType.RightBrace);
-                case ',':
-                    return MakeToken(TokenType.Comma);
-                case ';':
-                    return MakeToken(TokenType.SemiColon);
-                case ':':
-                    return MakeToken(TokenType.Colon);
-                case '?':
-                    return MakeToken(TokenType.Question);
-                case '!':
-                    return MakeToken(TokenType.Bang);
-                case '@':
-                    return MakeToken(TokenType.At);
-                case '"':
-                    return ReadString();
-                case '/':
-                    switch (Current)
-                    {
-                        case '/':
-                            return ReadLineComment();
-                        case '*':
-                            return ReadBlockComment();
-                        default:
-                            return ReadIdentifier();
-                    }*/
-
-                case '-':
-                case '.':
-                    if (_cur == '.' && IsDigit(Current))
-                        return ReadNumber();
-                    if (_cur == '-' && IsDigit(Current) && !IsDigit(_prev))
-                        return ReadNumber();
-                    return IsOperator(Current)
-                        ? ReadIdentifier()
-                        : MakeToken(TokenType.Identifier);
-
-                case '\0':
-                    return MakeToken(TokenType.Eof);
-
-                default:
-                    if (IsIdentifier(_cur))
-                        return ReadIdentifier();
-                    //if (IsOperator(_cur))
-                        //return ReadOperator();
-                    if (IsDigit(_cur))
-                        return ReadNumber();
-
-                    throw new ParseException(Position.None, "Unknown character.");
-            }
+            return _cur;
         }
 
-        private Token ReadWhitespace()
+        private char Skip()
+        {
+            _cur = Advance();
+            return _cur;
+        }
+
+        public Token ReadToken()
+        {
+            Consume();
+            while (true)
+            {
+                // Ignore tabs for free indentation
+                if (_cur == '\t' || _cur == ' ')
+                {
+                    // remove whitespace character from read cache
+                    _read = _read.Substring(0, _read.Length - 1);
+                    Skip();
+                    continue;
+                }
+
+                // Certain tokens only valid after a newline/start-of-file
+                if (_eolChars.Contains(_prev))
+                {
+                    switch (_cur)
+                    {
+                        case '*':
+                            _insideLabel = true;
+                            return MakeToken(TokenType.Asterisk);
+                        case '#':
+                            if (!_eolChars.Contains(Current))
+                                _insideTitle = true;
+                            return MakeToken(TokenType.Hash);
+                        case ';':
+                            return ReadLineComment();
+                        case '@':
+                            _insideTag = true;
+                            _inlineTag = false;
+                            return MakeToken(TokenType.At);
+                    } // switch _cur
+                }
+
+                if (_insideTitle){
+                    return ReadText();}
+
+                if (_insideLabel)
+                {
+                    switch (_cur)
+                    {
+                        case '|':
+                            _insideLabel = false;
+                            return MakeToken(TokenType.Pipe);
+                        default:
+                            return ReadIdentifier();
+                    }
+                }
+
+                // Any other tokens, and non-post-newline tokens
+                if (_insideTag)
+                {
+                    if (_inlineTag && _cur == ']')
+                    {
+                        _insideTag = false;
+                        return MakeToken(TokenType.RightBracket);
+                    }
+                    switch (_cur)
+                    {
+                        case '=':
+                            return MakeToken(TokenType.Equals);
+                        default:
+                            return ReadIdentifier();
+                    }
+                }
+
+                switch (_cur)
+                {
+                    // newlines
+                    case '\r': // mac
+                        if (Current == '\n') // windows
+                            Advance();
+                        goto case '\n';
+                    case '\n': // *nix
+                        _insideTag = false;
+                        return MakeToken(TokenType.LineEnd);
+                    // eof
+                    case '\0':
+                        _insideTag = false;
+                        return MakeToken(TokenType.Eof);
+                    // tag
+                    case '[':
+                        if (Current != '[') // escaped LBracket counts as plain text
+                        {
+                            _insideTag = true;
+                            _inlineTag = true;
+                            return MakeToken(TokenType.LeftBracket);
+                        }
+                        goto default;
+                    default:
+                        return ReadText();
+                }
+            } // while true
+        } // ReadToken()
+
+        private Token ReadLineComment()
         {
             while (true)
             {
                 switch (Current)
                 {
-                    case ' ':
-                    case '\t':
+                    case '\n':
+                    case '\r':
+                    case '\0':
+                        string value = _read.Substring(1).Trim();
+                        return MakeToken(TokenType.LineComment, value);
+                    default:
                         Advance();
+                        break;
+                }
+            }
+
+        }//TODO*/
+
+        private Token ReadText()
+        {
+            _insideTitle = false;
+            var sb = new StringBuilder();
+            char c = _cur;
+
+            for (int i = 0; i < 9000; i++)
+            {
+                sb.Append(c);
+                if (Current == '[')
+                {
+                    if (_reader.Next == '[')
+                        Advance();
+                    else
+                        return MakeToken(TokenType.Text, sb.ToString());
+                }
+
+                if (_eolChars.Contains(Current))
+                    return MakeToken(TokenType.Text, sb.ToString());
+                c = Advance();
+            }
+            throw new ParseException(CurrentPosition, "ReadText exceeded maximum iterations.");
+
+        }
+
+
+        /* TODO
+    case '(':
+        return MakeToken(TokenType.LeftParen);
+    case ')':
+        return MakeToken(TokenType.RightParen);
+    case '{':
+        return MakeToken(TokenType.LeftBrace);
+    case '}':
+        return MakeToken(TokenType.RightBrace);
+    case ',':
+        return MakeToken(TokenType.Comma);
+    case ';':
+        return MakeToken(TokenType.SemiColon);
+    case ':':
+        return MakeToken(TokenType.Colon);
+    case '?':
+        return MakeToken(TokenType.Question);
+    case '!':
+        return MakeToken(TokenType.Bang);
+    case '@':
+        return MakeToken(TokenType.At);
+    case '"':
+        return ReadString();
+    case '/':
+        switch (Current)
+        {
+            case '/':
+                return ReadLineComment();
+            case '*':
+                return ReadBlockComment();
+            default:
+                return ReadIdentifier();
+        }*/
+
+        /* TODO private Token ReadWhitespace()
+        {
+            while (true)
+            {
+                switch (Current)
+                {
+                    case '\t':
+                        Advance(); // tabs are ignored
                         break;
                     default:
                         return MakeToken(TokenType.WhiteSpace);
                 }
             }
-        }
+        } //*/
 
-        /* TODO: private Token ReadString()
+        /* TODO private Token ReadString()
         {
             var escaped = new StringBuilder();
             while (true)
@@ -235,9 +371,9 @@ namespace KirikiriSharp.Lexer
                 }
 
             }
-        }*/
+        }//*/
 
-        private int ReadHexDigit()
+        /* TODO private int ReadHexDigit()
         {
             char c = char.ToLower(Advance());
             int digit = "0123456789abcdef".IndexOf(c);
@@ -247,36 +383,7 @@ namespace KirikiriSharp.Lexer
                 throw new ParseException(Position.None, "Expected hex digit.");
             }
             return digit;
-        }
-
-        /* TODO private Token ReadLineComment()
-        {
-            Advance(); // second '/'
-
-            int slashCount = 2;
-            
-            while (Current == '/')
-            {
-                ++slashCount;
-                Advance();
-            }
-
-            while (true)
-            {
-                switch (Current)
-                {
-                    case '\n':
-                    case '\r':
-                    case '\0':
-                        string value = _read.Substring(slashCount).Trim();
-                        return MakeToken(TokenType.LineComment, value);
-                    default:
-                        Advance();
-                        break;
-                }
-            }
-
-        }*/
+        }//*/
 
         /* TODO private Token ReadBlockComment()
         {
@@ -302,19 +409,80 @@ namespace KirikiriSharp.Lexer
                     // Otherwise keep advancing.
                 }
             }
-        }*/
+        }//*/
 
         private Token ReadIdentifier()
         {
-            int idx = 0;
-            while (true)
+            var sb = new StringBuilder();
+            char c = _cur;
+
+            bool openQuotes = false;
+            char quoteType = '"';
+            int openBrackets = 0;
+            int maxOpenBrackets = 0;
+
+
+            for (int i = 0; i < 9000; i++)
             {
-                if (IsIdentifier(Current) || (idx > 0 && IsDigit(Current)))
-                    Advance();
-                else
-                    return MakeToken(TokenType.Identifier);
-                idx++;
+                bool skip = false;
+                
+                // whitespace & quotes
+                bool isQuotedSpace = openQuotes && c == ' ';
+                if (isQuotedSpace)
+                    skip = true;
+
+                else if ((c == '"' || c == '\'') && (!openQuotes || c == quoteType))
+                {
+                    if (!openQuotes)
+                        quoteType = c;
+                    openQuotes = !openQuotes;
+                    skip = true;
+                }
+
+                else if (c == '[')
+                {
+                    openBrackets++;
+                    if (openBrackets > maxOpenBrackets)
+                        maxOpenBrackets = openBrackets;
+                }
+
+                else if (c == ']')
+                {
+                    // doesn't seem like this is a problem... consider warning about this in a 'strict' mode
+                    //if (openBrackets <= 0 && openQuotes)
+                        //throw new ParseException(CurrentPosition,
+                            //"Don't use an RBracket within a quoted identifier without first using a LBracket.");
+                            
+                    if (openBrackets>0)
+                        openBrackets--;
+                }
+
+                if (!skip)
+                    sb.Append(c);
+
+                bool isEoL = _eolChars.Contains(Current);
+                if (isEoL
+                    || (Current == '|' && _insideLabel)
+                    || (Current == '=' && !openQuotes)
+                    || (Current == ' ' && !openQuotes)
+                    || (Current == ']' && openBrackets == 0)) // && !openQuotes // doesn't seem needed
+                {
+                    if (openBrackets > 0)
+                        throw new ParseException(CurrentPosition, "Identifier ended without proper matching brackets.");
+                    if (isEoL)
+                    {
+                        _insideTag = false;
+                        _insideLabel = false;
+                        if (_inlineTag && maxOpenBrackets > 0)
+                            throw new ParseException(CurrentPosition,
+                                "prematurely ended an inline tag containing an identifier with embedded brackets.");
+                    }
+                    return MakeToken(TokenType.Identifier, sb.ToString());
+                }
+
+                c = skip ? Skip() : Advance();
             }
+            throw new ParseException(CurrentPosition, "ReadIdentifier exceeded maximum iterations.");
         }
 
         private Token ReadOperator()
@@ -353,23 +521,6 @@ namespace KirikiriSharp.Lexer
                         : MakeToken(TokenType.Integer, Int32.Parse(_read));
                 }
             }
-        }
-
-        private char Advance()
-        {
-            char c = Current;
-            _reader.Advance();
-            _read += c;
-
-            // update position
-            if (c == '\n')
-            {
-                _line++;
-                _col = 1;
-            }
-            else _col++;
-
-            return c;
         }
 
         private Token MakeToken(TokenType type)
