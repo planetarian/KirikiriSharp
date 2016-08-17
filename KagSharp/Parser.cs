@@ -91,7 +91,7 @@ namespace KirikiriSharp
 
 
             if (prefix == null)
-                throw new ParseException(token.Position, "Could not parse \"" + token.Text + "\".");
+                throw new ParseException(token.Position, $"Could not parse \"{token.Text}\".");
 
             IExpression left = prefix.Parse(this, token);
 
@@ -166,107 +166,6 @@ namespace KirikiriSharp
             return _readTokens[distance];
         }
 
-
-        /*
-        private ITokenReader reader;
-        private List<Token> read;
-        private List<Token> consumed;
-
-        public PositionSpan Span
-        {
-            get { return new PositionSpan(this, Last(1).Position); }
-        }
-
-        public Token Current
-        {
-            get { return LookAhead(0); }
-        }
-
-
-        protected Parser(ITokenReader reader)
-        {
-            Expect.NotNull(reader);
-
-            this.reader = reader;
-            read = new List<Token>();
-            consumed = new List<Token>();
-        }
-
-        public Token Last(int offset)
-        {
-            Expect.PositiveNonZero(offset);
-            return consumed[offset - 1];
-        }
-
-        public bool LookAhead (params TokenType[] tokens)
-        {
-            for (int i = 0; i < tokens.Length; i++)
-            {
-                if (!LookAhead(i).IsType(tokens[i])) return false;
-            }
-            return true;
-        }
-
-        public bool LookAheadAny(params TokenType[] types)
-        {
-            foreach (var type in types)
-            {
-                if (LookAhead(type)) return true;
-            }
-            return false;
-        }
-
-        public bool Match(params TokenType[] types)
-        {
-            // see if they match
-            if (!LookAhead(types)) return false;
-            // consume the matched tokens
-            for (int i = 0; i < types.Length; i++)
-            {
-                Consume();
-            }
-
-            return true;
-        }
-
-        public bool MatchAny(params TokenType[] types)
-        {
-            foreach (var type in types)
-            {
-                if (Match(type)) return true;
-            }
-            return false;
-        }
-
-        public Token Consume()
-        {
-            // Make sure we've read the token.
-            LookAhead(0);
-
-            consumed.Add(read[0]);
-            read.RemoveAt(0);
-            return Last(1);
-        }
-
-        public Token Consume(TokenType type)
-        {
-            if (Match(type))
-                return Last(1);
-            Token current = Current;
-            String message = String.Format("Expected token {0}, found {1}", type, current);
-            throw new ParseException(current.Position, message);
-        }
-
-        private Token LookAhead(int distance)
-        {
-            // read in as many as needed.
-            while (distance >= read.Count)
-            {
-                read.Add(reader.ReadToken());
-            }
-            // get the queued token.
-            return read[distance];
-        }
-        */
+        
     }
 }

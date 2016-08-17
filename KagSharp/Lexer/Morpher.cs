@@ -19,9 +19,7 @@
                 switch (token.Type)
                 {
                     case TokenType.WhiteSpace:
-                    // TODO
-                    //case TokenType.BlockComment:
-                    //case TokenType.LineComment:
+                    case TokenType.LineComment:
                     case TokenType.LineEnd:
                         continue;
                     default:

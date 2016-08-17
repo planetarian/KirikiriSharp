@@ -8,7 +8,7 @@ namespace KirikiriSharp.Lexer
         public Position Position { get; private set; }
         public TokenType Type { get; }
         public string Text { get; }
-        public object Value { get; private set; }
+        public object Value { get; }
 
         public Token(Position position, TokenType type, string text, object value)
         {

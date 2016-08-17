@@ -34,10 +34,12 @@ namespace KirikiriSharp.Lexer
         static Lexer()
         {
             Keywords.Add("*", TokenType.Asterisk);
+            Keywords.Add("#", TokenType.Hash);
             Keywords.Add("|", TokenType.Pipe);
             Keywords.Add("@", TokenType.At);
             Keywords.Add("[", TokenType.LeftBracket);
             Keywords.Add("]", TokenType.RightBracket);
+            Keywords.Add("=", TokenType.Equals);
             /*
             Keywords.Add("global", TokenType.Global);
             Keywords.Add("scene", TokenType.Scene);
@@ -247,7 +249,117 @@ namespace KirikiriSharp.Lexer
         }
 
 
-        /* TODO
+        private Token ReadIdentifier()
+        {
+            var sb = new StringBuilder();
+            char c = _cur;
+
+            bool openQuotes = false;
+            char quoteType = '"';
+            int openBrackets = 0;
+            int maxOpenBrackets = 0;
+
+
+            for (int i = 0; i < 9000; i++)
+            {
+                bool skip = false;
+                
+                // whitespace & quotes
+                bool isQuotedSpace = openQuotes && c == ' ';
+                if (isQuotedSpace)
+                    skip = true;
+
+                else if ((c == '"' || c == '\'') && (!openQuotes || c == quoteType))
+                {
+                    if (!openQuotes)
+                        quoteType = c;
+                    openQuotes = !openQuotes;
+                    skip = true;
+                }
+
+                else if (c == '[')
+                {
+                    openBrackets++;
+                    if (openBrackets > maxOpenBrackets)
+                        maxOpenBrackets = openBrackets;
+                }
+
+                else if (c == ']')
+                {
+                    // doesn't seem like this is a problem... consider warning about this in a 'strict' mode
+                    //if (openBrackets <= 0 && openQuotes)
+                        //throw new ParseException(CurrentPosition,
+                            //"Don't use an RBracket within a quoted identifier without first using a LBracket.");
+                            
+                    if (openBrackets>0)
+                        openBrackets--;
+                }
+
+                if (!skip)
+                    sb.Append(c);
+
+                bool isEoL = _eolChars.Contains(Current);
+                if (isEoL
+                    || (Current == '|' && _insideLabel)
+                    || (Current == '=' && !openQuotes)
+                    || (Current == ' ' && !openQuotes)
+                    || (Current == ']' && openBrackets == 0)) // && !openQuotes // doesn't seem needed
+                {
+                    if (openBrackets > 0)
+                        throw new ParseException(CurrentPosition, "Identifier ended without proper matching brackets.");
+                    if (isEoL)
+                    {
+                        _insideTag = false;
+                        _insideLabel = false;
+                        if (_inlineTag && maxOpenBrackets > 0)
+                            throw new ParseException(CurrentPosition,
+                                "prematurely ended an inline tag containing an identifier with embedded brackets.");
+                    }
+                    return MakeToken(TokenType.Identifier, sb.ToString());
+                }
+
+                c = skip ? Skip() : Advance();
+            }
+            throw new ParseException(CurrentPosition, "ReadIdentifier exceeded maximum iterations.");
+        }
+
+        private Token MakeToken(TokenType type)
+        {
+            return MakeToken(type, _read);
+        }
+
+        private Token MakeToken(TokenType type, object value)
+        {
+            Expect.NotEmpty(_read);
+            string readLower = _read.ToLower();
+            if (type == TokenType.Identifier)
+            {
+                if (Keywords.ContainsKey(readLower))
+                {
+                    type = Keywords[readLower];
+                }
+
+                if (readLower == "true")
+                    value = true;
+                else if (readLower == "false")
+                    value = false;
+            }
+
+            var token = new Token(CurrentPosition, type, _read, value);
+
+            _startLine = _line;
+            _startCol = _col;
+            _read = String.Empty;
+
+            return token;
+        }
+
+        public TokenType TypeFromKeyword(string keyword)
+        {
+            return Keywords.ContainsKey(keyword) ? Keywords[keyword] : TokenType.Invalid;
+        }
+
+        /* TODO extra cases
     case '(':
         return MakeToken(TokenType.LeftParen);
     case ')':
@@ -279,7 +391,63 @@ namespace KirikiriSharp.Lexer
                 return ReadBlockComment();
             default:
                 return ReadIdentifier();
-        }*/
+        }//*/
+
+        /* TODO IsDigit, IsIdentifier, IsOperator
+        private static bool IsDigit(char c)
+        {
+            return (c >= '0') && (c <= '9');
+        }
+
+        private static bool IsIdentifier(char c)
+        {
+            return ((c >= 'a') && (c <= 'z'))
+                || ((c >= 'A') && (c <= 'Z'))
+                || (c == '_');//TODO: || (c == '.');
+        }
+
+        private static bool IsOperator(char c)
+        {
+            return "%/*-+".IndexOf(c) != -1;
+        }//*/
+
+        /* TODO private Token ReadOperator()
+        {
+            while (true)
+            {
+                if (IsIdentifier(Current) || IsOperator(Current))
+                    Advance();
+                else
+                    return MakeToken(TokenType.Identifier);
+            }
+        }//*/
+
+
+        /* TODO private Token ReadNumber()
+        {
+            int periods = _read[0] == '.' ? 1 : 0;
+            while (true)
+            {
+                char c = Current;
+                if (c == '.')
+                {
+                    periods++;
+                    if (periods > 1)
+                        throw new ParseException(Position.None, "Invalid decimal value.");
+                    Advance();
+                }
+                else if (IsDigit(c))
+                {
+                    Advance();
+                }
+                else
+                {
+                    return periods > 0
+                        ? MakeToken(TokenType.Float, float.Parse(_read))
+                        : MakeToken(TokenType.Integer, Int32.Parse(_read));
+                }
+            }
+        }//*/
 
         /* TODO private Token ReadWhitespace()
         {
@@ -410,170 +578,5 @@ namespace KirikiriSharp.Lexer
                 }
             }
         }//*/
-
-        private Token ReadIdentifier()
-        {
-            var sb = new StringBuilder();
-            char c = _cur;
-
-            bool openQuotes = false;
-            char quoteType = '"';
-            int openBrackets = 0;
-            int maxOpenBrackets = 0;
-
-
-            for (int i = 0; i < 9000; i++)
-            {
-                bool skip = false;
-                
-                // whitespace & quotes
-                bool isQuotedSpace = openQuotes && c == ' ';
-                if (isQuotedSpace)
-                    skip = true;
-
-                else if ((c == '"' || c == '\'') && (!openQuotes || c == quoteType))
-                {
-                    if (!openQuotes)
-                        quoteType = c;
-                    openQuotes = !openQuotes;
-                    skip = true;
-                }
-
-                else if (c == '[')
-                {
-                    openBrackets++;
-                    if (openBrackets > maxOpenBrackets)
-                        maxOpenBrackets = openBrackets;
-                }
-
-                else if (c == ']')
-                {
-                    // doesn't seem like this is a problem... consider warning about this in a 'strict' mode
-                    //if (openBrackets <= 0 && openQuotes)
-                        //throw new ParseException(CurrentPosition,
-                            //"Don't use an RBracket within a quoted identifier without first using a LBracket.");
-                            
-                    if (openBrackets>0)
-                        openBrackets--;
-                }
-
-                if (!skip)
-                    sb.Append(c);
-
-                bool isEoL = _eolChars.Contains(Current);
-                if (isEoL
-                    || (Current == '|' && _insideLabel)
-                    || (Current == '=' && !openQuotes)
-                    || (Current == ' ' && !openQuotes)
-                    || (Current == ']' && openBrackets == 0)) // && !openQuotes // doesn't seem needed
-                {
-                    if (openBrackets > 0)
-                        throw new ParseException(CurrentPosition, "Identifier ended without proper matching brackets.");
-                    if (isEoL)
-                    {
-                        _insideTag = false;
-                        _insideLabel = false;
-                        if (_inlineTag && maxOpenBrackets > 0)
-                            throw new ParseException(CurrentPosition,
-                                "prematurely ended an inline tag containing an identifier with embedded brackets.");
-                    }
-                    return MakeToken(TokenType.Identifier, sb.ToString());
-                }
-
-                c = skip ? Skip() : Advance();
-            }
-            throw new ParseException(CurrentPosition, "ReadIdentifier exceeded maximum iterations.");
-        }
-
-        private Token ReadOperator()
-        {
-            while (true)
-            {
-                if (IsIdentifier(Current) || IsOperator(Current))
-                    Advance();
-                else
-                    return MakeToken(TokenType.Identifier);
-            }
-        }
-
-
-        private Token ReadNumber()
-        {
-            int periods = _read[0] == '.' ? 1 : 0;
-            while (true)
-            {
-                char c = Current;
-                if (c == '.')
-                {
-                    periods++;
-                    if (periods > 1)
-                        throw new ParseException(Position.None, "Invalid decimal value.");
-                    Advance();
-                }
-                else if (IsDigit(c))
-                {
-                    Advance();
-                }
-                else
-                {
-                    return periods > 0
-                        ? MakeToken(TokenType.Float, float.Parse(_read))
-                        : MakeToken(TokenType.Integer, Int32.Parse(_read));
-                }
-            }
-        }
-
-        private Token MakeToken(TokenType type)
-        {
-            return MakeToken(type, _read);
-        }
-
-        private Token MakeToken(TokenType type, object value)
-        {
-            Expect.NotEmpty(_read);
-            string readLower = _read.ToLower();
-            if (type == TokenType.Identifier)
-            {
-                if (Keywords.ContainsKey(readLower))
-                {
-                    type = Keywords[readLower];
-                }
-
-                if (readLower == "true")
-                    value = true;
-                else if (readLower == "false")
-                    value = false;
-            }
-
-            var token = new Token(CurrentPosition, type, _read, value);
-
-            _startLine = _line;
-            _startCol = _col;
-            _read = String.Empty;
-
-            return token;
-        }
-
-        private static bool IsDigit(char c)
-        {
-            return (c >= '0') && (c <= '9');
-        }
-
-        private static bool IsIdentifier(char c)
-        {
-            return ((c >= 'a') && (c <= 'z'))
-                || ((c >= 'A') && (c <= 'Z'))
-                || (c == '_');//TODO: || (c == '.');
-        }
-
-        private static bool IsOperator(char c)
-        {
-            return "%*/-+".IndexOf(c) != -1;
-        }
-
-        public TokenType TypeFromKeyword(string keyword)
-        {
-            return Keywords.ContainsKey(keyword) ? Keywords[keyword] : TokenType.Invalid;
-        }
     }
 }
