@@ -12,7 +12,7 @@ namespace KagSharp.Parselets
         {
             IExpression nameEx = parser.ParseExpression<LabelExpression>();
             if (nameEx.ValueType != typeof(IdentifierExpression))
-                throw new ParseException(Position.None, "Label name must be a valid identifier.");
+                throw new ParseException(token.Position, "Label name must be a valid identifier.");
             string name = ((IdentifierExpression)nameEx).Name;
 
             string desc = name;
@@ -20,7 +20,7 @@ namespace KagSharp.Parselets
             {
                 IExpression descEx = parser.ParseExpression<LabelExpression>();
                 if (descEx.ValueType != typeof(TextExpression))
-                    throw new ParseException(Position.None, "Label description must follow pipe.");
+                    throw new ParseException(token.Position, "Label description must follow pipe.");
                 desc = ((TextExpression) descEx).Text;
             }
 

@@ -15,7 +15,7 @@ namespace KagSharp.Parselets
         public IExpression Parse(Parser parser, IExpression left, Token token)
         {
             if (!(left is IdentifierExpression)) throw new ParseException(
-                Position.None, "The left-hand side of a parameter assignment must be an identifier.");
+                token.Position, "The left-hand side of a parameter assignment must be an identifier.");
             string name = ((IdentifierExpression)left).Name;
 
             IExpression right = parser.ParseExpression<ParameterExpression>(Precedence - 1);
