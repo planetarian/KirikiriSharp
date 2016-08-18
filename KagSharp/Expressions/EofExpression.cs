@@ -5,7 +5,7 @@ namespace KagSharp.Expressions
 {
     public class EofExpression : IExpression
     {
-        public void Print(StringBuilder sb, bool verbose)
+        public void Print(StringBuilder sb, bool verbose, int indentLevel)
         {
         }
 

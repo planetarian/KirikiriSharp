@@ -169,7 +169,7 @@ namespace KirikiriTest
             IExpression expression = null;
             while (!(expression is EofExpression))
             {
-                expression?.Print(sb, true);
+                expression?.Print(sb, true, 0);
                 try
                 {
                     expression = parser.ParseExpression<DocumentExpression>();

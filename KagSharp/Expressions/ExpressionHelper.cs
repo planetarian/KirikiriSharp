@@ -6,24 +6,34 @@ namespace KagSharp.Expressions
 {
     public static class ExpressionHelper
     {
+        private static Type _previousExpressionType;
+
+        public static void Indent(StringBuilder sb, Type expressionType, int indentLevel)
+        {
+            if (_previousExpressionType == typeof (EndOfLineExpression))
+                sb.Append("".PadLeft(indentLevel, '\t'));
+            _previousExpressionType = expressionType;
+        }
+
         public static void PrintDelimited<T>(
-            StringBuilder sb, List<T> expressions, string delimiter, bool verbose) where T : IExpression
+            StringBuilder sb, List<T> expressions, string delimiter, bool verbose, int indentLevel = 0) where T : IExpression
         {
             for (int i = 0; i < expressions.Count; i++)
             {
-                expressions[i].Print(sb, verbose);
+                expressions[i].Print(sb, verbose, indentLevel);
                 if (i < expressions.Count - 1)
                     sb.Append(delimiter);
             }
         }
         public static void PrintDelimited<T>(
-            StringBuilder sb, Dictionary<string, T> expressions, string delimiter, bool verbose) where T : IExpression
+            StringBuilder sb, Dictionary<string, T> expressions, string delimiter, bool verbose, int indentLevel = 0)
+            where T : IExpression
         {
             int i = 0;
             foreach (T expr in expressions.Values)
             {
                 i++;
-                expr.Print(sb, verbose);
+                expr.Print(sb, verbose, indentLevel);
                 if (i < expressions.Count)
                     sb.Append(delimiter);
             }

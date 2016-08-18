@@ -12,8 +12,11 @@ namespace KagSharp.Expressions
             Name = name;
         }
 
-        public void Print(StringBuilder sb, bool verbose) =>
+        public void Print(StringBuilder sb, bool verbose, int indentLevel)
+        {
+            ExpressionHelper.Indent(sb, GetType(), indentLevel);
             sb.Append('#').Append(Name);
+        }
 
         public TR Accept<TR>(IExpressionVisitor<TR> visitor, string context) =>
             visitor.Visit(this, context);

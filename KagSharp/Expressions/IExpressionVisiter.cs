@@ -8,9 +8,12 @@
         TR Visit(LabelExpression expression, string context);
         TR Visit(IdentifierExpression expression, string context);
         TR Visit(TextExpression expression, string context);
-        TR Visit(TagExpression expression, string context);
         TR Visit(ParameterExpression expression, string context);
         TR Visit(TitleExpression expression, string context);
+        TR Visit(TagExpression expression, string context);
+        TR Visit(MacroExpression expression, string context);
+        TR Visit(IfExpression expression, string context);
+        TR Visit(IScriptExpression expression, string context);
         /*
         TR Visit(AssignExpression expression, string context);
         TR Visit(BoolExpression expression, string context);

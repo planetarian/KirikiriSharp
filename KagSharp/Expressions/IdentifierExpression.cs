@@ -8,29 +8,30 @@ namespace KagSharp.Expressions
     public class IdentifierExpression : IExpression
     {
         public string Name { get; }
-        public string Value { get; }
 
         public static Dictionary<string, Type> RegisteredIdentifiers
             = new Dictionary<string, Type>();
 
-        public IdentifierExpression(string name, string value)
+        public IdentifierExpression(string name)
         {
             Name = name;
-            Value = value;
         }
 
-        public void Print(StringBuilder sb, bool verbose)
+        public virtual void Print(StringBuilder sb, bool verbose, int indentLevel)
         {
-            if (Regex.IsMatch(Value, @"^[\d\w]+$", RegexOptions.Compiled))
-                sb.Append(Value);
+            // Should never be starting a line with an identifier
+            //ExpressionHelper.Indent(sb, GetType(), indentLevel);
+
+            if (Regex.IsMatch(Name, @"^[\d\w]+$", RegexOptions.Compiled))
+                sb.Append(Name);
             else
-                sb.Append('"').Append(Value).Append('"');
+                sb.Append('"').Append(Name).Append('"');
         }
 
-        public TR Accept<TR>(IExpressionVisitor<TR> visitor, string context) =>
+        public virtual TR Accept<TR>(IExpressionVisitor<TR> visitor, string context) =>
             visitor.Visit(this, context);
 
-        public Type ValueType => RegisteredIdentifiers.ContainsKey(Name)
+        public virtual Type ValueType => RegisteredIdentifiers.ContainsKey(Name)
             ? RegisteredIdentifiers[Name]
             : typeof(IdentifierExpression);
 

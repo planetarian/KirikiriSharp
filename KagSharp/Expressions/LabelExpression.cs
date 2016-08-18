@@ -15,8 +15,9 @@ namespace KagSharp.Expressions
             Description = description;
         }
 
-        public void Print(StringBuilder sb, bool verbose)
+        public void Print(StringBuilder sb, bool verbose, int indentLevel)
         {
+            ExpressionHelper.Indent(sb, GetType(), indentLevel);
             sb.Append('*').Append(Name);
             if (!String.IsNullOrEmpty(Description) && Name != Description)
                 sb.Append('|').Append(Description);

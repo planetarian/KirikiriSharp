@@ -9,6 +9,6 @@ namespace KagSharp.Parselets
     public class IdentifierParselet : IPrefixParselet
     {
         public IExpression Parse(Parser parser, Token token) =>
-            new IdentifierExpression(token.Text, token.Value.ToString());
+            new IdentifierExpression(token.Value.ToString());
     }
 }

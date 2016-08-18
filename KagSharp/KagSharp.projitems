@@ -16,7 +16,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Expressions\IdentifierExpression.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Expressions\IExpression.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Expressions\IExpressionVisiter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Expressions\IfExpression.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Expressions\IScriptExpression.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Expressions\LabelExpression.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Expressions\MacroExpression.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Expressions\ParameterExpression.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Expressions\TagExpression.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Expressions\TextExpression.cs" />

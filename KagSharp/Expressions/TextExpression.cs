@@ -12,7 +12,11 @@ namespace KagSharp.Expressions
             Text = text;
         }
 
-        public void Print(StringBuilder sb, bool verbose) => sb.Append(Text);
+        public void Print(StringBuilder sb, bool verbose, int indentLevel)
+        {
+            ExpressionHelper.Indent(sb, GetType(), indentLevel);
+            sb.Append(Text);
+        }
 
         public TR Accept<TR>(IExpressionVisitor<TR> visitor, string context) =>
             visitor.Visit(this, context);
