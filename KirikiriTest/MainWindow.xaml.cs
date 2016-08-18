@@ -1,17 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using KagSharp;
 using KagSharp.Expressions;
 using KagSharp.Lexer;
@@ -26,7 +18,6 @@ namespace KirikiriTest
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly object _lock = new object();
 
         public MainWindow()
         {
@@ -90,7 +81,7 @@ namespace KirikiriTest
                 GraupelTextBox.Text = ex.ToString();
                 return;
             }
-            RunTjs(contents);
+            RunTjs(contents, FilenameTextBox.Text);
         }
 
 
@@ -125,10 +116,13 @@ namespace KirikiriTest
         private void LexKag(string input, string title = "input")
         {
             ClearLog();
+            DateTime opStart = DateTime.Now;
+
             Token token;
             var reader = new StringSourceReader(title, input);
             var lexer = new Lexer(reader);
             var morpher = new Morpher(lexer);
+            var sb = new StringBuilder();
             do
             {
                 try
@@ -137,7 +131,7 @@ namespace KirikiriTest
                 }
                 catch (ParseException ex)
                 {
-                    Log(Environment.NewLine +
+                    sb.AppendLine(Environment.NewLine +
                         ex.Position + Environment.NewLine +
                         ex.GetType() + Environment.NewLine +
                         ex.Message + Environment.NewLine);
@@ -145,19 +139,38 @@ namespace KirikiriTest
                 }
                 catch (Exception ex)
                 {
-                    Log(Environment.NewLine +
+                    sb.AppendLine(Environment.NewLine +
                         ex.GetType() + Environment.NewLine +
                         ex.Message + Environment.NewLine);
                     break;
                 }
-                Log(token.ToString());
+                if (DisplayOutput(title))
+                    sb.AppendLine(token.ToString());
             } while (token.Type != TokenType.Eof);
-            Log("Done." + Environment.NewLine);
+            
+            DateTime opEnd = DateTime.Now;
+            TimeSpan duration = opEnd - opStart;
+            sb.AppendLine($"Done in {duration.TotalMilliseconds}ms." + Environment.NewLine);
+            Log(sb.ToString());
+        }
+
+        private bool DisplayOutput(string inputName)
+        {
+            bool displayOutput = false;
+            Dispatcher.Invoke(() =>
+            {
+                if (inputName == "input")
+                    displayOutput = DisplayInputResult.IsChecked == true;
+                else displayOutput = DisplayFileResult.IsChecked == true;
+            });
+            return displayOutput;
         }
 
         private void ParseKag(string input, string title = "input")
         {
             ClearLog();
+            DateTime opStart = DateTime.Now;
+
             var reader = new StringSourceReader(title, input);
             var lexer = new Lexer(reader);
             var morpher = new Morpher(lexer);
@@ -194,23 +207,30 @@ namespace KirikiriTest
                     numErrors++;
                 }
             }
-            Log(sb.ToString());
+            if (DisplayOutput(title))
+                Log(sb.ToString());
             if (errors.Length > 0)
             {
                 Log(numErrors+" Errors:");
                 Log(errors.ToString());
             }
+
+            DateTime opEnd = DateTime.Now;
+            TimeSpan duration = opEnd - opStart;
+            Log($"Done in {duration.TotalMilliseconds}ms." + Environment.NewLine);
         }
 
-        private void RunTjs(string input)
+        private void RunTjs(string input, string title = "input")
         {
             ClearLog();
+            DateTime opStart = DateTime.Now;
+
             try
             {
                 Tjs.mStorage = null;
                 Tjs.Initialize();
                 var mScriptEngine = new Tjs();
-                Tjs.SetConsoleOutput(new DelegateConsoleOutput(Log));
+                Tjs.SetConsoleOutput(new DelegateConsoleOutput(DisplayOutput(title) ? Log : (Action<string>) (m => { }), Log));
 
                 Dispatch2 dsp = mScriptEngine.GetGlobal();
                 var ret = new Variant();
@@ -230,7 +250,10 @@ namespace KirikiriTest
             {
                 Log(ex + Environment.NewLine);
             }
-            Log("Done." + Environment.NewLine);
+
+            DateTime opEnd = DateTime.Now;
+            TimeSpan duration = opEnd - opStart;
+            Log($"Done in {duration.TotalMilliseconds}ms." + Environment.NewLine);
         }
 
         public void Log(string data)
