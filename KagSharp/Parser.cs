@@ -90,7 +90,7 @@ namespace KagSharp
             }
             catch (Exception ex)
             {
-                throw new ParseException(Position.None,
+                throw new ParseException(token.Position,
                     $"Token type {token.Type} not registered in prefixParselets.", ex);
             }
 
@@ -103,7 +103,7 @@ namespace KagSharp
                 }
                 catch (Exception ex)
                 {
-                    throw new ParseException(Position.None,
+                    throw new ParseException(token.Position,
                         $"Type {type} not registered at contextPrefixParselets[{token.Type}].", ex);
                 }
             }

@@ -162,25 +162,43 @@ namespace KirikiriTest
             var lexer = new Lexer(reader);
             var morpher = new Morpher(lexer);
             var parser = new KagParser(morpher);
-            try
+            var sb = new StringBuilder();
+
+            int numErrors = 0;
+            var errors = new StringBuilder();
+            IExpression expression = null;
+            while (!(expression is EofExpression))
             {
-                DocumentExpression doc = parser.ParseDocument();
-                var sb = new StringBuilder();
-                doc.Print(sb, true);
-                Log(sb.ToString());
+                expression?.Print(sb, true);
+                try
+                {
+                    expression = parser.ParseExpression<DocumentExpression>();
+                }
+                catch (ParseException ex)
+                {
+                    string error = Environment.NewLine +
+                        ex.Position + Environment.NewLine +
+                        ex.GetType() + Environment.NewLine +
+                        ex.Message + Environment.NewLine;
+                    sb.AppendLine(error);
+                    errors.AppendLine(error);
+                    numErrors++;
+                }
+                catch (Exception ex)
+                {
+                    string error = Environment.NewLine +
+                        ex.GetType() + Environment.NewLine +
+                        ex.Message + Environment.NewLine;
+                    sb.AppendLine(error);
+                    errors.AppendLine(error);
+                    numErrors++;
+                }
             }
-            catch (ParseException ex)
+            Log(sb.ToString());
+            if (errors.Length > 0)
             {
-                Log(Environment.NewLine +
-                    ex.Position + Environment.NewLine +
-                    ex.GetType() + Environment.NewLine +
-                    ex.Message + Environment.NewLine);
-            }
-            catch (Exception ex)
-            {
-                Log(Environment.NewLine +
-                    ex.GetType() + Environment.NewLine +
-                    ex.Message + Environment.NewLine);
+                Log(numErrors+" Errors:");
+                Log(errors.ToString());
             }
         }
 
@@ -198,6 +216,15 @@ namespace KirikiriTest
                 var ret = new Variant();
 
                 mScriptEngine.ExecScript(input, ret, dsp, null, 0);
+            }
+            catch (TjsScriptError ex)
+            {
+                Log("Line: " + ex.GetSourceLine());
+                Log("Pos: " + ex.GetPosition());
+                Log("Block: " + ex.GetBlockName());
+                Log("Trace: ");
+                Log(ex.GetTrace());
+                Log(ex + Environment.NewLine);
             }
             catch (Exception ex)
             {

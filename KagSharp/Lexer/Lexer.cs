@@ -123,6 +123,25 @@ namespace KagSharp.Lexer
                     continue;
                 }
 
+                // stuff that can end stuff prematurely
+                switch (_cur)
+                {
+                    // newlines
+                    case '\r': // mac
+                        if (Current == '\n') // windows
+                            Advance();
+                        goto case '\n';
+                    case '\n': // *nix
+                        _insideTag = false;
+                        _insideTagValue = false;
+                        return MakeToken(TokenType.LineEnd);
+                    // eof
+                    case '\0':
+                        _insideTag = false;
+                        _insideTagValue = false;
+                        return MakeToken(TokenType.Eof);
+                }
+
                 // Certain tokens only valid after a newline/start-of-file
                 if (_eolChars.Contains(_prev))
                 {
@@ -180,20 +199,6 @@ namespace KagSharp.Lexer
 
                 switch (_cur)
                 {
-                    // newlines
-                    case '\r': // mac
-                        if (Current == '\n') // windows
-                            Advance();
-                        goto case '\n';
-                    case '\n': // *nix
-                        _insideTag = false;
-                        _insideTagValue = false;
-                        return MakeToken(TokenType.LineEnd);
-                    // eof
-                    case '\0':
-                        _insideTag = false;
-                        _insideTagValue = false;
-                        return MakeToken(TokenType.Eof);
                     // tag
                     case '[':
                         if (Current != '[') // escaped LBracket counts as plain text
