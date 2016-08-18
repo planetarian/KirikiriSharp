@@ -9,10 +9,19 @@
     <Import_RootNamespace>KagSharp</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Expressions\DocumentExpression.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Expressions\EndOfLineExpression.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Expressions\EofExpression.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Expressions\ExpressionHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Expressions\IdentifierExpression.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Expressions\IExpression.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Expressions\IExpressionVisiter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)KirikiriParser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Expressions\LabelExpression.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Expressions\ParameterExpression.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Expressions\TagExpression.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Expressions\TextExpression.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Expressions\TitleExpression.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)KagParser.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Lexer\ISourceReader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Lexer\ITokenReader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Lexer\Lexer.cs" />
@@ -22,8 +31,15 @@
     <Compile Include="$(MSBuildThisFileDirectory)Lexer\TokenListReader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Lexer\TokenType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ParseException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Parselets\EndOfLineParselet.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Parselets\IdentifierParselet.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Parselets\INonPrefixParselet.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Parselets\IPrefixParselet.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Parselets\LabelParselet.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Parselets\ParameterParselet.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Parselets\TagParselet.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Parselets\TextParselet.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Parselets\TitleParselet.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Parser.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Position.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PrecedenceValues.cs" />

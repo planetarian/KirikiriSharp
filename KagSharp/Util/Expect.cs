@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace KirikiriSharp.Util
+namespace KagSharp.Util
 {
     public static class Expect
     {

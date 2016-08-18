@@ -1,4 +1,4 @@
-﻿namespace KirikiriSharp.Lexer
+﻿namespace KagSharp.Lexer
 {
     public enum TokenType
     {

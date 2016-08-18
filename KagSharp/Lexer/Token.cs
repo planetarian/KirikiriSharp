@@ -1,7 +1,7 @@
 ﻿using System.Text.RegularExpressions;
-using KirikiriSharp.Util;
+using KagSharp.Util;
 
-namespace KirikiriSharp.Lexer
+namespace KagSharp.Lexer
 {
     public class Token
     {

@@ -1,8 +1,7 @@
-﻿using System;
-using KirikiriSharp.Expressions;
-using KirikiriSharp.Lexer;
+﻿using KagSharp.Expressions;
+using KagSharp.Lexer;
 
-namespace KirikiriSharp.Parselets
+namespace KagSharp.Parselets
 {
     public interface IPrefixParselet
     {

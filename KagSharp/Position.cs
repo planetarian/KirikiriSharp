@@ -1,7 +1,6 @@
 ﻿using System;
-using KirikiriSharp.Util;
 
-namespace KirikiriSharp
+namespace KagSharp
 {
     public class Position
     {

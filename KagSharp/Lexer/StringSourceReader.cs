@@ -1,6 +1,6 @@
-﻿using KirikiriSharp.Util;
+﻿using KagSharp.Util;
 
-namespace KirikiriSharp.Lexer
+namespace KagSharp.Lexer
 {
     public class StringSourceReader : ISourceReader
     {

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using KirikiriSharp.Util;
+using KagSharp.Util;
 
-namespace KirikiriSharp.Lexer
+namespace KagSharp.Lexer
 {
     public class Lexer : ITokenReader
     {
@@ -21,6 +21,7 @@ namespace KirikiriSharp.Lexer
         private bool _insideLabel;
         private bool _insideTag;
         private bool _inlineTag;
+        private bool _insideTagValue;
 
         private readonly char[] _eolChars = {'\r', '\n', '\0'};
 
@@ -164,11 +165,13 @@ namespace KirikiriSharp.Lexer
                     if (_inlineTag && _cur == ']')
                     {
                         _insideTag = false;
+                        _insideTagValue = false;
                         return MakeToken(TokenType.RightBracket);
                     }
                     switch (_cur)
                     {
                         case '=':
+                            _insideTagValue = true;
                             return MakeToken(TokenType.Equals);
                         default:
                             return ReadIdentifier();
@@ -184,10 +187,12 @@ namespace KirikiriSharp.Lexer
                         goto case '\n';
                     case '\n': // *nix
                         _insideTag = false;
+                        _insideTagValue = false;
                         return MakeToken(TokenType.LineEnd);
                     // eof
                     case '\0':
                         _insideTag = false;
+                        _insideTagValue = false;
                         return MakeToken(TokenType.Eof);
                     // tag
                     case '[':
@@ -195,6 +200,7 @@ namespace KirikiriSharp.Lexer
                         {
                             _insideTag = true;
                             _inlineTag = true;
+                            _insideTagValue = false;
                             return MakeToken(TokenType.LeftBracket);
                         }
                         goto default;
@@ -301,7 +307,7 @@ namespace KirikiriSharp.Lexer
                 bool isEoL = _eolChars.Contains(Current);
                 if (isEoL
                     || (Current == '|' && _insideLabel)
-                    || (Current == '=' && !openQuotes)
+                    || (Current == '=' && !openQuotes && !_insideTagValue)
                     || (Current == ' ' && !openQuotes)
                     || (Current == ']' && openBrackets == 0)) // && !openQuotes // doesn't seem needed
                 {
@@ -311,10 +317,13 @@ namespace KirikiriSharp.Lexer
                     {
                         _insideTag = false;
                         _insideLabel = false;
+                        _insideTagValue = false;
+
                         if (_inlineTag && maxOpenBrackets > 0)
                             throw new ParseException(CurrentPosition,
                                 "prematurely ended an inline tag containing an identifier with embedded brackets.");
                     }
+                    _insideTagValue = false;
                     return MakeToken(TokenType.Identifier, sb.ToString());
                 }
 

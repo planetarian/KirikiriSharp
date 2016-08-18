@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace KirikiriSharp.Expressions
+namespace KagSharp.Expressions
 {
     public class EofExpression : IExpression
     {
@@ -9,11 +9,12 @@ namespace KirikiriSharp.Expressions
         {
         }
 
+
+        public TR Accept<TR>(IExpressionVisitor<TR> visitor, string context) =>
+            visitor.Visit(this, context);
+
         public Type ValueType => typeof(EofExpression);
 
-        public TR Accept<TR>(IExpressionVisitor<TR> visitor, string context)
-        {
-            return visitor.Visit(this, context);
-        }
+        public override string ToString() => "EofExpression";
     }
 }

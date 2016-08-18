@@ -1,4 +1,6 @@
-﻿namespace KirikiriSharp.Lexer
+﻿using System.Diagnostics;
+
+namespace KagSharp.Lexer
 {
     public class Morpher : ITokenReader
     {
@@ -10,7 +12,7 @@
             _reader = reader;
             //eatLines = true;
         }
-
+        
         public Token ReadToken()
         {
             while (true)
@@ -20,7 +22,7 @@
                 {
                     case TokenType.WhiteSpace:
                     case TokenType.LineComment:
-                    case TokenType.LineEnd:
+                    //case TokenType.LineEnd:
                         continue;
                     default:
                         return token;

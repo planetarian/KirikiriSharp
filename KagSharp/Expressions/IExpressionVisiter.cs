@@ -1,8 +1,16 @@
-﻿namespace KirikiriSharp.Expressions
+﻿namespace KagSharp.Expressions
 {
     public interface IExpressionVisitor<out TR>
     {
         TR Visit(EofExpression expression, string context);
+        TR Visit(EndOfLineExpression expression, string context);
+        TR Visit(DocumentExpression expression, string context);
+        TR Visit(LabelExpression expression, string context);
+        TR Visit(IdentifierExpression expression, string context);
+        TR Visit(TextExpression expression, string context);
+        TR Visit(TagExpression expression, string context);
+        TR Visit(ParameterExpression expression, string context);
+        TR Visit(TitleExpression expression, string context);
         /*
         TR Visit(AssignExpression expression, string context);
         TR Visit(BoolExpression expression, string context);

@@ -12,10 +12,12 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using KirikiriSharp;
-using KirikiriSharp.Lexer;
+using KagSharp;
+using KagSharp.Expressions;
+using KagSharp.Lexer;
 using Tjs2;
 using Tjs2.Engine;
+using Lexer = KagSharp.Lexer.Lexer;
 
 namespace KirikiriTest
 {
@@ -42,8 +44,41 @@ namespace KirikiriTest
                 FilenameTextBox.Text = fileName;
             }
         }
+        
 
-        private void TestTjsFileButton_Click(object sender, RoutedEventArgs e)
+        private void LexKagFileButton_Click(object sender, RoutedEventArgs e)
+        {
+            string filename = FilenameTextBox.Text;
+            string contents;
+            try
+            {
+                contents = CheckFile(filename);
+            }
+            catch (Exception ex)
+            {
+                GraupelTextBox.Text = ex.ToString();
+                return;
+            }
+            LexKag(contents, filename);
+        }
+
+        private void ParseKagFileButton_Click(object sender, RoutedEventArgs e)
+        {
+            string filename = FilenameTextBox.Text;
+            string contents;
+            try
+            {
+                contents = CheckFile(filename);
+            }
+            catch (Exception ex)
+            {
+                GraupelTextBox.Text = ex.ToString();
+                return;
+            }
+            ParseKag(contents, filename);
+        }
+
+        private void RunTjsFileButton_Click(object sender, RoutedEventArgs e)
         {
             string contents;
             try
@@ -55,51 +90,45 @@ namespace KirikiriTest
                 GraupelTextBox.Text = ex.ToString();
                 return;
             }
-            TestTjs(contents);
+            RunTjs(contents);
         }
 
-        private void TestKagFileButton_Click(object sender, RoutedEventArgs e)
-        {
-            string contents;
-            try
-            {
-                contents = CheckFile(FilenameTextBox.Text);
-            }
-            catch (Exception ex)
-            {
-                GraupelTextBox.Text = ex.ToString();
-                return;
-            }
-            TestKag(contents);
-        }
 
-        private string CheckFile(string fileName)
+        private string CheckFile(string filename)
         {
-            var fileInfo = new FileInfo(fileName);
+            var fileInfo = new FileInfo(filename);
             if (fileInfo.Length > 1024 * 256)
                 throw new InvalidOperationException("File is too large.");
-            return File.ReadAllText(fileName);
+            return File.ReadAllText(filename);
         }
 
-        private void TestKagStringButton_Click(object sender, RoutedEventArgs e)
+
+        private void LexKagInputButton_Click(object sender, RoutedEventArgs e)
         {
             string contents = InputTextBox.Text;
-            Task.Run(()=>TestKag(contents));
+            Task.Run(() => LexKag(contents));
         }
 
-        private void TestTjsStringButton_Click(object sender, RoutedEventArgs e)
+        private void ParseKagInputButton_Click(object sender, RoutedEventArgs e)
         {
             string contents = InputTextBox.Text;
-            Task.Run(() => TestTjs(contents));
+            Task.Run(() => ParseKag(contents));
         }
 
-        private void TestKag(string input)
+        private void RunTjsInputButton_Click(object sender, RoutedEventArgs e)
         {
-            var reader = new StringSourceReader("input", input);
-            var lexer = new KirikiriSharp.Lexer.Lexer(reader);
+            string contents = InputTextBox.Text;
+            Task.Run(() => RunTjs(contents));
+        }
 
-            var morpher = new Morpher(lexer);
+
+        private void LexKag(string input, string title = "input")
+        {
+            ClearLog();
             Token token;
+            var reader = new StringSourceReader(title, input);
+            var lexer = new Lexer(reader);
+            var morpher = new Morpher(lexer);
             do
             {
                 try
@@ -126,10 +155,38 @@ namespace KirikiriTest
             Log("Done." + Environment.NewLine);
         }
 
-        private void TestTjs(string input)
+        private void ParseKag(string input, string title = "input")
         {
-            //GraupelTextBox.Text = String.Empty;
-            
+            ClearLog();
+            var reader = new StringSourceReader(title, input);
+            var lexer = new Lexer(reader);
+            var morpher = new Morpher(lexer);
+            var parser = new KagParser(morpher);
+            try
+            {
+                DocumentExpression doc = parser.ParseDocument();
+                var sb = new StringBuilder();
+                doc.Print(sb, true);
+                Log(sb.ToString());
+            }
+            catch (ParseException ex)
+            {
+                Log(Environment.NewLine +
+                    ex.Position + Environment.NewLine +
+                    ex.GetType() + Environment.NewLine +
+                    ex.Message + Environment.NewLine);
+            }
+            catch (Exception ex)
+            {
+                Log(Environment.NewLine +
+                    ex.GetType() + Environment.NewLine +
+                    ex.Message + Environment.NewLine);
+            }
+        }
+
+        private void RunTjs(string input)
+        {
+            ClearLog();
             try
             {
                 Tjs.mStorage = null;
@@ -151,7 +208,12 @@ namespace KirikiriTest
 
         public void Log(string data)
         {
-            Dispatcher.BeginInvoke(new Action(() =>GraupelTextBox.AppendText(data + Environment.NewLine)));
+            Dispatcher.BeginInvoke(new Action(() => GraupelTextBox.AppendText(data + Environment.NewLine)));
+        }
+
+        public void ClearLog()
+        {
+            Dispatcher.BeginInvoke(new Action(() => GraupelTextBox.Clear()));
         }
 
         public class MessageConsoleOutput : IConsoleOutput

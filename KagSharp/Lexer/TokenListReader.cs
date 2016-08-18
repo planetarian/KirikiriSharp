@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace KirikiriSharp.Lexer
+namespace KagSharp.Lexer
 {
     public class TokenListReader : ITokenReader
     {

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using KirikiriSharp.Expressions;
-using KirikiriSharp.Lexer;
-using KirikiriSharp.Parselets;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
+using KagSharp.Expressions;
+using KagSharp.Lexer;
+using KagSharp.Parselets;
 
-namespace KirikiriSharp
+namespace KagSharp
 {
     public abstract class Parser
     {
@@ -81,12 +83,29 @@ namespace KirikiriSharp
             if (token.Type == TokenType.Eof)
                 return new EofExpression();
 
-            IPrefixParselet prefix = _prefixParselets[token.Type];
+            IPrefixParselet prefix;
+            try
+            {
+                prefix = _prefixParselets[token.Type];
+            }
+            catch (Exception ex)
+            {
+                throw new ParseException(Position.None,
+                    $"Token type {token.Type} not registered in prefixParselets.", ex);
+            }
 
             if (type != typeof(IExpression) && _contextPrefixParselets.ContainsKey(token.Type) &&
                 _contextPrefixParselets[token.Type].ContainsKey(type))
             {
-                prefix = _contextPrefixParselets[token.Type][type];
+                try
+                {
+                    prefix = _contextPrefixParselets[token.Type][type];
+                }
+                catch (Exception ex)
+                {
+                    throw new ParseException(Position.None,
+                        $"Type {type} not registered at contextPrefixParselets[{token.Type}].", ex);
+                }
             }
 
 
@@ -118,7 +137,7 @@ namespace KirikiriSharp
 
             return left;
         }
-
+        
         private int GetPrecedence(Type parentExpressionType)
         {
             TokenType type = LookAhead().Type;
@@ -128,7 +147,7 @@ namespace KirikiriSharp
 
             return _infixParselets.ContainsKey(type) ? _infixParselets[type].Precedence : 0;
         }
-
+        
         public bool Match(TokenType expected)
         {
             Token token = LookAhead();
@@ -137,7 +156,7 @@ namespace KirikiriSharp
             Consume();
             return true;
         }
-
+        
         public Token Consume(TokenType expected)
         {
             Token token = LookAhead();
@@ -146,7 +165,7 @@ namespace KirikiriSharp
                     "Expected token " + expected + " and found " + token.Type);
             return Consume();
         }
-
+        
         public Token Consume()
         {
             LookAhead();
@@ -154,7 +173,7 @@ namespace KirikiriSharp
             _readTokens.RemoveAt(0);
             return read;
         }
-
+        
         public Token LookAhead(int distance = 0)
         {
             // read in as many as needed.

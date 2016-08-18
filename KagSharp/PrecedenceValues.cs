@@ -1,4 +1,4 @@
-﻿namespace KirikiriSharp
+﻿namespace KagSharp
 {
     public static class PrecedenceValues
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace KirikiriSharp.Expressions
+namespace KagSharp.Expressions
 {
     public interface IExpression
     {
