@@ -1,15 +1,18 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
+using Jint.Parser;
 using KagSharp;
 using KagSharp.Expressions;
 using KagSharp.Lexer;
 using Tjs2;
 using Tjs2.Engine;
 using Lexer = KagSharp.Lexer.Lexer;
+using Token = KagSharp.Lexer.Token;
 
 namespace KirikiriTest
 {
@@ -18,6 +21,7 @@ namespace KirikiriTest
     /// </summary>
     public partial class MainWindow : Window
     {
+        private bool _useTjs;
 
         public MainWindow()
         {
@@ -71,16 +75,35 @@ namespace KirikiriTest
 
         private void RunTjsFileButton_Click(object sender, RoutedEventArgs e)
         {
+            string filename = FilenameTextBox.Text;
             string contents;
             try
             {
-                contents = CheckFile(FilenameTextBox.Text);
+                contents = CheckFile(filename);
             }
             catch (Exception ex)
             {
                 GraupelTextBox.Text = ex.ToString();
                 return;
             }
+            _useTjs = true;
+            RunTjs(contents, FilenameTextBox.Text);
+        }
+
+        private void JintRunTjsFileButton_Click(object sender, RoutedEventArgs e)
+        {
+            string filename = FilenameTextBox.Text;
+            string contents;
+            try
+            {
+                contents = CheckFile(filename);
+            }
+            catch (Exception ex)
+            {
+                GraupelTextBox.Text = ex.ToString();
+                return;
+            }
+            _useTjs = false;
             RunTjs(contents, FilenameTextBox.Text);
         }
 
@@ -109,6 +132,14 @@ namespace KirikiriTest
         private void RunTjsInputButton_Click(object sender, RoutedEventArgs e)
         {
             string contents = InputTextBox.Text;
+            _useTjs = true;
+            Task.Run(() => RunTjs(contents));
+        }
+
+        private void JintRunTjsInputButton_Click(object sender, RoutedEventArgs e)
+        {
+            string contents = InputTextBox.Text;
+            _useTjs = false;
             Task.Run(() => RunTjs(contents));
         }
 
@@ -225,30 +256,70 @@ namespace KirikiriTest
             ClearLog();
             DateTime opStart = DateTime.Now;
 
-            try
+            if (_useTjs)
             {
-                Tjs.mStorage = null;
-                Tjs.Initialize();
-                var mScriptEngine = new Tjs();
-                Tjs.SetConsoleOutput(new DelegateConsoleOutput(DisplayOutput(title) ? Log : (Action<string>) (m => { }), Log));
+                try
+                {
+                    Tjs.mStorage = null;
+                    Tjs.Initialize();
+                    var mScriptEngine = new Tjs();
+                    Tjs.SetConsoleOutput(
+                        new DelegateConsoleOutput(DisplayOutput(title) ? Log : (Action<string>) (m => { }), Log));
 
-                Dispatch2 dsp = mScriptEngine.GetGlobal();
-                var ret = new Variant();
+                    Dispatch2 dsp = mScriptEngine.GetGlobal();
+                    var ret = new Variant();
 
-                mScriptEngine.ExecScript(input, ret, dsp, null, 0);
+                    mScriptEngine.ExecScript(input, ret, dsp, null, 0);
+                }
+                catch (TjsScriptError ex)
+                {
+                    int line, col;
+                    input.TryGetPosition(ex.GetPosition(), out line, out col);
+                    Log($"Line {line}, Col {col}");
+                    Log(input.GetLine(line));
+                    Log("↑".PadLeft(col, ' '));
+
+                    string trace = ex.GetTrace();
+                    if (!String.IsNullOrWhiteSpace(trace))
+                        Log("Trace: " + trace);
+
+                    Log(ex + Environment.NewLine);
+                }
+                catch (Exception ex)
+                {
+                    Log(ex + Environment.NewLine);
+                }
             }
-            catch (TjsScriptError ex)
+            else
             {
-                Log("Line: " + ex.GetSourceLine());
-                Log("Pos: " + ex.GetPosition());
-                Log("Block: " + ex.GetBlockName());
-                Log("Trace: ");
-                Log(ex.GetTrace());
-                Log(ex + Environment.NewLine);
-            }
-            catch (Exception ex)
-            {
-                Log(ex + Environment.NewLine);
+                var engine = new Jint.Engine();
+                try
+                {
+                    engine.Execute(input, new ParserOptions {Tolerant=true});
+                }
+                catch (Jint.Parser.ParserException ex)
+                {
+                    Log($"Line {ex.LineNumber}, Col {ex.Column}");
+                    string source = input.GetLine(ex.LineNumber);
+                    Log(source);
+                    string whited = Regex.Replace(source.Substring(0, ex.Column-1), @"[^\t]", " ", RegexOptions.Compiled) + "↑";
+                    Log(whited);
+                    Log(ex + Environment.NewLine);
+                }
+                catch (Jint.Runtime.JavaScriptException ex)
+                {
+                    Log($"Line {ex.LineNumber}, Col {ex.Column}");
+                    string source = GetSource(input, ex.Location);
+                    Log(source);
+                    string whited = Regex.Replace(source.Substring(0,ex.Column-1), @"[^\t]", " ", RegexOptions.Compiled) + "↑";
+                    Log(whited);
+                    //Log("↑".PadLeft(ex.Column, ' '));
+                    Log(ex + Environment.NewLine);
+                }
+                catch (Exception ex)
+                {
+                    Log(ex + Environment.NewLine);
+                }
             }
 
             DateTime opEnd = DateTime.Now;
@@ -278,6 +349,12 @@ namespace KirikiriTest
                 MessageBox.Show(msg, "Message");
             }
         }
+
+        private static string GetSource(string input, Jint.Parser.Location location)
+        {
+            return input.GetSegment(location.Start.Line, location.Start.Column, location.End.Line, location.End.Column);
+        }
+
     }
 
 

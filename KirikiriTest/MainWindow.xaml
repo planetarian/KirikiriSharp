@@ -19,7 +19,8 @@
                     <Button x:Name="LexKagInputButton" Content="Lex KAG" Margin="10,0,0,10.4" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="75" Click="LexKagInputButton_Click"/>
                     <Button x:Name="ParseKagInputButton" Content="Parse KAG" Margin="90,0,0,10.4" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="75" Click="ParseKagInputButton_Click"/>
                     <Button x:Name="RunTjsInputButton" Content="Run TJS" Margin="170,0,0,10.4" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="75" Click="RunTjsInputButton_Click"/>
-                    <CheckBox x:Name="DisplayInputResult" Content="Display" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="250,0,0,12" IsChecked="True"/>
+                    <Button x:Name="RunJsInputButton" Content="Run JS" Margin="250,0,0,10.4" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="75" Click="JintRunTjsInputButton_Click"/>
+                    <CheckBox x:Name="DisplayInputResult" Content="Display" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="330,0,0,12.4" IsChecked="True"/>
                 </Grid>
             </TabItem>
             <TabItem Header="File">
@@ -27,9 +28,10 @@
                     <TextBox x:Name="FilenameTextBox" Margin="10,10,10.2,35.4" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
                     <Button x:Name="KagFileLexButton" Content="Lex KAG" Margin="10,0,0,10.4" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="75" Click="LexKagFileButton_Click" Height="20"/>
                     <Button x:Name="KagFileParseButton" Content="Parse KAG" Margin="90,0,0,10.4" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="75" Click="ParseKagFileButton_Click" Height="20"/>
-                    <Button x:Name="TjsFileButton" Content="Run TJS" Margin="170,0,0,10.4" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="75" Click="RunTjsFileButton_Click" Height="20"/>
-                    <Button x:Name="BrowseButton" Content="Browse" Margin="250,0,-37.8,10.4" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="75" Click="BrowseButton_Click" Height="20"/>
-                    <CheckBox x:Name="DisplayFileResult" Content="Display" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="330,0,0,12" IsChecked="True"/>
+                    <Button x:Name="RunTjsFileButton" Content="Run TJS" Margin="170,0,0,10.4" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="75" Click="RunTjsFileButton_Click" Height="20"/>
+                    <Button x:Name="RunJsFileButton" Content="Run JS" Margin="250,0,0,10.4" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="75" Click="JintRunTjsFileButton_Click" Height="20"/>
+                    <Button x:Name="BrowseButton" Content="Browse" Margin="330,0,0,10.4" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="75" Click="BrowseButton_Click" Height="20"/>
+                    <CheckBox x:Name="DisplayFileResult" Content="Display" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="410,0,0,12.4" IsChecked="True"/>
                 </Grid>
             </TabItem>
         </TabControl>
@@ -37,7 +39,7 @@
         <TabControl x:Name="ResultTabs" Grid.Row="2">
             <TabItem Header="List">
                 <Grid>
-                    <TextBox x:Name="GraupelTextBox" Margin="0" AcceptsReturn="True" IsReadOnly="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
+                    <TextBox x:Name="GraupelTextBox" Margin="0" AcceptsReturn="True" IsReadOnly="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Background="#222" Foreground="#ccc" FontFamily="Consolas"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Tree">
